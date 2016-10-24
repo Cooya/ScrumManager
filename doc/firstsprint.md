@@ -22,6 +22,7 @@
 * US#3 : En tant qu’utilisateur quelconque, je dois pouvoir être invité à un projet en tant que contributeur ou client.
 * US#4 : En tant qu’utilisateur quelconque, je dois pouvoir accéder à la liste de tous les projets auxquels j’ai participé.
 * US#5 : En tant que chef de projet, je dois pouvoir ajouter ou retirer des contributeurs et un client. 
+
 ## Tâches
 ### Tâche 1 (base de données mySQL) :
 * Création d'une base de données "Projectmanager" dans lequel seront stockées nos tables. 

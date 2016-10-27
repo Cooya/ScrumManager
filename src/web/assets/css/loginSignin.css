@@ -37,3 +37,13 @@
   position:relative;
   top:1px;
 }
+
+.boutonCont {
+  width:25px;
+  height:25px;
+  background:#fafafa;
+  box-shadow:2px 2px 8px #aaa;
+  font:bold 13px Arial;
+  border-radius:50%;
+  color:#555;
+}

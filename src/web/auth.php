@@ -38,7 +38,7 @@
 			            <p>Cliquez <a href="./index.html">ici</a> 
 			            pour revenir à la page d accueil</p>';
 			            echo $message; 		
-
+include "AddContributor.php";
 		}
 	}
 

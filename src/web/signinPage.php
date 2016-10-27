@@ -21,16 +21,16 @@
 <form name="SIGNIN" action="registration.php" method="POST">
   <table border="0" align="center" cellspacing="2" cellpadding="2">
     <tr align="center">
-      <td><input type="login" name="login" placeholder="login"></td>
+      <td><input type="text" name="login" placeholder="login"></td>
     </tr>
     <tr align="center">
       <td><input type="password" name="password" placeholder="password"></td>
     </tr>
     <tr align="center">
-      <td><input type="name" name="name" placeholder="name"></td>
+      <td><input type="text" name="name" placeholder="name"></td>
     </tr>
     <tr align="center">
-      <td><input type="surname" name="surname" placeholder="surname"></td>
+      <td><input type="text" name="surname" placeholder="surname"></td>
     </tr>
      <tr align="center">
       <td><input type="email" name="email" placeholder="email"></td>

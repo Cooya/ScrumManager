@@ -1,16 +1,30 @@
 <html>
   <head>
   <link rel="stylesheet" href="assets/css/loginSignin.css" />
+  <link rel="stylesheet" href="assets/css/navigationBar.css" />
 
     <title>Login</title>
   </head>
 <body>
+
+<ul id="horiz_menu">
+
+  <li class="bouton_menu"><a href="Logout.php"><img src="assets/images/logout.png" alt="logout" />Logout</a></li>
+
+  <li class="bouton_menu"><a href="projectList.php"><img src="assets/images/list.png" alt="projectlist" />Project List</a></li>
+
+  <li class="bouton_menu"><a href="newProject.html"><img src="assets/images/newproject.png" alt="newproject" />New Project</a></li>
+
+</ul>
+
+
+  
 <h1 align ="center">LOGIN TO SCRUM MANAGER</h1>
 
-<form name="Login" action="#" method="POST">
+<form name="Login" action="auth.php" method="POST">
   <table border="0" align="center" cellspacing="2" cellpadding="2">
     <tr align="center">
-      <td><input type="email" name="identifiant" placeholder="email"></td>
+      <td><input type="text" name="login" placeholder="login"></td>
     </tr>
     <tr align="center">
       <td><input type="password" name="password" placeholder="password"></td>

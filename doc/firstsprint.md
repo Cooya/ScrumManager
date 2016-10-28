@@ -13,7 +13,7 @@
 | 8 | | X | | | |
 | 9 |Mohamed | | | |X |
 | 10 | | X | | | |
-| 11 | | X | | | |
+| 11 |Nicolas |  | |X | |
 
 
 ## User stories

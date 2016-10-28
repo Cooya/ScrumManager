@@ -33,10 +33,10 @@
 		 	session_start();
 			$_SESSION['login'] = $result['login'];
 			$_SESSION['password'] = $result['password'];
-			$message = '<p>Bienvenue '.$result['login'].', 
-			            vous êtes maintenant connecté!</p>
-			            <p>Cliquez <a href="./index.html">ici</a> 
-			            pour revenir à la page d accueil</p>';
+			$message = '<p>Hi '.$result['login'].', 
+			            You are now connected !!</p>
+			            <p>Click <a href="./projectList.php">here</a> 
+			            to see the list of projects </p>';
 			            echo $message; 		
 include "AddContributor.php";
 		}

@@ -27,8 +27,8 @@ else{
 
     $data = $connexion->query("SELECT login FROM user WHERE login = '$login'");
     if($result = $data->fetch()){
-        echo "ce login existe deja";
         include "signinPage.php";
+        echo '<P>ce login existe deja</p>';
 
     }
     else

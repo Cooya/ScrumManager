@@ -10,10 +10,10 @@
 | 5 | Ismail|  | | | X|
 | 6 |Ismail |  | | | X|
 | 7 | Ismail|  | | | X|
-| 8 | Nicolas | X | | | |
+| 8 | Nicolas | | X | | |
 | 9 |Mohamed | | | |X |
-| 10 | Nicolas | X | | | |
-| 11 |Nicolas | X | | | |
+| 10 | Nicolas | | X | | |
+| 11 |Nicolas | | X | | |
 
 
 ## User stories

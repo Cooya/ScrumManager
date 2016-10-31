@@ -1,4 +1,8 @@
 <?php
+	session_start();
+	if(!isset($_SESSION['login'])) {
+		header('Location: loginPage.php');
+	}
 	include 'databaseConnection.php';
 ?>
 
@@ -11,11 +15,7 @@
   		<link rel="stylesheet" href="assets/css/navigationBar.css" />
   	</head>
 	<body>
-		<ul id="horiz_menu">
-			<li class="bouton_menu"><a href="loginPage.php"><img src="assets/images/login.png" alt="Login" />Login</a></li>
-			<li class="bouton_menu"><a href="signinPage.php"><img src="assets/images/register.png" alt="Sign in" />Sign in</a></li>
-			<li class="bouton_menu"><a href="index.html"><img src="assets/images/home.png" alt="home" />Home</a></li>
-		</ul>
+		<?php include 'navBar.php'; ?>
 		<h1>Projects List</h1>
 
 		<?php
@@ -75,7 +75,6 @@
 			    echo '</tr>';
 			} 
 			echo '</table>';
-			echo '<a href="newProject.html">Create a project</a>';
 		?>
 	</body>
 </html>

@@ -16,9 +16,8 @@
 	</head>
 	<body>
 		<?php include 'navBar.php'; ?>
-		<h1 align ="center">Login</h1>
-
-		<form name="Login" action="login.php" method="POST">
+		<h1 align ="center">Registration</h1>
+		<form name="SIGNIN" action="registration.php" method="POST">
 			<table border="0" align="center" cellspacing="2" cellpadding="2">
 				<tr align="center">
 					<td><input type="text" name="login" placeholder="login"></td>
@@ -27,8 +26,16 @@
 					<td><input type="password" name="password" placeholder="password"></td>
 				</tr>
 				<tr align="center">
-					<td colspan="2"><input type="submit" value="Log in" class="myButton"></td> 
-					<td colspan="2"> Or <a href="signinPage.php">Subscribe here</a></td>
+					<td><input type="text" name="name" placeholder="name"></td>
+				</tr>
+				<tr align="center">
+					<td><input type="text" name="surname" placeholder="surname"></td>
+				</tr>
+				<tr align="center">
+					<td><input type="email" name="email" placeholder="email"></td>
+				</tr>
+				<tr align="center">
+					<td colspan="2"><input type="submit" value="Sign in" class="myButton"></td> 
 				</tr>
 			</table>
 		</form>

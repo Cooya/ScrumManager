@@ -2,7 +2,7 @@
 	include 'databaseConnection.php';
 
 	if(empty($_POST['login']) || empty($_POST['password'])) {
-		echo '<p style="color:red">Missing field(s). <a href="./loginPage.php">Get back</a></p>';
+		echo '<p style="color:red">Missing field(s). <a href="loginPage.php">Get back</a></p>';
 	}
 	else {
 	    $login = $_POST['login']; 
@@ -15,8 +15,10 @@
 			$data = $result->fetch();
 			session_start();
 			$_SESSION['login'] = $data['login'];
-			echo '<p>Hi ' . $data['login'] . ', You are now connected !!</p><p>Click <a href="./projectList.php">here</a> 
-			to see the list of projects </p>';
+			echo '
+				<p>Hi <b>' . $data['login'] . '</b> ! You are now connected.
+				Click <a href="projectListPage.php">here</a> to browse your list of projects.</p>
+			';
 		}
 	}
 ?>

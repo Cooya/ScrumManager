@@ -1,8 +1,5 @@
 <?php
 	session_start();
-	if(!isset($_SESSION['login'])) {
-		header('Location: loginPage.php');
-	}
 	if(!isset($_GET['name']) || !isset($_GET['link'])) {
 		echo '<p style="color:red;">Missing informations.</p>';
 		exit;
@@ -23,7 +20,7 @@
 
 	$result = $db->query($sql);
 	if($result) 
-		echo '<p style="color:green;">The project has been created successfully.</p>';
+		echo '<p style="color:green">The project has been created successfully.</p>';
 	else
-		echo '<p style="color:red;">An error has occurred, please try again. <a href="./newProject.html">Get back</a></p>';
+		echo '<p style="color:red">An error has occurred, please <a href="./newProjectPage.php">try again</a>.</p>';
 ?>

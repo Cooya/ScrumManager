@@ -28,7 +28,7 @@
 				</tr>
 				<tr align="center">
 					<td colspan="2"><input type="submit" value="Log in" class="myButton"></td> 
-					<td colspan="2"> Or <a href="signinPage.php">Subscribe here</a></td>
+					<td colspan="2"> Or <a href="loginPage.php">Subscribe here</a></td>
 				</tr>
 			</table>
 		</form>

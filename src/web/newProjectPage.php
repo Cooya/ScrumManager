@@ -17,7 +17,7 @@
 	<body>
 		<?php include 'navBar.php'; ?>
 		<h1>Create a new project</h1>
-		<form method="get" action="newProject.php">
+		<form method="post" action="newProject.php">
 			<label for="name">Name : </label>
 			<input type="name" id="name" name="name" /><br>
 

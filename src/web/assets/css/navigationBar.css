@@ -1,60 +1,29 @@
 ul#horiz_menu { 
-
-width : 800px; 
-
-height : 40px;
-
-list-style-type : none; 
-
-margin :left;
-
-padding : 0;
-
-background-color : #99ddff;
-
-border : 2px black;
-
+	width : 800px;
+	height : 40px;
+	list-style-type : none;
+	margin :left;
+	padding : 0;
+	background-color : #99ddff;
+	border : 2px black;
 }
-
- 
 
 ul#horiz_menu li {
-
-padding : 0 0.9em;  
-
-line-height : 30px;
-
-
-
+	padding : 0 0.9em;  
+	line-height : 30px;
 }
-
- 
 
 ul#horiz_menu li.bouton_menu {
-
-float : right;
-
-
+	float : right;
 }
 
-
- img
-{
-max-width: 15px;
+img {
+ 	max-width: 15px;
 }
-
 
 ul#horiz_menu a {
-
-color : black;
-
-text-decoration : none;
-
-padding : 0 0.5em; 
-
-font :  0.90em "Georgia";
-
+	color : black;
+	text-decoration : none;
+	padding : 0 0.5em; 
+	font :  0.90em "Georgia";
 }
-
-
-

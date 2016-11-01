@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	if(!isset($_GET['name']) || !isset($_GET['link'])) {
+	if(!isset($_POST['name']) || !isset($_POST['link'])) {
 		echo '<p style="color:red;">Missing informations.</p>';
 		exit;
 	}
@@ -11,8 +11,8 @@
 	$sql = 'SELECT id FROM user WHERE login = "'.$current_user.'"'; 
 	$result = $db->query($sql);
 	$data = $result->fetch();
-	$name = $_GET['name'];
-	$link = $_GET['link'];
+	$name = $_POST['name'];
+	$link = $_POST['link'];
 	$datetime = date("Y-m-d H:i:s");
 
 	$sql = 'INSERT INTO project (name, master, creation_date, repository_link) VALUES 

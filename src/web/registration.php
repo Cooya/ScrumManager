@@ -21,6 +21,7 @@
 				echo '<p style="color: red">An error has occurred during the request. Please <a href="registrationPage.php">try again</a>.</p>';
 			}
 			else {
+				session_start();
 				$_SESSION['login'] = $login;
 				echo '
 					<p style="color: green">Account created successfully. 

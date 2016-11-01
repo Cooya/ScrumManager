@@ -1,15 +1,18 @@
+/* suppression de la base de données "scrummanager" si elle existe */
+DROP DATABASE ScrumManager;
+
 /* création de la base de données "scrummanager" */
-CREATE DATABASE IF NOT EXISTS ScrumManager;
+CREATE DATABASE ScrumManager;
 USE ScrumManager;
 
 /* ajout de la table "project" */
-CREATE TABLE IF NOT EXISTS `project` (
+CREATE TABLE `project` (
   `id` int(80) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(80) NOT NULL,
-  `owner` int(80) unsigned NOT NULL,
+  `owner` int(80) unsigned,
   `master` int(80) unsigned NOT NULL,
-  `contributors` int(80) unsigned NOT NULL,
-  `last_update` datetime NOT NULL,
+  `contributors` int(80) unsigned,
+  `last_update` datetime,
   `creation_date` datetime NOT NULL,
   `repository_link` varchar(80) NOT NULL,
   PRIMARY KEY (`id`),
@@ -19,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `project` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4;
 
 /* ajout de la table "user" */
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `id` int(80) unsigned NOT NULL AUTO_INCREMENT,
   `login` varchar(20) NOT NULL,
   `password` varchar(80) NOT NULL,

@@ -2,17 +2,17 @@
 	include 'databaseConnection.php';
 
 	if(empty($_POST['login']) || empty($_POST['password'])) {
-		echo '<p style="color:red">Missing field(s). <a href="loginPage.php">Get back</a></p>';
+		echo '<p style="color:red">Missing field(s). <a href="loginPage.php">Get back</a>.</p>';
 	}
 	else {
 	    $login = $_POST['login']; 
 		$password = md5($_POST['password']);
 		$result = $db->query("SELECT login, password FROM user WHERE login = '$login' AND password = '$password'");
-		if(!$result) {
-			echo '<p style="color:red">Invalid login or password.</p>';
+		$data = $result->fetch();
+		if(!$data) {
+			echo '<p style="color:red">Invalid login or password. <a href="loginPage.php">Get back</a>.</p>';
 		}
 		else {
-			$data = $result->fetch();
 			session_start();
 			$_SESSION['login'] = $data['login'];
 			echo '

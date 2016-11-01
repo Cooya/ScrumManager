@@ -21,7 +21,7 @@
 				echo '<p style="color: red">An error has occurred during the request. Please <a href="registrationPage.php">try again</a>.</p>';
 			}
 			else {
-				$_SESSION['login'] = $data['login'];
+				$_SESSION['login'] = $login;
 				echo '
 					<p style="color: green">Account created successfully. 
 					Welcome <b>' . $login . '</b> ! <a href="./newProjectPage.php">Create a project now</a>.</p>

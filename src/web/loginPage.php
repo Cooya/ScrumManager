@@ -26,7 +26,7 @@
 					<td><input type="password" name="password" placeholder="password"></td>
 				</tr>
 				<tr align="center">
-					<td colspan="2"><input type="submit" value="Log in" class="myButton"></td> 
+					<td colspan="2"><input type="submit" value="Log in" id="submit" class="myButton"></td> 
 					<td colspan="2"> Or <a href="registrationPage.php">Subscribe here</a></td>
 				</tr>
 			</table>

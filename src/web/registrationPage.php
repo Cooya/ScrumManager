@@ -34,7 +34,7 @@
 					<td><input type="email" name="email" placeholder="email"></td>
 				</tr>
 				<tr align="center">
-					<td colspan="2"><input type="submit" value="Sign in" class="myButton"></td> 
+					<td colspan="2"><input type="submit" id="submit" value="Sign in" class="myButton"></td> 
 				</tr>
 			</table>
 		</form>

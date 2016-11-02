@@ -23,7 +23,7 @@
 			<label for="link">Repository link : </label>
 			<input type="link" id="link" name="link" /><br><br>
 
-			<input type="submit" value="Create">
+			<input type="submit" id="submit" value="Create">
 		</form>
 	</body>
 </html>

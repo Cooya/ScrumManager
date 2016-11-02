@@ -2,8 +2,8 @@
 
 | User story | Commit id |
 | ---------- | --------- |
-| US#1 | |
-| US#2 | |
+| US#1 | 92f0e4498766cb2553fd2386c50b1ff712c7e52c |
+| US#2 | 92f0e4498766cb2553fd2386c50b1ff712c7e52c |
 | US#3 | |
 | US#4 | |
 | US#5 | |

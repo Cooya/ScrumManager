@@ -3,17 +3,16 @@
 ## Kanban
 |Task id | Developper | To do | On going | On testing | Done |
 | ---------- | ---------- | :-----: | :--------: | :----------: | :----: |
-| 1 |Ismail |  | | |X |
-| 2 | Ismail|  | | |X |
-| 3 |Mohamed | | | |X |
-| 4 |Mohamed | || |X |
-| 5 | Ismail|  | | | X|
-| 6 |Ismail |  | | | X|
-| 7 | Ismail|  | | | X|
-| 8 | Nicolas | | X | | |
-| 9 |Mohamed | | | |X |
+| 1 | Ismail | | | | X |
+| 2 | Ismail | | | | X |
+| 3 | Mohamed | | | | X |
+| 4 | Mohamed | | | | X |
+| 5 | Ismail | | | | X |
+| 6 | Ismail | | | | X |
+| 7 | Ismail | | | | X |
+| 8 | Nicolas | | | | X |
+| 9 | Mohamed | | | | X |
 | 10 | Nicolas | | X | | |
-| 11 |Nicolas | | X | | |
 
 
 ## User stories
@@ -66,31 +65,21 @@
 *Durée estimée : 1 Jh*
 
 ### Tâche 8 :
-* Réalisation d'un contrôleur PHP qui permet de générer un mail de notification lorsqu'un utilisateur est invité à un nouveau projet. Le mail contiendra une URL permettant de rejoindre le projet.
+* Créer une table pour stocker les contributeurs (association projet/utilisateur).
+* Réalisation d'un contrôleur qui permet d'inviter des contributeurs et un client au projet.
 
 *Durée estimée : 1 Jh*
 
 ### Tâche 9 :
-* Création de la page HTML pour l'ajout de nouveaux contributeurs par leur adresse mail.
+* Création de la page HTML pour l'ajout de nouveaux contributeurs et un client par leur nom d'utilisateur.
 
 *Durée estimée : 0,5 Jh*
 
 ### Tâche 10 :
-* Création d'un contrôleur PHP permettant l'envoi de mails.
-* Création d'un contrôleur PHP permettant l'ajout des nouveaux contributeurs.
-
-*Durée estimée : 1 Jh*
-
-
-### Tâche 11 :
 * Effectuer un test de validation qui crée un compte et se connecte avec.
 * Effectuer un test de validation qui crée plusieurs projets et qui les liste.
 
 *Durée estimée : 1 Jh*
 
 
-
-
-
-
-**Durée totale estimée : 9 Jh**
+**Durée totale estimée : 8 Jh**

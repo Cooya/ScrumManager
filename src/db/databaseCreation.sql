@@ -1,9 +1,9 @@
 /* suppression de la base de données "scrummanager" si elle existe */
-DROP DATABASE ScrumManager;
+DROP DATABASE scrummanager;
 
 /* création de la base de données "scrummanager" */
-CREATE DATABASE ScrumManager;
-USE ScrumManager;
+CREATE DATABASE scrummanager;
+USE scrummanager;
 
 /* ajout de la table "project" */
 CREATE TABLE `project` (

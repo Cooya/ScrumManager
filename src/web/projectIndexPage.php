@@ -16,7 +16,7 @@
 		}
 		catch(PDOException $e) {
 			echo $sql . "<br>" . $e->getMessage();
-			return false;
+			return false;	
 		}
 		return $result->fetch();
 	}
@@ -83,6 +83,7 @@
 			<input hidden type="number" name="projectId" value=<?php echo $data['id']; ?>>
 			<input type="text" name="clientUsername" size=20 placeholder="client username" required><button type="submit" class="boutonCont">Set</button>
 		</form>
+ 		<BR> <BR> <BR>
 		<h3>Add new contributor</h3>
 		<form method="POST">
 			<input hidden type="number" name="projectId" value=<?php echo $data['id']; ?>>
@@ -91,4 +92,4 @@
 		<br>
 		<div><?php echo $message ?></div>
 	</body>
-</html>
+</html>	

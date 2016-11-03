@@ -68,7 +68,7 @@ module.exports = function(providedDriver) {
 			setTimeout(() => {
 				driver.findElement(By.tagName('p')).getText().then(
 					(text) => {
-						expect(text).to.be.eql("The project has been created successfully.");
+						expect(text).to.be.eql("The project has been created successfully, click here to go Back.");
 						done();
 					},
 					(err) => done(err)

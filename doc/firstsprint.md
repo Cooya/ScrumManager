@@ -1,4 +1,4 @@
-# First Sprint (24/10 - 30/10)
+# First Sprint (24/10 - 04/11)
 
 ## Kanban
 |Task id | Developper | To do | On going | On testing | Done |

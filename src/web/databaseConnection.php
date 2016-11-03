@@ -1,4 +1,5 @@
 <?php
+
 	try {
 		$db = new PDO('mysql:host=localhost;dbname=scrummanager;charset=utf8', 'root', 'root');
 	}

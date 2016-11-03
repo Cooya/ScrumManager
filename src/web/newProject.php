@@ -15,8 +15,8 @@
 	$link = $_POST['link'];
 	$datetime = date("Y-m-d H:i:s");
 
-	$sql = 'INSERT INTO project (name, master, creation_date, repository_link) VALUES 
-	("' . $name . '", ' . $data['id'] . ', "'.$datetime.'" ,"' . $link . '")';
+	$sql = 'INSERT INTO project (name, owner, master, creation_date, repository_link) VALUES 
+	("' . $name . '","' . $data['id'] .'", ' . $data['id'] . ', "'.$datetime.'" ,"' . $link . '")';
 
 	$result = $db->query($sql);
 	if($result) 

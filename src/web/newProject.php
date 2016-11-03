@@ -20,7 +20,7 @@
 
 	$result = $db->query($sql);
 	if($result) 
-		echo '<p style="color:green">The project has been created successfully.</p>';
+		echo '<p style="color:green">The project has been created successfully, <a href="./newProjectPage.php">click here </a> to go Back.</p>';
 	else
 		echo '<p style="color:red">An error has occurred, please <a href="./newProjectPage.php">try again</a>.</p>';
 ?>

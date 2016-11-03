@@ -1,7 +1,7 @@
 <?php
 	include 'databaseConnection.php';
 
-	if(empty($_POST['login']) || empty($_POST['password'])) {
+	if(empty($_POST['login']) and empty($_POST['password'])) {
 		echo '<p style="color:red">Missing field(s). <a href="loginPage.php">Get back</a>.</p>';
 	}
 	else {

@@ -15,12 +15,12 @@
 	$link = $_POST['link'];
 	$datetime = date("Y-m-d H:i:s");
 
-	$sql = 'INSERT INTO project (name, owner, master, creation_date, repository_link) VALUES 
-	("' . $name . '","' . $data['id'] .'", ' . $data['id'] . ', "'.$datetime.'" ,"' . $link . '")';
+	$sql = 'INSERT INTO project (name, master, creation_date, repository_link) VALUES 
+	("' . $name . '", ' . $data['id'] . ', "'. $datetime .'", "' . $link . '")';
 
 	$result = $db->query($sql);
 	if($result) 
-		echo '<p style="color:green">The project has been created successfully, <a href="./newProjectPage.php">click here </a> to go Back.</p>';
+		echo '<p style="color:green">The project has been created successfully, <a href="./newProjectPage.php">click here </a> to go back.</p>';
 	else
 		echo '<p style="color:red">An error has occurred, please <a href="./newProjectPage.php">try again</a>.</p>';
 ?>

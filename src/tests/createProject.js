@@ -19,9 +19,16 @@ function fillTextInput(inputName, text, callback) {
 	);
 }
 
-module.exports = function(providedDriver) {
+module.exports = function(providedDriver, i) {
+	var projectFields = ['mocha_project', 'mocha_github'];
+
+	if(i) {
+		projectFields[0] += i;
+		projectFields[1] += i;
+	}
+
 	describe('Create a project', function() {
-		this.timeout(8000);
+		this.timeout(4000);
 
 		if(!providedDriver) {
 			before(function() {
@@ -34,6 +41,9 @@ module.exports = function(providedDriver) {
 		}
 		else {
 			driver = providedDriver;
+			if(!providedDriver.projectFields)
+				providedDriver.projectFields = [];
+			providedDriver.projectFields.push(projectFields);
 		}
 
 		it('When I go to the project creation page', function(done) {
@@ -52,8 +62,8 @@ module.exports = function(providedDriver) {
 
 		it('Then when I fill form inputs', function(done) {
 			async.parallel([
-				(stepDone) => fillTextInput('name', 'mocha_project', stepDone),
-				(stepDone) => fillTextInput('link', 'mocha_github', stepDone),
+				(stepDone) => fillTextInput('name', projectFields[0], stepDone),
+				(stepDone) => fillTextInput('link', projectFields[1], stepDone),
 			], done);
 		});
 
@@ -68,7 +78,7 @@ module.exports = function(providedDriver) {
 			setTimeout(() => {
 				driver.findElement(By.tagName('p')).getText().then(
 					(text) => {
-						expect(text).to.be.eql("The project has been created successfully, click here to go Back.");
+						expect(text).to.be.eql("The project has been created successfully, click here to go back.");
 						done();
 					},
 					(err) => done(err)

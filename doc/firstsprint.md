@@ -12,7 +12,7 @@
 | 7 | Ismail | | | | X |
 | 8 | Nicolas | | | | X |
 | 9 | Mohamed | | | | X |
-| 10 | Nicolas | | X | | |
+| 10 | Nicolas | | | | X |
 
 
 ## User stories

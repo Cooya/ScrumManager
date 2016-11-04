@@ -22,7 +22,7 @@ CREATE TABLE `project` (
 /* ajout de la table "user" */
 CREATE TABLE `user` (
 	`id` int(80) unsigned NOT NULL AUTO_INCREMENT,
-	`login` varchar(20) NOT NULL,
+	`login` varchar(20) UNIQUE NOT NULL,
 	`password` varchar(80) NOT NULL,
 	`name` varchar(80) NOT NULL,
 	`surname` text NOT NULL,

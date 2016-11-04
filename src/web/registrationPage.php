@@ -3,6 +3,36 @@
 	if(isset($_SESSION['login'])) {
 		header('Location: index.php');
 	}
+
+	include 'databaseConnection.php';
+	$message = ""
+
+
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		if(empty($_POST['login']) || empty( $_POST['password']) || empty($_POST['name']) || empty($_POST['surname']) || empty($_POST['email'])) {
+			$message = '<p style="color: red">Missing fields for creating an account.</p>';
+		}
+		else {
+			$login = $_POST['login'];
+			$password = md5($_POST['password']);
+			$name = $_POST['name'];
+			$surname = $_POST['surname'];
+			$email = $_POST['email'];
+
+			$sql = "INSERT INTO user (login, password, name, surname, mail) VALUES ('$login', '$password', '$name', '$surname', '$email')");
+			if(!$db->query($sql)) {
+				$message = '<p style="color: red">This login has already been taken.</p>';
+			}
+			else {
+				$_SESSION['accountId'] = $db->lastInsertId();
+				$_SESSION['login'] = $login;
+				$message = '
+					<p style="color: green">Account created successfully. 
+					Welcome <b>' . $login . '</b> ! <a href="./newProjectPage.php">Create a project now</a>.</p>
+				';
+			}
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +46,7 @@
 	<body>
 		<?php include 'navBar.php'; ?>
 		<h1 align ="center">Registration</h1>
-		<form name="SIGNIN" action="registration.php" method="POST">
+		<form method="POST">
 			<table border="0" align="center" cellspacing="2" cellpadding="2">
 				<tr align="center">
 					<td><input type="text" name="login" placeholder="login"></td>
@@ -38,6 +68,8 @@
 				</tr>
 			</table>
 		</form>
+		<br>
+		<div><?php echo $message ?></div>
 		<footer align="center">
 			<p>
 				By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use.<br>

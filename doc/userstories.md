@@ -14,5 +14,8 @@
 | 11 | En tant que développeur, je dois pouvoir accéder à une liste des modifications apportées au projet. | 3 | 5 |
 | 12 | En tant que client, je dois pouvoir modifier la liste des user stories. | 2 | 2 |
 | 13 | En tant que client, je dois pouvoir accéder à une interface détaillant l’état d’avancement du projet. | 2 | 5 |
+| | | | 48 |
 
 US #9 volontairement retirée.
+
+Effort premier sprint : 11

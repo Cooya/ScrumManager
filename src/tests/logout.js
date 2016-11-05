@@ -30,7 +30,7 @@ module.exports = function(providedDriver) {
 		});
 
 		it('I must see the logout message', function(done) {
-			driver.findElement(By.tagName('body')).getText().then(
+			driver.findElement(By.css('body')).getText().then(
 				(text) => {
 					expect(text).to.be.eql('You have been logged out, click here to return to home page.');
 					done();
@@ -40,7 +40,7 @@ module.exports = function(providedDriver) {
 
 		it('Then when I go back to the home page', function(done) {
 			driver.get('http://localhost/logout.php');
-			driver.findElement(By.tagName('a')).click().then(
+			driver.findElement(By.css('a')).click().then(
 				done,
 				(err) => done(err)
 			);
@@ -48,7 +48,7 @@ module.exports = function(providedDriver) {
 
 		it('I must see the login button', function(done) {
 			setTimeout(() => {
-				driver.findElement(By.tagName('a')).getText().then(
+				driver.findElement(By.css('a')).getText().then(
 					(text) => {
 						expect(text).to.be.eql("Login");
 						done();

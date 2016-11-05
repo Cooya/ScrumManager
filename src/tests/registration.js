@@ -37,8 +37,8 @@ module.exports = function(providedDriver) {
 		}
 
 		it('When I go to the registration page', function(done) {
-			driver.get('http://localhost/registrationPage.php');
-			driver.findElement(By.tagName('h1')).getText().then(
+			driver.get('http://localhost/registration.php');
+			driver.findElement(By.css('h1')).getText().then(
 				(text) => {
 					expect(text).to.be.eql('Registration');
 					done();
@@ -67,11 +67,11 @@ module.exports = function(providedDriver) {
 			);
 		});
 
-		it('I must see a success message', function(done) {
+		it('I must be redirected on the project creation page', function(done) {
 			setTimeout(() => {
-				driver.findElement(By.tagName('a')).getText().then(
+				driver.getCurrentUrl().then(
 					(text) => {
-						expect(text).to.be.eql("Create a project now");
+						expect(text).to.be.eql("http://localhost/newProject.php");
 						done();
 					},
 					(err) => done(err)

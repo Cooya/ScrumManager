@@ -37,7 +37,7 @@ module.exports = function(providedDriver) {
 		}
 
 		it('When I go to the login page', function(done) {
-			driver.get('http://localhost/loginPage.php').then(
+			driver.get('http://localhost/login.php').then(
 				done,
 				(err) => done(err)
 			);
@@ -61,11 +61,11 @@ module.exports = function(providedDriver) {
 			);
 		});
 
-		it('I must see a success message', function(done) {
+		it('I must be redirected on the project list page', function(done) {
 			setTimeout(() => {
-				driver.findElement(By.tagName('p')).getText().then(
+				driver.getCurrentUrl().then(
 					(text) => {
-						expect(text).to.be.eql("Hi mocha_test ! You are now connected. Click here to browse your list of projects.");
+						expect(text).to.be.eql("http://localhost/projectList.php");
 						done();
 					},
 					(err) => done(err)

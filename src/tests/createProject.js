@@ -20,11 +20,11 @@ function fillTextInput(inputName, text, callback) {
 }
 
 module.exports = function(providedDriver, i) {
-	var projectFields = ['mocha_project', 'mocha_github'];
+	var project = {name: 'mocha_project', link: 'mocha_github'};
 
 	if(i) {
-		projectFields[0] += i;
-		projectFields[1] += i;
+		project.name += i;
+		project.link += i;
 	}
 
 	describe('Create a project', function() {
@@ -41,14 +41,14 @@ module.exports = function(providedDriver, i) {
 		}
 		else {
 			driver = providedDriver;
-			if(!providedDriver.projectFields)
-				providedDriver.projectFields = [];
-			providedDriver.projectFields.push(projectFields);
+			if(!providedDriver.projects)
+				providedDriver.projects = [];
+			providedDriver.projects.push(project);
 		}
 
 		it('When I go to the project creation page', function(done) {
-			driver.get('http://localhost/newProjectPage.php');
-			driver.findElement(By.tagName('h1')).getText().then(
+			driver.get('http://localhost/newProject.php');
+			driver.findElement(By.css('h1')).getText().then(
 				(text) => {
 					expect(text).to.be.eql('Create a new project');
 					done();
@@ -62,8 +62,8 @@ module.exports = function(providedDriver, i) {
 
 		it('Then when I fill form inputs', function(done) {
 			async.parallel([
-				(stepDone) => fillTextInput('name', projectFields[0], stepDone),
-				(stepDone) => fillTextInput('link', projectFields[1], stepDone),
+				(stepDone) => fillTextInput('name', project.name, stepDone),
+				(stepDone) => fillTextInput('link', project.link, stepDone),
 			], done);
 		});
 
@@ -76,9 +76,9 @@ module.exports = function(providedDriver, i) {
 
 		it('I must see a success message', function(done) {
 			setTimeout(() => {
-				driver.findElement(By.tagName('p')).getText().then(
+				driver.findElement(By.id('message')).getText().then(
 					(text) => {
-						expect(text).to.be.eql("The project has been created successfully, click here to go back.");
+						expect(text).to.be.eql('The project "' + project.name + '" has been created successfully.');
 						done();
 					},
 					(err) => done(err)

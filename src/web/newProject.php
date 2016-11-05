@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	if(!isset($_SESSION['login'])) {
-		header('Location: loginPage.php');
+		header('Location: login.php');
 	}
 
 	include 'databaseConnection.php';
@@ -47,6 +47,6 @@
 			<input type="submit" id="submit" value="Create">
 		</form>
 		<br>
-		<div><?php echo $message ?></div>
+		<div id="message"><?php echo $message ?></div>
 	</body>
 </html>

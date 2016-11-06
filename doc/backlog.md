@@ -20,8 +20,8 @@
 | 17 | En tant que développeur, je dois pouvoir supprimer une tache d'une US. | 2 | 3 ||
 | 18 | En tant que développeur, je dois pouvoir ajouter un sprint. | 3 | 2 ||
 | 19 | En tant que développeur, je dois pouvoir ajouter des tâches pour chaque sprint. | 3 | 4 ||
-| 20 | En tant que développeur, je dois pouvoir modifier les tâches souhaitées de chaque sprint. | 3 | 4 ||
-| 21 | En tant que développeur, je dois pouvoir supprimer les tâches souhaitées de chaque sprint. | 3 | 3 ||
+| 20 | En tant que développeur, je dois pouvoir modifier les tâches souhaitées pour chaque sprint. | 3 | 4 ||
+| 21 | En tant que développeur, je dois pouvoir supprimer les tâches souhaitées pour chaque sprint. | 3 | 3 ||
 | 22 | En tant que développeur, je dois pouvoir accéder aux tâches de chaque sprint. | 3 | 3 ||
 | 23 | En tant que développeur, je dois pouvoir accéder au Kanban de chaque sprint. | 3 | 3 ||
 | 24 | En tant que développeur, je dois pouvoir accéder à une liste des modifications apportées au projet. | 3 | 5 ||

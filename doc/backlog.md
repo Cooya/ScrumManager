@@ -1,12 +1,12 @@
 ## Back log
 
 | Id | US  | Priority | Cost | Sprint |
-| --- | --- | ------- | ---- |
+| --- | --- | ------- | ---- | ---- |
 | 1 | En tant qu’utilisateur quelconque, je dois pouvoir m’inscrire, me connecter et me déconnecter de l’application. | 1 | 3 | 1 |
 | 2 | En tant qu’utilisateur quelconque, je dois pouvoir créer un projet et ainsi en devenir son chef de projet. | 1 | 3 | 1 |
 | 3 | En tant qu’utilisateur quelconque, je dois pouvoir être invité à un projet en tant que contributeur ou client. | 1 | 2 | 1 |
 | 4 | En tant qu’utilisateur quelconque, je dois pouvoir accéder à la liste de tous les projets auxquels j’ai participé. | 1 | 3 | 1 |
-| 5 | En tant que chef de projet, je dois pouvoir ajouter ou retirer des contributeurs et un client. | 1 | 2 | 1 |
+| 5 | En tant que chef de projet, je dois pouvoir ajouter ou retirer des contributeurs et un client. | 1 | 2 | 1 | 
 | 6 | En tant que chef de projet, je dois pouvoir assigner des droits aux collaborateurs. | 3 | 5 ||
 | 8 | En tant que chef de projet, je dois pouvoir accéder à une interface détaillée des différentes modifications de la part des contributeurs. | 3 | 4 ||
 | 9 | En tant que chef de projet, je dois pouvoir supprimer un projet. | 2 | 2 | 1 |

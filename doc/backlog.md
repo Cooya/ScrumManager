@@ -27,8 +27,8 @@
 | 24 | En tant que développeur, je dois pouvoir accéder à une liste des modifications apportées au projet. | 3 | 5 ||
 | 25 | En tant que développeur, je dois pouvoir accéder au Burn down chart de chaque projet. | 3 | 6 ||
 | 26 | En tant que client, je dois pouvoir accéder à une interface détaillant l’état d’avancement du projet. | 3 | 6 ||
+|TOTAL|													    |    | 88 ||
 
-| | | | 88 |||
 
 
 Effort premier sprint : 11

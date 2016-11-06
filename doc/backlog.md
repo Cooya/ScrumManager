@@ -9,8 +9,8 @@
 | 5 | En tant que chef de projet, je dois pouvoir ajouter ou retirer des contributeurs et un client. | 1 | 2 | 1 | 
 | 6 | En tant que chef de projet, je dois pouvoir assigner des droits aux collaborateurs. | 3 | 5 ||
 | 8 | En tant que chef de projet, je dois pouvoir accéder à une interface détaillée des différentes modifications de la part des contributeurs. | 3 | 4 ||
-| 9 | En tant que chef de projet, je dois pouvoir supprimer un projet. | 2 | 2 | 1 |
-| 10 | En tant que chef de projet, je dois pouvoir modifier un projet. | 2 | 3 | 1 |
+| 9 | En tant que chef de projet, je dois pouvoir supprimer un projet. | 2 | 2 |  |
+| 10 | En tant que chef de projet, je dois pouvoir modifier un projet. | 2 | 3 |  |
 | 11 | En tant que développeur, je dois pouvoir ajouter une US au backlog . | 2 | 3 ||
 | 12 | En tant que développeur, je dois pouvoir modifier les US du backlog . | 2 | 4 ||
 | 13 | En tant que développeur, je dois pouvoir supprimer les US du backlog . | 2 | 3 ||

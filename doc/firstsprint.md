@@ -38,8 +38,8 @@
 *Durée estimée : 1 Jh*
 
 ### Tâche 3 :
-* Création de la page HTML de connexion (formulaire avec deux champs de texte).
-* Création de la page HTML d'enregistrement (formulaire avec les champs correspondants à la table User).
+* Création de la page HTML de connexion (formulaire login/password).
+* Création de la page HTML d'enregistrement (formulaire login/password/name/surname/email).
 
 *Durée estimée : 1 Jh*
 
@@ -49,7 +49,7 @@
 *Durée estimée : 1 Jh*
 
 ### Tâche 5 :
-* Réalialisation de la page HTML de création d'un nouveau projet.
+* Réalisation de la page HTML de création d'un nouveau projet.
 
 *Durée estimée : 0,5 Jh*
 

@@ -42,26 +42,30 @@ CREATE TABLE `contributor` (
 
 CREATE TABLE IF NOT EXISTS `task` (
   `id` int(80) unsigned NOT NULL AUTO_INCREMENT,
+  `project_Id` int(80) unsigned DEFAULT NULL,
   `description` varchar(80) NOT NULL,
-  `developper_id` int(80) unsigned DEFAULT NULL,
+  `developper_Id` int(80) unsigned DEFAULT NULL,
   `sprint` int(80) NOT NULL,
   `duration` int(80) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `developper_id` (`developper_id`),
-  KEY `developper_id_2` (`developper_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  KEY `project_Id` (`project_Id`),
+  KEY `developper_Id` (`developper_Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 
 /* ajout de la table "us" */
 
 CREATE TABLE IF NOT EXISTS `us` (
   `id` int(80) NOT NULL,
+  `project_Id` int(80) unsigned NOT NULL,
   `description` varchar(80) NOT NULL,
   `priority` int(80) NOT NULL,
   `cost` int(80) NOT NULL,
   `sprint` int(80) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `project_Id` (`project_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 ---------------------------------------------------------
 
@@ -79,6 +83,12 @@ ALTER TABLE `contributor`
 /* contraintes pour la table "task" */
 
 ALTER TABLE `task`
-  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`developper_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`developper_Id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`project_Id`) REFERENCES `project` (`id`);
+
+
+/* contraintes pour la table "us" */
+ALTER TABLE `us`
+  ADD CONSTRAINT `us_ibfk_1` FOREIGN KEY (`project_Id`) REFERENCES `project` (`id`);
 
 

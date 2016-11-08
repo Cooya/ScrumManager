@@ -18,9 +18,9 @@
 ## User stories
 * US#1 : En tant qu’utilisateur quelconque, je dois pouvoir m’inscrire, me connecter et me déconnecter de l’application.
 * US#2 : En tant qu’utilisateur quelconque, je dois pouvoir créer un projet et ainsi en devenir son chef de projet.
-* US#3 : En tant qu’utilisateur quelconque, je dois pouvoir être invité à un projet en tant que contributeur ou client.
+* US#3 : En tant qu’utilisateur quelconque, je dois pouvoir rejoindre un projet en tant que contributeur ou propriétaire.
 * US#4 : En tant qu’utilisateur quelconque, je dois pouvoir accéder à la liste de tous les projets auxquels j’ai participé.
-* US#5 : En tant que chef de projet, je dois pouvoir ajouter ou retirer des contributeurs et un client. 
+* US#5 : En tant que chef de projet, je dois pouvoir ajouter ou retirer des contributeurs et un propriétaire.
 
 ## Tâches
 ### Tâche 1 (base de données mySQL) :

@@ -21,10 +21,8 @@
 * 2 : En tant qu’utilisateur quelconque, je dois pouvoir créer un projet et ainsi en devenir son chef de projet.
 * 3 : En tant qu’utilisateur quelconque, je dois pouvoir rejoindre un projet en tant que contributeur ou propriétaire.
 * 4 : En tant qu’utilisateur quelconque, je dois pouvoir accéder à la liste de tous les projets auxquels j’ai participé.
-
 * 5 : En tant que chef de projet, je dois pouvoir ajouter ou retirer des contributeurs et un propriétaire.
 * 6 : En tant que chef de projet, je dois pouvoir modifier les informations à propos d'un projet ou supprimer ce projet.
-
 * 7 : En tant que participant à un projet, je dois pouvoir consulter et modifier le backlog (ajout, modification et suppression des sprints).
 * 8 : En tant que participant à un projet, je dois pouvoir ajouter, modifier et supprimer des US du backlog.
 * 9 : En tant que participant à un projet, je dois pouvoir modifier et consulter les détails de chaque sprint (kanban et description des tâches).

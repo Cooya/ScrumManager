@@ -1,6 +1,6 @@
 # Second Sprint (07/11 - 19/11)
 
-## Kanban
+## Kanbanelosr
 |Task id | Developper | To do | On going | On testing | Done |
 | ---------- | ---------- | :-----: | :--------: | :----------: | :----: |
 | 1 | Ismail | | | | X|
@@ -24,8 +24,8 @@
 
 ## Tâches
 ### Tâche 1 (base de données mySQL) :
-* Création d'une table Task(id, description, developper, sprint, duration). 
-* Création d'une table US(id, description, priority, cost, sprint). 
+* Création d'une table Task(id, project_Id, description, developper, sprint, duration). 
+* Création d'une table US(id, project_Id, description, priority, cost, sprint). 
 * Ajouter une tâche et une US en requêtes SQL pour vérifier que toutes les tables sont bien présentes. 
 
 *Durée estimée : 0.5 Jh*

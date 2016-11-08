@@ -45,12 +45,13 @@ Effort premier sprint : 11
 | 4 | En tant qu’utilisateur quelconque, je dois pouvoir accéder à la liste de tous les projets auxquels j’ai participé. | 1 | 3 | 1 |
 | 5 | En tant que chef de projet, je dois pouvoir ajouter ou retirer des contributeurs et un client. | 1 | 2 | 1 | 
 | 6 | En tant que chef de projet, je dois pouvoir modifier les informations à propos d'un projet ou supprimer ce projet. | 3 | 3 | 3 |
-| 7 | En tant que chef de projet ou propriétaire, je dois pouvoir modifier le backlog (ajout, modification et suppression de sprints + ajout, modification et suppression d'US). | 2 | 13 | 2 |
-| 8 | En tant que chef de projet ou développeur, je dois pouvoir modifier le kanban du sprint courant. | 2 | 8 | 2 |
-| 9 | En tant que chef de projet ou développeur, je dois pouvoir modifier la documentation du projet. | 3 | 5 | 3 |
-| 10 | En tant que participant à un projet, je dois pouvoir consulter le backlog du projet. | 2 | 2 | 2 |
-| 11 | En tant que participant à un projet, je dois pouvoir consulter le kanban du projet. | 2 | 2 | 2 |
-| 12 | En tant que participant à un projet, je dois pouvoir consulter la documentation du projet.  | 2 | 2 | 2 |
-| 13 | En tant que participant à un projet, je dois pouvoir consulter le burn down chart du projet. | 3 | 8 | 3 |
-| 14 | En tant que participant à un projet, je dois pouvoir accéder à une liste des modifications apportées au projet. | 3 | 8 | 3 |
-| Total | | | 64 | |
+| 7 | En tant que chef de projet ou propriétaire, je dois pouvoir modifier le backlog (ajout, modification et suppression de sprints). | 2 | 8 | 2 |
+| 8 | En tant que chef de projet ou propriétaire, je dois pouvoir ajouter, modificatier et supprimer des US du backlog . | 2 | 8 | 2 |
+| 9 | En tant que chef de projet ou développeur, je dois pouvoir modifier le kanban du sprint courant. | 2 | 8 | 2 |
+| 10 | En tant que chef de projet ou développeur, je dois pouvoir modifier la documentation du projet. | 3 | 5 | 3 |
+| 11 | En tant que participant à un projet, je dois pouvoir consulter le backlog du projet. | 2 | 2 | 2 |
+| 12 | En tant que participant à un projet, je dois pouvoir consulter le kanban du projet. | 2 | 2 | 2 |
+| 13 | En tant que participant à un projet, je dois pouvoir consulter la documentation du projet.  | 2 | 2 | 2 |
+| 14 | En tant que participant à un projet, je dois pouvoir consulter le burn down chart du projet. | 3 | 8 | 3 |
+| 15 | En tant que participant à un projet, je dois pouvoir accéder à une liste des modifications apportées au projet. | 3 | 8 | 3 |
+| Total | | | 66 | |

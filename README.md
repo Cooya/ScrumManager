@@ -1,85 +1,90 @@
-# First Sprint (24/10 - 04/11)
+# Second Sprint (07/11 - 19/11)
 
-## Kanban
+## Kanbanelosr
 |Task id | Developper | To do | On going | On testing | Done |
 | ---------- | ---------- | :-----: | :--------: | :----------: | :----: |
-| 1 | Ismail | | | | X |
-| 2 | Ismail | | | | X |
-| 3 | Mohamed | | | | X |
-| 4 | Mohamed | | | | X |
-| 5 | Ismail | | | | X |
-| 6 | Ismail | | | | X |
-| 7 | Ismail | | | | X |
-| 8 | Nicolas | | | | X |
-| 9 | Mohamed | | | | X |
-| 10 | Nicolas | | X | | |
+| 1 | Ismail | | | | X|
+| 2 | Ismail | X | | | |
+| 3 | | | | | |
+| 4 | | | | | |
+| 5 | | | | | |
+| 6 | | | | | |
+| 7 | | | | | |
+| 8 | | | | | |
+| 9 | | | | | |
+| 10 | | | | | |
+| 11 | | | | | |
+| 12 | Nicolas | X | | | |
 
 
 ## User stories
-* US#1 : En tant qu’utilisateur quelconque, je dois pouvoir m’inscrire, me connecter et me déconnecter de l’application.
-* US#2 : En tant qu’utilisateur quelconque, je dois pouvoir créer un projet et ainsi en devenir son chef de projet.
-* US#3 : En tant qu’utilisateur quelconque, je dois pouvoir être invité à un projet en tant que contributeur ou client.
-* US#4 : En tant qu’utilisateur quelconque, je dois pouvoir accéder à la liste de tous les projets auxquels j’ai participé.
-* US#5 : En tant que chef de projet, je dois pouvoir ajouter ou retirer des contributeurs et un client. 
+* US#7 : En tant que participant à un projet, je dois pouvoir consulter et modifier le backlog (ajout, modification et suppression des sprints). 
+* US#8 : En tant que participant à un projet, je dois pouvoir ajouter, modifier et supprimer des US du backlog.	
+* US#9 : En tant que participant à un projet, je dois pouvoir modifier et consulter les détails de chaque sprint (kanban et description des tâches).
 
 ## Tâches
 ### Tâche 1 (base de données mySQL) :
-* Création d'une base de données "Projectmanager" dans lequel seront stockées nos tables. 
-* Création d'une table User(id, login, password, name, surname, mail). 
-* Création d'une table Project(id, name, owner, master, contributors, last_update, creation_date, repository_link). 
-* Ajouter un utilisateur ainsi qu'un projet en requêtes SQL pour vérifier que toutes les tables sont bien présentes. 
+* Création d'une table Task(id, project_Id, description, developper, sprint, duration). 
+* Création d'une table US(id, project_Id, description, priority, cost, sprint). 
+* Ajouter une tâche et une US en requêtes SQL pour vérifier que toutes les tables sont bien présentes. 
 
-*Durée estimée : 0,5 Jh*
+*Durée estimée : 0.5 Jh*
 
 ### Tâche 2 :
-* Création du menu de navigation.
-* Création de la page HTML "Home".
+* Création de la page HTML du backlog (tableau des US avec description/priorité/coût/sprint) 
 
 *Durée estimée : 1 Jh*
 
 ### Tâche 3 :
-* Création de la page HTML de connexion (formulaire avec deux champs de texte).
-* Création de la page HTML d'enregistrement (formulaire avec les champs correspondants à la table User).
+* Création du contrôleur d'ajout des US.
 
-*Durée estimée : 1 Jh*
+*Durée estimée : 0.5 Jh*
 
 ### Tâche 4 :
-* Réalisation du contrôleur PHP pour la gestion des requêtes SQL correpondantes à la connexion et l'enregistrement des utilisateurs. 
+* Création du contrôleur de modification des US.
+
+*Durée estimée : 0.5 Jh*
+
+### Tâche 5 :
+* Création du contrôleur de suppression des US (et supression du sprint si aucune US associée au sprint restante).
 
 *Durée estimée : 1 Jh*
 
-### Tâche 5 :
-* Réalialisation de la page HTML de création d'un nouveau projet.
-
-*Durée estimée : 0,5 Jh*
-
 ### Tâche 6 :
-* Création de la page HTML pour lister les projets existants.
+* Création du contrôleur d'ajout des priorités, des coûts et des sprints pour chaque US.
 
-*Durée estimée : 0,5 Jh*
+*Durée estimée : 2 Jh*
 
 ### Tâche 7 :
-* Réalisation du contrôleur PHP qui permet la création d'un nouveau projet (l'utilisateur qui crée le projet devient automatiquement le chef de ce projet).
-* Réalisation du contrôleur PHP qui effectue le listage des projets.
+* Création du contrôleur de modification des priorités, des coûts et des sprints pour chaque US.
 
 *Durée estimée : 1 Jh*
 
 ### Tâche 8 :
-* Créer une table pour stocker les contributeurs (association projet/utilisateur).
-* Réalisation d'un contrôleur qui permet d'inviter des contributeurs et un client au projet.
+* Création de la page HTML pour la consultation du détail de chaque sprint (kanban + US + description de chaque taĉhe).
+
+*Durée estimée : 1,5 Jh*
+
+### Tâche 9 :
+* Création du contrôleur d'ajout d'une tâche.
 
 *Durée estimée : 1 Jh*
 
-### Tâche 9 :
-* Création de la page HTML pour l'ajout de nouveaux contributeurs et un client par leur nom d'utilisateur.
+### Tâche 10 :
+* Création d'un contrôleur de modification d'une taĉhe.
+
+*Durée estimée : 1 Jh*
+
+### Tâche 11 :
+* Création d'un contrôleur de suppression d'une tâche.
 
 *Durée estimée : 0,5 Jh*
 
-### Tâche 10 :
-* Effectuer un test de validation qui crée un compte et se connecte avec.
-* Effectuer un test de validation qui crée plusieurs projets et qui les liste.
+### Tâche 12 :
+* Test de validation qui crée plusieurs US.
+* Test de validation qui ajoute des tâches dans un sprint.
 
-*Durée estimée : 1 Jh*
+*Durée estimée : 2 Jh*
 
 
-**Durée totale estimée : 8 Jh**
+**Durée totale estimée : 15,5 Jh**

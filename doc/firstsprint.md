@@ -12,15 +12,15 @@
 | 7 | Ismail | | | | X |
 | 8 | Nicolas | | | | X |
 | 9 | Mohamed | | | | X |
-| 10 | Nicolas | | X | | |
+| 10 | Nicolas | | | | X |
 
 
 ## User stories
 * US#1 : En tant qu’utilisateur quelconque, je dois pouvoir m’inscrire, me connecter et me déconnecter de l’application.
 * US#2 : En tant qu’utilisateur quelconque, je dois pouvoir créer un projet et ainsi en devenir son chef de projet.
-* US#3 : En tant qu’utilisateur quelconque, je dois pouvoir être invité à un projet en tant que contributeur ou client.
+* US#3 : En tant qu’utilisateur quelconque, je dois pouvoir rejoindre un projet en tant que contributeur ou propriétaire.
 * US#4 : En tant qu’utilisateur quelconque, je dois pouvoir accéder à la liste de tous les projets auxquels j’ai participé.
-* US#5 : En tant que chef de projet, je dois pouvoir ajouter ou retirer des contributeurs et un client. 
+* US#5 : En tant que chef de projet, je dois pouvoir ajouter ou retirer des contributeurs et un propriétaire.
 
 ## Tâches
 ### Tâche 1 (base de données mySQL) :
@@ -38,8 +38,8 @@
 *Durée estimée : 1 Jh*
 
 ### Tâche 3 :
-* Création de la page HTML de connexion (formulaire avec deux champs de texte).
-* Création de la page HTML d'enregistrement (formulaire avec les champs correspondants à la table User).
+* Création de la page HTML de connexion (formulaire login/password).
+* Création de la page HTML d'enregistrement (formulaire login/password/name/surname/email).
 
 *Durée estimée : 1 Jh*
 
@@ -49,7 +49,7 @@
 *Durée estimée : 1 Jh*
 
 ### Tâche 5 :
-* Réalialisation de la page HTML de création d'un nouveau projet.
+* Réalisation de la page HTML de création d'un nouveau projet.
 
 *Durée estimée : 0,5 Jh*
 

@@ -19,9 +19,16 @@ function fillTextInput(inputName, text, callback) {
 	);
 }
 
-module.exports = function(providedDriver) {
+module.exports = function(providedDriver, i) {
+	var project = {name: 'mocha_project', link: 'mocha_github'};
+
+	if(i) {
+		project.name += i;
+		project.link += i;
+	}
+
 	describe('Create a project', function() {
-		this.timeout(8000);
+		this.timeout(4000);
 
 		if(!providedDriver) {
 			before(function() {
@@ -34,11 +41,14 @@ module.exports = function(providedDriver) {
 		}
 		else {
 			driver = providedDriver;
+			if(!providedDriver.projects)
+				providedDriver.projects = [];
+			providedDriver.projects.push(project);
 		}
 
 		it('When I go to the project creation page', function(done) {
-			driver.get('http://localhost/newProjectPage.php');
-			driver.findElement(By.tagName('h1')).getText().then(
+			driver.get('http://localhost/newProject.php');
+			driver.findElement(By.css('h1')).getText().then(
 				(text) => {
 					expect(text).to.be.eql('Create a new project');
 					done();
@@ -52,8 +62,8 @@ module.exports = function(providedDriver) {
 
 		it('Then when I fill form inputs', function(done) {
 			async.parallel([
-				(stepDone) => fillTextInput('name', 'mocha_project', stepDone),
-				(stepDone) => fillTextInput('link', 'mocha_github', stepDone),
+				(stepDone) => fillTextInput('name', project.name, stepDone),
+				(stepDone) => fillTextInput('link', project.link, stepDone),
 			], done);
 		});
 
@@ -66,9 +76,9 @@ module.exports = function(providedDriver) {
 
 		it('I must see a success message', function(done) {
 			setTimeout(() => {
-				driver.findElement(By.tagName('p')).getText().then(
+				driver.findElement(By.id('message')).getText().then(
 					(text) => {
-						expect(text).to.be.eql("The project has been created successfully, click here to go Back.");
+						expect(text).to.be.eql('The project "' + project.name + '" has been created successfully.');
 						done();
 					},
 					(err) => done(err)

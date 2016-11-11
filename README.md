@@ -1,10 +1,10 @@
 # Second Sprint (07/11 - 19/11)
 
-## Kanbanelosr
+## Kanban
 |Task id | Developper | To do | On going | On testing | Done |
 | ---------- | ---------- | :-----: | :--------: | :----------: | :----: |
 | 1 | Ismail | | | | X|
-| 2 | Ismail | X | | | |
+| 2 | Ismail | | X | | |
 | 3 | | | | | |
 | 4 | | | | | |
 | 5 | | | | | |

@@ -23,7 +23,7 @@
 			$reponse2 = $db->query('SELECT * FROM project WHERE id = '. $_GET['projectId']);
 			$donnees = $reponse2->fetch() ?>
 
-	<h1>Backlog du projet <?php echo $donnees['name']; ?></h1>
+	<h2>Backlog du projet <?php echo $donnees['name']; ?></h2>
 
 
 			<?php
@@ -53,6 +53,10 @@
 				echo '</table>';
 
 			?>
+
+	<BR><BR><BR>
+
+	<h3>Add a new US </h3>
 
 			<FORM method="get" action="addUS.php">
 		    <P>

@@ -24,7 +24,7 @@
 			echo '
 				<table  border="1">
 					<tr>
-						<td><b>Name</b></td><td><b>Owner</b></td><td><b>Master</b></td><td><b>Last update</b></td><td><b>Creation date</b></td><td><b>Repository Link</b></td>
+						<td><b>Name</b></td><td><b>Owner</b></td><td><b>Master</b></td><td><b>Last update</b></td><td><b>Creation date</b></td><td><b>Repository Link</b></td><td><b>Contributor & Owner management</b></td>
 					</tr>
 			';
 
@@ -60,12 +60,14 @@
 
 			    echo '
 			    	<tr>
-			    		<td><a href="projectIndex.php?projectId=' . $data[$i]['projectId'] . '"><b>' . $data[$i]['projectName'] . '</b></a></td>
+			    		<td><a href="backLog.php?projectId=' . $data[$i]['projectId'] . '"><b>' . $data[$i]['projectName'] . '</b></a></td>
 			    		<td><b>' . $ownerSurname . ' ' . $ownerName . '</b></td>
 			    		<td><b>' . $masterSurname . ' ' . $masterName . '</b></td>
 			    		<td><b>' . $data[$i]['last_update'] . '</b></td>
 			    		<td><b>' . $data[$i]['creation_date'] . '</b></td>
 			    		<td><b>' . $data[$i]['repository_link'] . '</b></td>
+			    		<td><b><a href="projectIndex.php?projectId=' . $data[$i]['projectId'] . '">Edit</a></b></td>
+
 			    	</tr>
 			    ';
 

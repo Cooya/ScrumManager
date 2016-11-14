@@ -8,10 +8,10 @@
 | 3 | Ismail | X | | | |
 | 4 | | | | | |
 | 5 | | | | | |
-| 6 | | | | | |
-| 7 | | | | | |
-| 8 |Mohamed | | | | X |
-| 9 |Mohamed | | X | | |
+| 6 | Nicolas | X | | | |
+| 7 | Nicolas | X | | | |
+| 8 | Mohamed | | | | X |
+| 9 | Mohamed | | X | | |
 | 10 | | | | | |
 | 11 | | | | | |
 | 12 | Nicolas | X | | | |

@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `task` (
   `description` varchar(80) NOT NULL,
   `developper_Id` int(80) unsigned DEFAULT NULL,
   `sprint` int(80) NOT NULL,
+   `status` int(80) NOT NULL,
   `duration` int(80) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `project_Id` (`project_Id`),

@@ -35,13 +35,10 @@
 
   </header>
  <div class="corp">
-    <div class="ligne">
-      <div class="cellule"><input type="text" name="date" size="10" value=""/></div>
     <?php
       $sql1 = "SELECT id, developper_Id, status FROM task"; 
 
       $result1 = $db->query($sql1);
-      $data1 = $result1->fetch();
 
 
       while($data1 = $result1->fetch()) {
@@ -59,13 +56,23 @@
           $d='X';
 
           echo '
-                <div class="cellule">' . $data1['id'] . '</div>
+                <div class="ligne">
+                <div class="cellule" ><p onclick="myFunction();this.onclick=null;" id="tmp">
+' . $data1['id'] . '</p></div>
                 <div class="cellule">' . $data1['developper_Id'] . '</div>
                 <div class="cellule">' . $a . '</div>
                 <div class="cellule">' . $b . '</div>
                 <div class="cellule">' . $c . '</div>
                 <div class="cellule">' . $d . '</div>
           </div>
+
+          <script>
+        function myFunction() {
+        document.getElementById("tmp").innerHTML =
+        "<input type=\"text\" >"
+ ;
+    }
+</script>
           ';
       } 
     ?>
@@ -76,14 +83,13 @@
 <h2> user stories</h2>
 <ul>
  <?php
-      $sql1 = "SELECT description FROM us"; 
+      $sql1 = "SELECT id,description FROM us"; 
 
       $result1 = $db->query($sql1);
-      $data1 = $result1->fetch();
 
 
       while($data1 = $result1->fetch()) {
-        echo '<li> '. $data1['description'] .' <li>';
+        echo '<li> UserStorie '. $data1[id] . ' : '. $data1['description'] .' </li>';
 
       } 
     ?>
@@ -95,11 +101,10 @@
       $sql1 = "SELECT id,description FROM task"; 
 
       $result1 = $db->query($sql1);
-      $data1 = $result1->fetch();
 
 
       while($data1 = $result1->fetch()) {
-        echo '<li> Tache '. $data1['id'].' : '. $data1['description'] .' <li>';
+        echo '<li> Tache '. $data1['id'].' : '. $data1['description'] .' </li>';
 
       } 
     ?>

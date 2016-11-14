@@ -19,7 +19,7 @@
 		<?php include 'navBar.php'; ?>
 
 			<?php
-			$reponse = $db->query('SELECT * FROM us WHERE project_Id = '. $_GET['projectId']);
+			$reponse = $db->query('SELECT * FROM us WHERE project_Id = "'. $_GET['projectId'].'" ORDER BY id');
 			$reponse2 = $db->query('SELECT * FROM project WHERE id = '. $_GET['projectId']);
 			$donnees = $reponse2->fetch() ?>
 
@@ -58,7 +58,7 @@
 
 	<h3>Add a new US </h3>
 
-			<FORM method="get" action="addUS.php">
+			<FORM method="get" action="addUs.php">
 		    <P>
 
 			      <INPUT type="text" placeholder="Id"  id="id" name="id">
@@ -76,7 +76,7 @@
 			      <INPUT type="text" placeholder="Sprint" id="sprint" name="sprint">
 
 
-		    <INPUT type="submit" value="ADD"> 
+		    <INPUT type="submit" name="project_id" value="<?php echo $_GET['projectId'] ?>"> 
 		    </P>
  		</FORM>
 

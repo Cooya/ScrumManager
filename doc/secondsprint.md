@@ -12,8 +12,8 @@
 | 7 | Nicolas | X | | | |
 | 8 | Mohamed | | | | X |
 | 9 | Mohamed | | X | | |
-| 10 | | | | | |
-| 11 | | | | | |
+| 10 | Mohamed | X | | | |
+| 11 | Mohamed | X | | | |
 | 12 | Nicolas | X | | | |
 
 

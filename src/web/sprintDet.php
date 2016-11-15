@@ -1,4 +1,10 @@
 <html>
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <?php
 //  session_start();
   //if(!isset($_SESSION['login'])) {
@@ -34,7 +40,7 @@
 
 
   </header>
- <div class="corp">
+ <div  class="corp">
     <?php
       $sql1 = "SELECT id, developper_Id, status FROM task"; 
 
@@ -97,17 +103,24 @@
 
 <h2> Taches</h2>
 <ul>
+ <div id="task" class="corp">
  <?php
       $sql1 = "SELECT id,description FROM task"; 
 
       $result1 = $db->query($sql1);
+        include 'addTask.php';
+
 
 
       while($data1 = $result1->fetch()) {
         echo '<li> Tache '. $data1['id'].' : '. $data1['description'] .' </li>';
+        echo '  
+        <a href="registration.php"><img src="assets/images/update.png"/></a>
+        <a href="index.php"><img src="assets/images/delete.png" /></a>';
 
       } 
     ?>
+     </div >
 </ul>
 
 

@@ -5,15 +5,15 @@
 | ---------- | ---------- | :-----: | :--------: | :----------: | :----: |
 | 1 | Ismail | | | | X |
 | 2 | Ismail | | | | X |
-| 3 | Ismail |  | | | X |
+| 3 | Ismail | | | | X |
 | 4 | Ismail | | X | | |
-| 5 | | | | | |
+| 5 | Ismail | X | | | |
 | 6 | Nicolas | X | | | |
 | 7 | Nicolas | X | | | |
 | 8 | Mohamed | | | | X |
 | 9 | Mohamed | | X | | |
-| 10 | | | | | |
-| 11 | | | | | |
+| 10 | Mohamed | X | | | |
+| 11 | Mohamed | X | | | |
 | 12 | Nicolas | X | | | |
 
 
@@ -31,9 +31,10 @@
 *Durée estimée : 0.5 Jh*
 
 ### Tâche 2 :
-* Création de la page HTML du backlog (tableau des US avec description/priorité/coût/sprint) 
+* Création de la page HTML du backlog (tableau des US avec description/priorité/coût/sprint).
+* Création d'une boîte de dialogue permettant l'ajout, la modification et la suppression d'US.
 
-*Durée estimée : 1 Jh*
+*Durée estimée : 2 Jh*
 
 ### Tâche 3 :
 * Création du contrôleur d'ajout des US.
@@ -53,7 +54,7 @@
 ### Tâche 6 :
 * Création du contrôleur d'ajout des priorités, des coûts et des sprints pour chaque US.
 
-*Durée estimée : 2 Jh*
+*Durée estimée : 1.5 Jh*
 
 ### Tâche 7 :
 * Création du contrôleur de modification des priorités, des coûts et des sprints pour chaque US.
@@ -62,8 +63,9 @@
 
 ### Tâche 8 :
 * Création de la page HTML pour la consultation du détail de chaque sprint (kanban + US + description de chaque taĉhe).
+* Création d'une boîte de dialogue permettant l'ajout, la modification et la suppression de tâches.
 
-*Durée estimée : 1,5 Jh*
+*Durée estimée : 2 Jh*
 
 ### Tâche 9 :
 * Création du contrôleur d'ajout d'une tâche.
@@ -87,4 +89,4 @@
 *Durée estimée : 2 Jh*
 
 
-**Durée totale estimée : 15,5 Jh**
+**Durée totale estimée : 13,5 Jh**

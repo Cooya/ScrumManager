@@ -37,36 +37,33 @@ CREATE TABLE `contributor` (
 	PRIMARY KEY (`projectId`, `userId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
-
 /* ajout de la table "task" */
 CREATE TABLE `task` (
 	`id` int(80) unsigned NOT NULL AUTO_INCREMENT,
-	`project_Id` int(80) unsigned DEFAULT NULL,
+	`projectId` int(80) unsigned DEFAULT NULL,
 	`description` varchar(80) NOT NULL,
-	`developper_Id` int(80) unsigned DEFAULT NULL,
+	`developperId` int(80) unsigned DEFAULT NULL,
 	`sprint` int(80) NOT NULL,
 	`status` int(80) NOT NULL,
 	`duration` int(80) NOT NULL,
 	PRIMARY KEY (`id`),
-	KEY `project_Id` (`project_Id`),
-	KEY `developper_Id` (`developper_Id`)
+	KEY `projectId` (`projectId`),
+	KEY `developperId` (`developperId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
 
 /* ajout de la table "us" */
 CREATE TABLE `us` (
 	`id` int(80) NOT NULL,
-	`project_Id` int(80) unsigned NOT NULL,
+	`projectId` int(80) unsigned NOT NULL,
 	`description` varchar(80) NOT NULL,
-	`priority` int(80) NOT NULL,
-	`cost` int(80) NOT NULL,
+	`priority` int(80) DEFAULT NULL,
+	`cost` int(80) DEFAULT NULL,
 	`sprint` int(80) NOT NULL,
 	PRIMARY KEY (`id`),
-	KEY `project_Id` (`project_Id`)
+	KEY `projectId` (`projectId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
----------------------------------------------------------
 
 /* contraintes pour la table "project" */
 ALTER TABLE `project`
@@ -78,13 +75,11 @@ ALTER TABLE `contributor`
 	ADD CONSTRAINT `contributor_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`),
 	ADD CONSTRAINT `contributor_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`);
 
-
 /* contraintes pour la table "task" */
 ALTER TABLE `task`
-	ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`developper_Id`) REFERENCES `user` (`id`),
-	ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`project_Id`) REFERENCES `project` (`id`);
-
+	ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`developperId`) REFERENCES `user` (`id`),
+	ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);
 
 /* contraintes pour la table "us" */
 ALTER TABLE `us`
-	ADD CONSTRAINT `us_ibfk_1` FOREIGN KEY (`project_Id`) REFERENCES `project` (`id`);
+	ADD CONSTRAINT `us_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);

@@ -83,7 +83,7 @@
 			<input hidden type="number" name="projectId" value=<?php echo $data['id']; ?>>
 			<input type="text" name="clientUsername" size=20 placeholder="client username" required><button type="submit" class="boutonCont">Set</button>
 		</form>
- 		<BR> <BR> <BR>
+ 		<br><br><br>
 		<h3>Add new contributor</h3>
 		<form method="POST">
 			<input hidden type="number" name="projectId" value=<?php echo $data['id']; ?>>

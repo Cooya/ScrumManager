@@ -3,11 +3,10 @@
 	if(isset($_SESSION['login'])) {
 		header('Location: index.php');
 	}
-
-	include 'databaseConnection.php';
 	$message = "";
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		include 'databaseConnection.php';
 		if(empty($_POST['login']) || empty($_POST['password'])) {
 			$message = '<p style="color:red">Missing field(s).</p>';
 		}

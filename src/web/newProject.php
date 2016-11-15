@@ -3,11 +3,11 @@
 	if(!isset($_SESSION['login'])) {
 		header('Location: login.php');
 	}
-
-	include 'databaseConnection.php';
 	$message = "";
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		include 'databaseConnection.php';
+
 		if(!isset($_POST['name']) || !isset($_POST['link'])) {
 			$message = '<p style="color:red;">Missing informations.</p>';
 		}

@@ -5,8 +5,6 @@
 	if(!isset($_SESSION['login'])) {
 		header('Location: login.php');
 	}
-
-	include 'databaseConnection.php';
 	$message = "";
 
 	function checkUsername($db, $user) {
@@ -22,6 +20,8 @@
 	}
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		include 'databaseConnection.php';
+		
 		if(!isset($_POST['projectId'])) {
 			$message = '<p style="color: red">Missing POST parameter.</p>';
 		}
@@ -92,4 +92,4 @@
 		<br>
 		<div id="message"><?php echo $message ?></div>
 	</body>
-</html>	
+</html>

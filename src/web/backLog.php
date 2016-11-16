@@ -72,7 +72,10 @@
 							<td><a href="sprintDetails.php?projectId=' . $projectId . '&sprint=' . $data['sprint'] . '">' . $data['sprint'] . '</td>
 							<td>' . ($data['cost'] != 0 ? $data['cost'] : "") . '</td>
 							<td>' . ($data['priority'] != 0 ? $data['priority'] : "") . '</td>
-							<td><button onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')">Modify</button></td>
+							<td>
+							<a onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')"><img src="assets/images/update.png" alt="update"/></a>
+							<a href="deleteUs.php?projectId=' . $projectId . '&sprint=' . $data['sprint'] . '"><img src="assets/images/delete.png" alt="delete"/></a>
+							</td>
 						</tr>
 					';
 				}

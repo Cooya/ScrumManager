@@ -3,14 +3,23 @@
 
 include 'databaseConnection.php';
 		
-	$project = $_POST['project'];
+		
+		
+			$task = $_POST['taskid'];
 			$description = $_POST['description'];
-			$developer = $_POST['developer'];
+			//$developer = $_POST['developer'];
 			$sprint = $_POST['sprint'];
 			$status = $_POST['status'];
 			$duration = $_POST['duration'];
-			$sql = "INSERT INTO task ( projectId, description, developerId, sprint, status, duration) 
-			VALUES ('$project', '$description', '$developer', '$sprint', '$status', '$duration')";
+
+			$sqli = "SELECT id FROM user WHERE login = '$developer'";
+			//$result = $db->$query($sqli);
+			//$data=$result->fetch();
+
+		
+			
+			$sql = "INSERT INTO task (id, description, sprint, status, duration) 
+			VALUES ('$task', '$description', '$sprint', '$status', '$duration')";
  			$db->query($sql);
 
 

@@ -6,8 +6,8 @@
 | 1 | Ismail | | | | X |
 | 2 | Ismail | | | | X |
 | 3 | Ismail | | | | X |
-| 4 | Ismail | | X | | |
-| 5 | Ismail | X | | | |
+| 4 | Ismail | | | | X |
+| 5 | Ismail | | X | | |
 | 6 | Nicolas | | | | X |
 | 7 | Nicolas | | | | X |
 | 8 | Mohamed | | | | X |

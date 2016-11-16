@@ -21,19 +21,23 @@
 				$sprint = $_POST['sprint'];
 				$cost = !empty($_POST['cost']) ? $_POST['cost'] : 0;
 				$priority = !empty($_POST['priority']) ? $_POST['priority'] : 0;
-				if($_POST['action'] == 'create') {
-					$sql = "INSERT INTO us VALUES('$id', '$projectId', '$description', '$priority', '$cost', '$sprint')";
+
+                                $resultcond = $db->query('SELECT DISTINCT specific_Id FROM us WHERE projectId="'.$projectId.'" AND specific_Id="'.$id.'"'); 
+				$donnees = $resultcond->fetch();
+				
+				if( ($_POST['action'] == 'create' && $id != $donnees['specific_Id'])) {
+					$sql = "INSERT INTO us VALUES(NULL, '$id', '$projectId', '$description', '$priority', '$cost', '$sprint')";
 					if(!$db->query($sql))
 						$message = '<p style="color:red">This US id has already been taken by another US.</p>';
 				}
-				else if($_POST['action'] == 'modify') {
-					$sql = "UPDATE us SET id = '$id', description = '$description', sprint = '$sprint', cost = '$cost', priority = '$priority' 
+				else if($_POST['action'] == 'modify' && $id != $donnees['specific_Id']) {
+					$sql = "UPDATE us SET id = NULL, specific_Id='$id', description = '$description', sprint = '$sprint', cost = '$cost', priority = '$priority' 
 						WHERE id = '$id'";
 					if(!$db->query($sql))
 						$message = '<p style="color:red">This US id has already been taken by another US.</p>';
 				}
 				else
-					$message = '<p style="color:red">Invalid POST parameter.</p>';
+					$message = '<p style="color:red">This US id has already been taken by another US.</p>';
 			}
 		}
 	}
@@ -67,7 +71,7 @@
 				while($data = $result->fetch(PDO::FETCH_ASSOC)) {
 					echo'
 						<tr>
-							<td>' . $data['id'] . '</td>
+							<td>' . $data['specific_Id'] . '</td>
 							<td>' . $data['description'] . '</td>
 							<td><a href="sprintDetails.php?projectId=' . $projectId . '&sprint=' . $data['sprint'] . '">' . $data['sprint'] . '</td>
 							<td>' . ($data['cost'] != 0 ? $data['cost'] : "") . '</td>
@@ -86,6 +90,7 @@
 		<br>
 		<button id="createUS" onclick="createDialog.dialog('open')">Add new US</button>
 		<br>
+		<div><?php echo $data['specific_Id']; ?></div>
 		<div id="message"><?php echo $message ?></div>
 		<script>
 			$(function() {

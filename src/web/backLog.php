@@ -57,7 +57,7 @@
 				$result = $db->query("SELECT * FROM us WHERE projectId = '$projectId' ORDER BY id");
 				$result2 = $db->query("SELECT * FROM project WHERE id = '$projectId'");
 				$data = $result2->fetch();
-				echo '<h2>Backlog du projet ' . $data['name'] . '</h2>';
+				echo '<h2>Backlog du projet : ' . $data['name'] . '</h2>';
 				echo '
 					<table border=1>
 					<tr>

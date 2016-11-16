@@ -15,15 +15,10 @@
       $.ajax({
        url : 'addTaskHandler.php',
        type : 'POST', 
-       data : 'project=' + project.val() + '&contenu=' + description.val()+'&developer=' +developer.val() + '&sprint=' +sprint.val() + '&status=' + status.val() +'&duration='+ duration.val(), 
-       dataType : 'html',  
-       success : function(code_html, statut){ 
-           alert(code_html +statut +" passe");
-       },
-       error : function(resultat, statut, erreur){
-          alert(resultat+statut+erreur+" non");
-       }
-            });
+       data : 'project=' + project.val() + '&description=' + description.val()+'&developer=' +developer.val() + '&sprint=' +sprint.val() + '&status=' + status.val() +'&duration='+ duration.val(), 
+       dataType : 'html',
+     });
+    
        
   
       var valid = true;
@@ -71,7 +66,6 @@
   </script>
  
 <div id="dialog-form" title="Create new Task">
-  <p class="validateTips">All form fields are required.</p>
  
   <form>
     <fieldset>

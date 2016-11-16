@@ -24,7 +24,7 @@
 		if(!$data)
 			$message = '<p style="color:red">Unknown developer username.</p>';
 		else {
-			$sql = "INSERT INTO task (id, projectId, description, developer, sprint, status, duration) 
+			$sql = "INSERT INTO task (id, projectId, description, developerId, sprint, status, duration) 
 			VALUES ('$project', '$description', '$developer', '$sprint', '$status', '$duration')";
 			if(!$db->query($sql))
 				$message = '<p style="color:red">Task id already used.</p>';
@@ -40,7 +40,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="assets/css/style.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	</head>
 	<body>

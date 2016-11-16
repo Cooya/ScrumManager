@@ -4,7 +4,7 @@
     var dialog, form,
        project = $( "#project" ),
       description = $( "#description" ),
-      developper = $( "#developper" ),
+      developer = $( "#developer" ),
       sprint = $( "#sprint" ),
       status = $( "#status" ),
       duration = $( "#duration" );
@@ -12,6 +12,20 @@
    
  
     function addTask() {
+      $.ajax({
+       url : 'addTaskHandler.php',
+       type : 'POST', 
+       data : 'project=' + project.val() + '&contenu=' + description.val()+'&developer=' +developer.val() + '&sprint=' +sprint.val() + '&status=' + status.val() +'&duration='+ duration.val(), 
+       dataType : 'html',  
+       success : function(code_html, statut){ 
+           alert(code_html +statut +" passe");
+       },
+       error : function(resultat, statut, erreur){
+          alert(resultat+statut+erreur+" non");
+       }
+            });
+       
+  
       var valid = true;
  
       if ( valid ) {
@@ -42,20 +56,7 @@
  
     form = dialog.find( "form" ).on( "submit", function( event ) {
       event.preventDefault();
-       $.ajax({
-       url : 'addTaskHandler.php',
-       type : 'POST', 
-       data : 'project=' + project.val() + '&contenu=' + description.val()+'&developper=' +developper.val() + '&sprint=' +sprint.val() + '&status=' + status.val() +'&duration='+ duration.val(), 
-       dataType : 'html',  
-       success : function(code_html, statut){ 
-           alert(code_html );
-       },
-
-       error : function(resultat, statut, erreur){
-          alert(resultat);
-       }
-            });
-  
+       
         addTask();
      
     
@@ -75,17 +76,17 @@
   <form>
     <fieldset>
        <label for="project">Project id</label>
-      <input type="text" name="project" id="project" class="text ui-widget-content ui-corner-all">
+      <input type="number" name="project" id="project" class="text ui-widget-content ui-corner-all">
       <label for="description">description</label>
       <input type="text" name="description" id="description" class="text ui-widget-content ui-corner-all">
-      <label for="developper">developper Id</label>
-      <input type="text" name="developper" id="developper"  class="text ui-widget-content ui-corner-all">
+      <label for="developer">developer Id</label>
+      <input type="number" name="developer" id="developer"  class="text ui-widget-content ui-corner-all">
       <label for="sprint">sprint</label>
-      <input type="text" name="sprint" id="sprint"  class="text ui-widget-content ui-corner-all">
+      <input type="number" name="sprint" id="sprint"  class="text ui-widget-content ui-corner-all">
       <label for="status">status</label>
-      <input type="text" name="status" id="status"  class="text ui-widget-content ui-corner-all">
+      <input type="number" name="status" id="status"  class="text ui-widget-content ui-corner-all">
       <label for="duration">duration</label>
-      <input type="text" name="duration" id="duration"  class="text ui-widget-content ui-corner-all">
+      <input type="number" name="duration" id="duration"  class="text ui-widget-content ui-corner-all">
 
       <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
     </fieldset>

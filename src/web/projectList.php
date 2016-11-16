@@ -60,7 +60,7 @@
 
 			    echo '
 			    	<tr>
-			    		<td><a href="backLog.php?projectId=' . $data[$i]['projectId'] . '"><b>' . $data[$i]['projectName'] . '</b></a></td>
+			    		<td><a href="backlog.php?projectId=' . $data[$i]['projectId'] . '"><b>' . $data[$i]['projectName'] . '</b></a></td>
 			    		<td><b>' . $ownerSurname . ' ' . $ownerName . '</b></td>
 			    		<td><b>' . $masterSurname . ' ' . $masterName . '</b></td>
 			    		<td><b>' . $data[$i]['last_update'] . '</b></td>

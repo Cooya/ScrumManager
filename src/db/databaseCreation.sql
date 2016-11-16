@@ -42,13 +42,13 @@ CREATE TABLE `task` (
 	`id` int(80) unsigned NOT NULL AUTO_INCREMENT,
 	`projectId` int(80) unsigned DEFAULT NULL,
 	`description` varchar(80) NOT NULL,
-	`developperId` int(80) unsigned DEFAULT NULL,
+	`developerId` int(80) unsigned DEFAULT NULL,
 	`sprint` int(80) NOT NULL,
 	`status` int(80) NOT NULL,
 	`duration` int(80) NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `projectId` (`projectId`),
-	KEY `developperId` (`developperId`)
+	KEY `developerId` (`developerId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 /* ajout de la table "us" */
@@ -77,7 +77,7 @@ ALTER TABLE `contributor`
 
 /* contraintes pour la table "task" */
 ALTER TABLE `task`
-	ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`developperId`) REFERENCES `user` (`id`),
+	ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`developerId`) REFERENCES `user` (`id`),
 	ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);
 
 /* contraintes pour la table "us" */

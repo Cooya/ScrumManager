@@ -23,15 +23,13 @@
 				$priority = !empty($_POST['priority']) ? $_POST['priority'] : 0;
 				if($_POST['action'] == 'create') {
 					$sql = "INSERT INTO us VALUES('$id', '$projectId', '$description', '$priority', '$cost', '$sprint')";
-					$result = $db->query($sql);
-					if(!$result)
+					if(!$db->query($sql))
 						$message = '<p style="color:red">This US id has already been taken by another US.</p>';
 				}
 				else if($_POST['action'] == 'modify') {
 					$sql = "UPDATE us SET id = '$id', description = '$description', sprint = '$sprint', cost = '$cost', priority = '$priority' 
 						WHERE id = '$id'";
-					$result = $db->query($sql);
-					if(!$result)
+					if(!$db->query($sql))
 						$message = '<p style="color:red">This US id has already been taken by another US.</p>';
 				}
 				else
@@ -71,7 +69,7 @@
 						<tr>
 							<td>' . $data['id'] . '</td>
 							<td>' . $data['description'] . '</td>
-							<td>' . $data['sprint'] . '</td>
+							<td><a href="sprintDetails.php?projectId=' . $projectId . '&sprint=' . $data['sprint'] . '">' . $data['sprint'] . '</td>
 							<td>' . ($data['cost'] != 0 ? $data['cost'] : "") . '</td>
 							<td>' . ($data['priority'] != 0 ? $data['priority'] : "") . '</td>
 							<td><button onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')">Modify</button></td>

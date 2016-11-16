@@ -61,7 +61,7 @@
 				echo '
 					<table border=1>
 					<tr>
-						<td><b>Id</b></td><td><b>US</b></td><td><b>Sprint</b></td><td><b>Cost</b></td><td><b>Priority</b></td><td><b></b></td>
+						<td><b>Id</b></td><td><b>US</b></td><td><b>Sprint</b></td><td><b>Cost</b></td><td><b>Priority</b></td><td><b>Actions</b></td>
 					</tr>
 				';
 				while($data = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -89,7 +89,7 @@
 				createDialog = $("#createDialog").dialog({
 					autoOpen: false,
 					height: 570,
-					width: 400,
+					width: 700,
 					modal: true,
 					buttons: {
 						"Create a new US": function() {
@@ -108,7 +108,7 @@
 				modifyDialog = $("#modifyDialog").dialog({
 					autoOpen: false,
 					height: 600,
-					width: 400,
+					width: 700,
 					modal: true,
 					buttons: {
 						"Modify US": function() {
@@ -133,8 +133,7 @@
 				}
 			});
 		</script>
-	</body>
-
+	</body>	
 	<div id="createDialog" title="Create new US">
 		<p class="validateTips">"Id", "Description" & "Sprint" fields are required.</p>
 		<form method="POST">
@@ -145,7 +144,7 @@
 				<input type="number" name="id" id="id" class="text ui-widget-content ui-corner-all" required>
 
 				<label for="description">Description</label>
-				<textarea name="description" id="description" cols="44" rows="3" required></textarea>
+				<textarea name="description" id="description" cols="51" rows="3" required></textarea>
 
 				<label for="sprint">Sprint</label>
 				<input type="number" name="sprint" id="sprint" class="text ui-widget-content ui-corner-all" required>				
@@ -171,7 +170,7 @@
 				<input type="number" name="id" id="id" class="text ui-widget-content ui-corner-all" required>
 
 				<label for="description">Description</label>
-				<textarea name="description" id="description" cols="44" rows="3" required></textarea>
+				<textarea name="description" id="description" cols="51" rows="3" required></textarea>
 
 				<label for="Sprint">Sprint</label>
 				<input type="number" name="sprint" id="sprint" class="text ui-widget-content ui-corner-all" required>				

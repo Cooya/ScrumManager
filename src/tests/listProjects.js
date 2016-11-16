@@ -59,11 +59,11 @@ module.exports = function(providedDriver) {
 			);
 		});
 
-		it('It must have a array cell containing the name of each created project', function(done) {
+		it('It must have an array cell containing the name of each created project', function(done) {
 			async.forEach(providedDriver.projects, checkProjectName, done);
 		});
 
-		it('It must have a array cell containing the repository link of each created project', function(done) {
+		it('It must have an array cell containing the repository link of each created project', function(done) {
 			async.forEach(providedDriver.projects, checkProjectLink, done);
 		});
 	});

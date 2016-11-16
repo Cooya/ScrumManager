@@ -56,7 +56,7 @@ module.exports = function(providedDriver, i) {
 			);
 		});
 
-		it('It must have a input for each data', function(done) {
+		it('It must have an input for each data', function(done) {
 			async.forEach(['name', 'link'], checkInputIsHere, done);
 		});
 

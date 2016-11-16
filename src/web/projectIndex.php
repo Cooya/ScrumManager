@@ -5,6 +5,7 @@
 	if(!isset($_SESSION['login'])) {
 		header('Location: login.php');
 	}
+	include 'databaseConnection.php';
 	$message = "";
 
 	function checkUsername($db, $user) {
@@ -20,8 +21,6 @@
 	}
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
-		include 'databaseConnection.php';
-		
 		if(!isset($_POST['projectId'])) {
 			$message = '<p style="color: red">Missing POST parameter.</p>';
 		}
@@ -80,14 +79,18 @@
 		<h1>Project <?php echo $data['name']; ?></h1>
 		<h3>Set client</h3>
 		<form method="POST">
-			<input hidden type="number" name="projectId" value=<?php echo $data['id']; ?>>
-			<input type="text" name="clientUsername" size=20 placeholder="client username" required><button type="submit" class="boutonCont">Set</button>
+			<input type="hidden" type="number" name="projectId" value=<?php echo $data['id']; ?>>
+			<input type="text" name="clientUsername" size=20 placeholder="client username" required>
+			<br>
+			<button type="submit">Set</button>
 		</form>
  		<br><br><br>
 		<h3>Add new contributor</h3>
 		<form method="POST">
-			<input hidden type="number" name="projectId" value=<?php echo $data['id']; ?>>
-			<input type="text" name="devUsername" size=20 placeholder="contributor username" required><button type="submit" class="boutonCont">Add</button>
+			<input type="hidden" type="number" name="projectId" value=<?php echo $data['id']; ?>>
+			<input type="text" name="devUsername" size=20 placeholder="contributor username" required>
+			<br>
+			<button type="submit">Add</button>
 		</form>
 		<br>
 		<div id="message"><?php echo $message ?></div>

@@ -19,27 +19,45 @@ function fillTextInput(inputName, text, callback) {
 	);
 }
 
-/* On working
-function getUSRowIdIntoTable(id, callback) {
+function getUSRowIndexIntoTable(id, done, next) {
 	driver.findElements(By.css('table > tbody > tr > td:nth-child(1)')).then(
 		(array) => {
 			array.forEach(function(elt, index) {
 				elt.getText().then(
 					(text) => {
 						if(text == id)
-							callback(index);
-					(err) => callback(err)
+							next(index);
+						else if(index + 1 == array.length)
+							done(new Error('User story with id = ' + id + ' not found into the table.'));
+					},
+					(err) => done(err)
 				);
 			});
 		},
-		(err) => callback(err)
+		(err) => done(err)
 	);
 }
-*/
+
+function checkUSRow(US, index, done) {
+	driver.findElements(By.css('table > tbody > tr > td:nth-child(' + (index + 1) + ') > tr')).then(
+		(array) => {
+			array.forEach(function(elt, index) {
+				elt.getText.then(
+					(text) => {
+						expect(text).to.be.eql(US[index]);
+						if(index + 1 == array.length) done();
+					}
+				),
+				(err) => done(err);
+			});
+		},
+		(err) => done(err)
+	);
+}
 
 module.exports = function(providedDriver, i) {
-	i = i ? i : 19;
-	var US = ['100' + i, "test description", i, 10, 5];
+	i = i ? i : 1;
+	var US = ['100' + i, 'user story description', i, 10, 5, 'Modify'];
 	var projectName;
 
 	describe('Create a user story', function() {
@@ -125,8 +143,10 @@ module.exports = function(providedDriver, i) {
 			);
 		});
 
-		//it('And I must see my new US into the table', function(done) {
-		//	getUSRowIdIntoTable(US[0], done);
-		//});
+		it('And I must see my new US into the table', function(done) {
+			getUSRowIndexIntoTable(US[0], done, function(index) {
+				checkUSRow(US, index, done);
+			});
+		});
 	});
 };

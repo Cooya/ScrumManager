@@ -9,7 +9,6 @@ describe('ScrumManager E2E tests', function() {
 	});
 
 	driver = new webdriver.Builder().forBrowser('chrome').build();
-	/*
 	require('./registration.js')(driver);
 	require('./logout.js')(driver);
 	require('./login.js')(driver);
@@ -17,7 +16,7 @@ describe('ScrumManager E2E tests', function() {
 	require('./createProject.js')(driver, 2);
 	require('./createProject.js')(driver, 3);
 	require('./listProjects.js')(driver);
-	*/
-	require('./login.js')(driver);
-	require('./createUS.js')(driver);
+	require('./createUS.js')(driver, 1);
+	require('./createUS.js')(driver, 2);
+	require('./createUS.js')(driver, 3);
 });

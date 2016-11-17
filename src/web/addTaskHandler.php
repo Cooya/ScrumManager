@@ -6,20 +6,21 @@ include 'databaseConnection.php';
 		
 		
 			$task = $_POST['taskid'];
+			$project= $_POST['project'];
 			$description = $_POST['description'];
-			//$developer = $_POST['developer'];
+			$developer = $_POST['developer'];
 			$sprint = $_POST['sprint'];
 			$status = $_POST['status'];
 			$duration = $_POST['duration'];
 
-			$sqli = "SELECT id FROM user WHERE login = '$developer'";
-			//$result = $db->$query($sqli);
-			//$data=$result->fetch();
+			$sql = "SELECT id FROM user WHERE login='$developer'";
+			$result =$db->query($sql);
+			$data=$result->fetch();
+			if($data)
+				$developerID=$data['id'];
 
-		
-			
-			$sql = "INSERT INTO task (id, description, sprint, status, duration) 
-			VALUES ('$task', '$description', '$sprint', '$status', '$duration')";
+			$sql = "INSERT INTO task (id, projectId, description, developerId, sprint, status, duration) 
+			VALUES ('$task', '$project', '$description','$developerID', '$sprint', '$status', '$duration')";
  			$db->query($sql);
 
 

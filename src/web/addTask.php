@@ -8,6 +8,8 @@
       sprint = $( "#sprint" ),
       status = $( "#status" ),
       duration = $( "#duration" );
+      project = $( "#project" );
+
  
    
  
@@ -15,29 +17,19 @@
       $.ajax({
        url : 'addTaskHandler.php',
        type : 'POST', 
-       data : 'taskid=' + taskid.val() + '&description=' + description.val()+'&developer=' +developer.val() + '&sprint=' +sprint.val() + '&status=' + status.val() +'&duration='+ duration.val(), 
+       data : 'taskid=' + taskid.val() + '&project=' + project.val() +  '&description=' + description.val()+ '&developer=' + developer.val() + '&sprint=' +sprint.val() + '&status=' + status.val() +'&duration='+ duration.val(), 
        dataType : 'html',
-            success : function(code_html, statut){ // success est toujours en place, bien sûr !
-           alert("oui");
-       },
+            success : function(code_html, statut){ 
+            $( "#task" ).append( "<li>" +
+          "Task  "+ taskid.val() +" : " + description.val() + "</td>" + 
+              "</li>" ) ;
+        dialog.dialog( "close" );       },
 
        error : function(resultat, statut, erreur){
-alert("non");
+      alert("erreur"+erreur);
        }
      });
     
-       
-  
-      var valid = true;
- 
-      if ( valid ) {
-        $( "#task" ).append( "<li>" +
-          "Task  "+ taskid.val() +" : " + description.val() + "</td>" +
-          
-        "</li>" ) +
-        dialog.dialog( "close" );
-      }
-      return valid;
     }
  
     dialog = $( "#dialog-form" ).dialog({
@@ -79,6 +71,8 @@ alert("non");
      
       <label for="taskid">Task id</label>
       <input type="number" name="taskid" id="taskid" class="text ui-widget-content ui-corner-all">
+      <input  type ="hidden"  id="project" value= <?php echo $_GET['projectId']; ?> >
+
       <label for="description">description</label>
       <input type="text" name="description" id="description" class="text ui-widget-content ui-corner-all">
       <label for="developer">developer login</label>

@@ -78,18 +78,15 @@
 							if($data['status']==3)
 								$d='X';
 
-							$dId=$data['developerId'];
-							$sqli = "SELECT login FROM user WHERE id = '. $dId.'";
-							$resulti = $db->query($sqli);
-							$datai = $resulti->fetch();
+						
 
 
 
 							echo '
 								<div class="ligne">
 									<div class="cellule" > '. $data['id'] . '</div>
-									<div class="cellule">' . $datai['login'] . '</div>
-									<div class="cellule">' . $a . '</div>
+									<div class="cellule">'  . $data['developerId'] . '</div>
+									<div class="cellule">' . $a .  '</div>
 									<div class="cellule">' . $b . '</div>
 									<div class="cellule">' . $c . '</div>
 									<div class="cellule">' . $d . '</div>
@@ -108,7 +105,8 @@
 		<ul>
 			<?php
 				$sprint=$_GET['sprint'];
-				$sql = "SELECT id, description FROM us WHERE sprint='$sprint'"; 
+				$project=$_GET['projectId'];
+				$sql = "SELECT id, description FROM us WHERE sprint='$sprint' and projectId='$project' "; 
 				$result = $db->query($sql);
 				while($data = $result->fetch())
 					echo '<li> UserStory '. $data['id'] . ' : '. $data['description'] .' </li>';
@@ -120,7 +118,7 @@
 				<?php
 					$sprint=$_GET['sprint'];
 
-					$sql = "SELECT * FROM task WHERE sprint='$sprint' ORDER BY id"; 
+					$sql = "SELECT * FROM task WHERE sprint='$sprint' and projectId='$project'  ORDER BY id"; 
 					$result = $db->query($sql);
 					include 'addTask.php';
 					include 'modifyTask.php';

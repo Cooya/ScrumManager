@@ -19,9 +19,25 @@
 	}
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
-		if(empty($_POST['projectId']))
-			$message = '<p style="color: red">Missing POST parameter.</p>';
-		else if(isset($_POST['owner'])) {
+		if(isset($_POST['projectName'])) {
+			if(!$master = checkUsername($db, $_SESSION['login']))
+				$message = '<p style="color: red">Unknown user for master.</p>';
+			else if(!empty($_POST['ownerUsername']) && !$owner = checkUsername($db, $_POST['ownerUsername']))
+				$message = '<p style="color: red">Unknown user for owner.</p>';
+			else {
+				$projectName = $_POST['projectName'];
+				$repositoryLink = !empty($_POST['repositoryLink']) ? $_POST['repositoryLink'] : '';
+				$creationDate = date("Y-m-d H:i:s");
+				$ownerId = isset($owner['id']) ? $owner['id'] : 'NULL';
+				$sql = "INSERT INTO project (name, master, creation_date, repository_link, owner) VALUES 
+				('$projectName', " . $master['id'] . ", '$creationDate', '$repositoryLink', $ownerId)";
+				if($db->query($sql)) 
+					$message = '<p style="color:green">The project "' . $_POST['projectName'] . '" has been created successfully.</p>';
+				else
+					$message = '<p style="color:red">An error has occurred, please try again.</p>';
+			}
+		}
+		else if(isset($_POST['projectId']) && isset($_POST['owner'])) {
 			if(!$data = checkUsername($db, $_POST['owner']))
 				$message .= '<p style="color: red">Unknown user.</p>';
 			else {
@@ -32,7 +48,7 @@
 					$message .= '<p style="color: green">The client has been set successfully.</p>';
 			}
 		}
-		else if(isset($_POST['contributor'])) {
+		else if(isset($_POST['projectId']) && isset($_POST['contributor'])) {
 			if(!$data = checkUsername($db, $_POST['contributor']))
 				$message = '<p style="color: red">Unknown user.</p>';
 			else {
@@ -43,6 +59,8 @@
 					$message = '<p style="color: green">The contributor has been added successfully.</p>';
 			}
 		}
+		else
+			$message = '<p style="color: red">Missing POST parameter(s).</p>';
 	}
 ?>
 
@@ -125,7 +143,8 @@
 			    	$pass = false;
 			    }
 			} 
-			echo '</table>';
+			echo '</table><br>';
+			echo '<button onclick="newProjectDialog.dialog(\'open\')">Create a new project</button>';
 			echo '<div id="message">' . $message . '</div>';
 		?>
 		<script>
@@ -168,6 +187,25 @@
 					}
 				});
 
+				newProjectDialog = $("#newProjectDialog").dialog({
+					autoOpen: false,
+					height: 500,
+					width: 400,
+					modal: true,
+					buttons: {
+						"Create": function() {
+							newProjectDialog.find("form").submit();
+							newProjectDialog.dialog("close");
+						},
+						Cancel: function() {
+				  			newProjectDialog.dialog("close");
+						}
+					},
+					close: function() {
+
+					}
+				});
+
 				openContributorDialog = function(projectId) {
 					$("#contributorDialog > form > fieldset > input[type='hidden']").val(projectId);
 					contributorDialog.dialog('open');
@@ -189,6 +227,7 @@
 			<fieldset>
 				<label for="contributor">Contributor username</label>
 				<input type="text" name="contributor" id="contributor" class="text ui-widget-content ui-corner-all" required>
+
 				<input type="hidden" name="projectId">
 				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 			</fieldset>
@@ -201,7 +240,26 @@
 			<fieldset>
 				<label for="owner">Owner username</label>
 				<input type="text" name="owner" id="owner" class="text ui-widget-content ui-corner-all" required>
+
 				<input type="hidden" name="projectId">
+				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="newProjectDialog" title="Create new project">
+		<p class="validateTips">Field "Project name" is required.</p>
+		<form method="POST">
+			<fieldset>
+				<label for="projectName">Project name</label>
+				<input type="text" name="projectName" id="projectName" class="text ui-widget-content ui-corner-all" required>
+
+				<label for="repositoryLink">Repository link</label>
+				<input type="link" name="repositoryLink" id="repositoryLink" class="text ui-widget-content ui-corner-all">
+
+				<label for="ownerUsername">Owner username</label>
+				<input type="text" name="ownerUsername" id="ownerUsername" class="text ui-widget-content ui-corner-all">
+
 				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 			</fieldset>
 		</form>

@@ -77,11 +77,6 @@
 								$c='X';
 							if($data['status']==3)
 								$d='X';
-
-						
-
-
-
 							echo '
 								<div class="ligne">
 									<div class="cellule" > '. $data['id'] . '</div>

@@ -1,4 +1,4 @@
-# Second Sprint (07/11 - 19/11)
+# Second Sprint (07/11 - 18/11)
 
 ## Kanban
 |Task id | Developper | To do | On going | On testing | Done |

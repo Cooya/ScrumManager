@@ -58,7 +58,7 @@
 		<?php 
 			include 'navBar.php';
 			if(isset($projectId)) {
-				$result = $db->query("SELECT * FROM us WHERE projectId = '$projectId' ORDER BY id");
+				$result = $db->query("SELECT * FROM us WHERE projectId = '$projectId' ORDER BY specific_Id");
 				$result2 = $db->query("SELECT * FROM project WHERE id = '$projectId'");
 				$data = $result2->fetch();
 				echo '<h2>Backlog du projet : ' . $data['name'] . '</h2>';
@@ -77,12 +77,14 @@
 							<td>' . ($data['cost'] != 0 ? $data['cost'] : "") . '</td>
 							<td>' . ($data['priority'] != 0 ? $data['priority'] : "") . '</td>
 							<td>
-							<a onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')"><img src="assets/images/update.png" alt="update"/></a>
-							<a href="deleteUs.php?projectId=' . $projectId . '&sprint=' . $data['sprint'] . '"><img src="assets/images/delete.png" alt="delete"/></a>
+							<a onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')"><img src="assets/images/update.png" 							         alt="update"/></a>
+						    
+							<a href="deleteUs.php?specific_Id=' . $data['specific_Id'] . '&projectId=' . $projectId . '&sprint=' . $data['sprint'] . 							         '"><img src="assets/images/delete.png" alt="delete"/></a>
 							</td>
 						</tr>
 					';
 				}
+
 				$result->closeCursor();
 				echo '</table>';
 			}

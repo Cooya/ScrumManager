@@ -39,10 +39,10 @@ function getUSRowIndexIntoTable(id, done, next) {
 }
 
 function checkUSRow(US, index, done) {
-	driver.findElements(By.css('table > tbody > tr > td:nth-child(' + (index + 1) + ') > tr')).then(
+	driver.findElements(By.css('table > tbody > tr:nth-child(' + (index + 1) + ') > td')).then(
 		(array) => {
 			array.forEach(function(elt, index) {
-				elt.getText.then(
+				elt.getText().then(
 					(text) => {
 						expect(text).to.be.eql(US[index]);
 						if(index + 1 == array.length) done();
@@ -57,7 +57,7 @@ function checkUSRow(US, index, done) {
 
 module.exports = function(providedDriver, i) {
 	i = i ? i : 1;
-	var US = ['100' + i, 'user story description', i, 10, 5, 'Modify'];
+	var US = ['100' + i, 'user story description', '' + i, '10', '5', ''];
 	var projectName;
 
 	describe('Create a user story', function() {
@@ -94,7 +94,7 @@ module.exports = function(providedDriver, i) {
 		it('I must touch down on the backlog project page', function(done) {
 			driver.findElement(By.css('h2')).getText().then(
 				(text) => {
-					expect(text).to.be.eql('Backlog du projet ' + projectName);
+					expect(text).to.be.eql('Backlog du projet : ' + projectName);
 					done();
 				},
 				(err) => done(err)
@@ -113,12 +113,12 @@ module.exports = function(providedDriver, i) {
 				null,
 				(err) => done(err)
 			);
-			async.forEach(['id', 'description', 'sprint', 'cost', 'priority'], checkInputIsHere, done);
+			async.forEach(['specificId', 'description', 'sprint', 'cost', 'priority'], checkInputIsHere, done);
 		});
 
 		it('Then when I fill form inputs', function(done) {
 			async.parallel([
-				(stepDone) => fillTextInput('id', US[0], stepDone),
+				(stepDone) => fillTextInput('specificId', US[0], stepDone),
 				(stepDone) => fillTextInput('description', US[1], stepDone),
 				(stepDone) => fillTextInput('sprint', US[2], stepDone),
 				(stepDone) => fillTextInput('cost', US[3], stepDone),

@@ -13,31 +13,31 @@
 		if($_SERVER["REQUEST_METHOD"] == "POST") {
 			if(empty($_POST['action']))
 				$message = '<p style="color:red">Missing POST parameter.</p>';
-			else if(empty($_POST['id']) || empty($_POST['description']) || empty($_POST['sprint']))
+			else if(empty($_POST['specific_Id']) || empty($_POST['description']) || empty($_POST['sprint']))
 				$message = '<p style="color:red">"Id", "Description" & "Sprint" fields are required.</p>';
 			else {
-				$id = $_POST['id'];
+				$specific_Id = $_POST['specific_Id'];
 				$description = $_POST['description'];
 				$sprint = $_POST['sprint'];
 				$cost = !empty($_POST['cost']) ? $_POST['cost'] : 0;
 				$priority = !empty($_POST['priority']) ? $_POST['priority'] : 0;
 
-                                $resultcond = $db->query('SELECT DISTINCT specific_Id FROM us WHERE projectId="'.$projectId.'" AND specific_Id="'.$id.'"'); 
+                                $resultcond = $db->query('SELECT specific_Id FROM us WHERE projectId="'.$projectId.'" AND specific_Id="'.$specific_Id.'" LIMIT 1'); 
 				$donnees = $resultcond->fetch();
 				
-				if( ($_POST['action'] == 'create' && $id != $donnees['specific_Id'])) {
-					$sql = "INSERT INTO us VALUES(NULL, '$id', '$projectId', '$description', '$priority', '$cost', '$sprint')";
+				if( ($_POST['action'] == 'create' && $specific_Id != $donnees['specific_Id'])) {
+					$sql = "INSERT INTO us VALUES(NULL, '$specific_Id', '$projectId', '$description', '$priority', '$cost', '$sprint')";
 					if(!$db->query($sql))
 						$message = '<p style="color:red">This US id has already been taken by another US.</p>';
 				}
-				else if($_POST['action'] == 'modify' && $id != $donnees['specific_Id']) {
-					$sql = "UPDATE us SET id = NULL, specific_Id='$id', description = '$description', sprint = '$sprint', cost = '$cost', priority = '$priority' 
-						WHERE id = '$id'";
+				else if($_POST['action'] == 'modify') {
+					$sql = 'UPDATE us SET specific_Id= "'.$specific_Id.'", description = "'.$description.'", sprint = "'.$sprint.'", cost = "'.$cost.'", priority = "'.$priority.'" WHERE specific_Id ="'.$specific_Id.'" AND projectId ="'.$projectId.'"';
 					if(!$db->query($sql))
 						$message = '<p style="color:red">This US id has already been taken by another US.</p>';
 				}
 				else
-					$message = '<p style="color:red">This US id has already been taken by another US.</p>';
+						$message = '<p style="color:red">This US id has already been taken by another US.</p>';
+
 			}
 		}
 	}
@@ -92,7 +92,7 @@
 		<br>
 		<button id="createUS" onclick="createDialog.dialog('open')">Add new US</button>
 		<br>
-		<div><?php echo $data['specific_Id']; ?></div>
+
 		<div id="message"><?php echo $message ?></div>
 		<script>
 			$(function() {
@@ -151,7 +151,7 @@
 				<input type="hidden" type="text" name="action" value="create">
 
 				<label for="id">Id</label>
-				<input type="number" name="id" id="id" class="text ui-widget-content ui-corner-all" required>
+				<input type="number" name="specific_Id" id="specific_Id" class="text ui-widget-content ui-corner-all" required>
 
 				<label for="description">Description</label>
 				<textarea name="description" id="description" cols="51" rows="3" required></textarea>
@@ -176,8 +176,8 @@
 			<fieldset>
 				<input type="hidden" type="text" name="action" value="modify">
 
-				<label for="id">Id</label>
-				<input type="number" name="id" id="id" class="text ui-widget-content ui-corner-all" required>
+				<label for="specific_Id">Id</label>
+				<input type="number" name="specific_Id" id="specific_Id" class="text ui-widget-content ui-corner-all" required>
 
 				<label for="description">Description</label>
 				<textarea name="description" id="description" cols="51" rows="3" required></textarea>

@@ -2,7 +2,7 @@
   <script>
   $( function() {
     var dialog, form,
-       project = $( "#project" ),
+       taskid = $( "#taskid" ),
       description = $( "#description" ),
       developer = $( "#developer" ),
       sprint = $( "#sprint" ),
@@ -15,8 +15,15 @@
       $.ajax({
        url : 'addTaskHandler.php',
        type : 'POST', 
-       data : 'project=' + project.val() + '&description=' + description.val()+'&developer=' +developer.val() + '&sprint=' +sprint.val() + '&status=' + status.val() +'&duration='+ duration.val(), 
+       data : 'taskid=' + taskid.val() + '&description=' + description.val()+'&developer=' +developer.val() + '&sprint=' +sprint.val() + '&status=' + status.val() +'&duration='+ duration.val(), 
        dataType : 'html',
+            success : function(code_html, statut){ // success est toujours en place, bien sûr !
+           alert("oui");
+       },
+
+       error : function(resultat, statut, erreur){
+alert("non");
+       }
      });
     
        
@@ -25,7 +32,7 @@
  
       if ( valid ) {
         $( "#task" ).append( "<li>" +
-          "Tache : " + description.val() + "</td>" +
+          "Task  "+ taskid.val() +" : " + description.val() + "</td>" +
           
         "</li>" ) +
         dialog.dialog( "close" );
@@ -69,12 +76,13 @@
  
   <form>
     <fieldset>
-       <label for="project">Project id</label>
-      <input type="number" name="project" id="project" class="text ui-widget-content ui-corner-all">
+     
+      <label for="taskid">Task id</label>
+      <input type="number" name="taskid" id="taskid" class="text ui-widget-content ui-corner-all">
       <label for="description">description</label>
       <input type="text" name="description" id="description" class="text ui-widget-content ui-corner-all">
-      <label for="developer">developer Id</label>
-      <input type="number" name="developer" id="developer"  class="text ui-widget-content ui-corner-all">
+      <label for="developer">developer login</label>
+      <input type="text" name="developer" id="developer"  class="text ui-widget-content ui-corner-all">
       <label for="sprint">sprint</label>
       <input type="number" name="sprint" id="sprint"  class="text ui-widget-content ui-corner-all">
       <label for="status">status</label>

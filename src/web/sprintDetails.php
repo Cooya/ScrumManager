@@ -61,8 +61,8 @@
 			</header>
 			<div class="corp">
 				<?php
-					if(isset($projectId) && isset($sprint)) {
-						$sql = "SELECT id, developerId, status FROM task WHERE projectId = '$projectId' AND sprint = '$sprint'"; 
+				$sprint=$_GET['sprint'];
+						$sql = "SELECT id, developerId, status FROM task WHERE sprint = '$sprint'"; 
 						$result = $db->query($sql);
 						while($data = $result->fetch()) {
 							$a='';
@@ -78,10 +78,17 @@
 							if($data['status']==3)
 								$d='X';
 
+							$dId=$data['developerId'];
+							$sqli = "SELECT login FROM user WHERE id = '. $dId.'";
+							$resulti = $db->query($sqli);
+							$datai = $resulti->fetch();
+
+
+
 							echo '
 								<div class="ligne">
-									<div class="cellule" ><p onclick="myFunction();this.onclick=null;" id="tmp">' . $data['id'] . '</p></div>
-									<div class="cellule">' . $data['developerId'] . '</div>
+									<div class="cellule" > '. $data['id'] . '</div>
+									<div class="cellule">' . $datai['login'] . '</div>
 									<div class="cellule">' . $a . '</div>
 									<div class="cellule">' . $b . '</div>
 									<div class="cellule">' . $c . '</div>
@@ -94,31 +101,34 @@
 								</script>
 							';
 						}
-					}
 				?>
 			</div>
 		</section>
 		<h2>User stories</h2>
 		<ul>
 			<?php
-				$sql = "SELECT id, description FROM us"; 
+				$sprint=$_GET['sprint'];
+				$sql = "SELECT id, description FROM us WHERE sprint='$sprint'"; 
 				$result = $db->query($sql);
 				while($data = $result->fetch())
-					echo '<li> UserStorie '. $data['id'] . ' : '. $data['description'] .' </li>';
+					echo '<li> UserStory '. $data['id'] . ' : '. $data['description'] .' </li>';
 			?>
 		</ul>
 		<h2>Tasks</h2>
 		<ul>
 			<div id="task" class="corp">
 				<?php
-					$sql = "SELECT id, description FROM task"; 
+					$sprint=$_GET['sprint'];
+
+					$sql = "SELECT * FROM task WHERE sprint='$sprint' ORDER BY id"; 
 					$result = $db->query($sql);
 					include 'addTask.php';
+					include 'modifyTask.php';
 					while($data = $result->fetch()) {
 						echo '<li> Task '. $data['id'].' : '. $data['description'] .' </li>';
 						echo '
-							<a href="registration.php"><img src="assets/images/update.png"/></a>
-							<a href="index.php"><img src="assets/images/delete.png" /></a>
+							<a onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')"><img src="assets/images/update.png" alt="update"/></a>
+							<a href="deleteTask.php?id=' . $data['id']. '"><img src="assets/images/delete.png" alt="delete"/></a>
 						';
 					}
 				?>

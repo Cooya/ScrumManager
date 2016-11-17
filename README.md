@@ -1,4 +1,4 @@
-# Second Sprint (07/11 - 19/11)
+# Second Sprint (07/11 - 18/11)
 
 ## Kanban
 |Task id | Developper | To do | On going | On testing | Done |
@@ -7,13 +7,13 @@
 | 2 | Ismail | | | | X |
 | 3 | Ismail | | | | X |
 | 4 | Ismail | | | | X |
-| 5 | Ismail | | X | | |
+| 5 | Ismail | | | | X |
 | 6 | Nicolas | | | | X |
 | 7 | Nicolas | | | | X |
 | 8 | Mohamed | | | | X |
-| 9 | Mohamed | | X | | |
-| 10 | Mohamed | X | | | |
-| 11 | Mohamed | X | | | |
+| 9 | Mohamed | | | | X |
+| 10 | Mohamed | | | X | |
+| 11 | Mohamed | | | X | |
 | 12 | Nicolas | | X | | |
 
 

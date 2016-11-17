@@ -40,16 +40,18 @@
 		<h1 align ="center">Login</h1>
 
 		<form method="POST">
-			<table border="0" align="center" cellspacing="2" cellpadding="2">
-				<tr align="center">
-					<td><input type="text" name="login" placeholder="login"></td>
+			<table class="tablelog" align="center" cellspacing="2" cellpadding="2">
+				<tr>
+					<td class="noborder"> <label for="login">Login</label> <input type="text" id="login" name="login" placeholder="login"></td>
 				</tr>
-				<tr align="center">
-					<td><input type="password" name="password" placeholder="password"></td>
+				<tr>
+					<td class="noborder"> <label for="password">Password</label> <input type="password" id="password" name="password" placeholder="password"></td>
 				</tr>
-				<tr align="center">
-					<td colspan="2"><input type="submit" value="Log in" id="submit" class="myButton"></td> 
-					<td colspan="2"> Or <a href="registration.php">Subscribe here</a></td>
+				<tr>
+					<td class="noborder"><input type="submit" value="Log in" id="submit" class="myButton"></td> 
+				</tr>
+				<tr>
+					<td class="noborder"> Or <a href="registration.php">Subscribe here</a></td>
 				</tr>
 			</table>
 		</form>

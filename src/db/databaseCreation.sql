@@ -39,7 +39,7 @@ CREATE TABLE `contributor` (
 
 /* ajout de la table "task" */
 CREATE TABLE `task` (
-	`id` int(80) unsigned NOT NULL AUTO_INCREMENT,
+	`id` int(80) unsigned NOT NULL,
 	`projectId` int(80) unsigned DEFAULT NULL,
 	`description` varchar(80) NOT NULL,
 	`developerId` int(80) unsigned DEFAULT NULL,
@@ -49,19 +49,22 @@ CREATE TABLE `task` (
 	PRIMARY KEY (`id`),
 	KEY `projectId` (`projectId`),
 	KEY `developerId` (`developerId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1  ;
 
 /* ajout de la table "us" */
+
 CREATE TABLE `us` (
-	`id` int(80) NOT NULL,
-	`projectId` int(80) unsigned NOT NULL,
+	`id` int(80) NOT NULL AUTO_INCREMENT,
+	`specific_Id` int(10) UNSIGNED NOT NULL,
+	`projectId` int(80) UNSIGNED NOT NULL,
 	`description` varchar(80) NOT NULL,
 	`priority` int(80) DEFAULT NULL,
 	`cost` int(80) DEFAULT NULL,
 	`sprint` int(80) NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `projectId` (`projectId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
 
 
 

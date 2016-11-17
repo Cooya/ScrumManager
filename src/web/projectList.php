@@ -65,9 +65,8 @@
 			    		<td><b>' . $masterSurname . ' ' . $masterName . '</b></td>
 			    		<td><b>' . $data[$i]['last_update'] . '</b></td>
 			    		<td><b>' . $data[$i]['creation_date'] . '</b></td>
-			    		<td><b><a href="http://' . $data[$i]['repository_link'] . '">' . $data[$i]['repository_link'] . '</a></b></td>
-			    		<td><b><a href="projectIndex.php?projectId=' . $data[$i]['projectId'] . '">Edit</a></b></td>
-
+			    		<td><b><a href="http://' . $data[$i]['repository_link'] . '">' . $data[$i]['repository_link'] . '</a></b></td>	
+					<td><a href="projectIndex.php?projectId=' . $data[$i]['projectId'] . '"><img src="assets/images/update.png" alt="update"/></a></td>
 			    	</tr>
 			    ';
 

@@ -14,7 +14,7 @@
 | 9 | Mohamed | | | | X |
 | 10 | Mohamed | | | | X |
 | 11 | Mohamed | | | | X |
-| 12 | Nicolas | | X | | |
+| 12 | Nicolas | | | | X |
 
 
 ## User stories

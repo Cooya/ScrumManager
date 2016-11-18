@@ -57,7 +57,7 @@ function checkUSRow(US, index, done) {
 
 module.exports = function(providedDriver, i) {
 	i = i ? i : 1;
-	var US = ['100' + i, 'user story description', '' + i, '10', '5', ''];
+	var US = ['100' + i, 'user story description', '' + i, '10', '5', '', ''];
 	var projectName;
 
 	describe('Create a user story', function() {
@@ -133,10 +133,10 @@ module.exports = function(providedDriver, i) {
 			);
 		});
 
-		it('I must not see a failure message', function(done) {
+		it('I must see a success message', function(done) {
 			driver.findElement(By.id('message')).getText().then(
 				(text) => {
-					expect(text).to.be.eql('');
+					expect(text).to.be.eql('The user story has been created successfully.');
 					done();
 				},
 				(err) => done(err)

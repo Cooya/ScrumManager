@@ -20,11 +20,11 @@ function fillTextInput(inputName, text, callback) {
 }
 
 module.exports = function(providedDriver, i) {
-	var project = {name: 'mocha_project', link: 'mocha_github'};
+	var project = {projectName: 'mocha_project', repositoryLink: 'mocha_github', ownerUsername: ''};
 
 	if(i) {
-		project.name += i;
-		project.link += i;
+		project.projectName += i;
+		project.repositoryLink += i;
 	}
 
 	describe('Create a project', function() {
@@ -46,29 +46,36 @@ module.exports = function(providedDriver, i) {
 			providedDriver.projects.push(project);
 		}
 
-		it('When I go to the project creation page', function(done) {
-			driver.get('http://localhost/newProject.php');
+		it('When I go to the projects list page', function(done) {
+			driver.get('http://localhost/projectList.php');
 			driver.findElement(By.css('h1')).getText().then(
 				(text) => {
-					expect(text).to.be.eql('Create a new project');
+					expect(text).to.be.eql('Projects List');
 					done();
 				}
 			);
 		});
 
-		it('It must have an input for each data', function(done) {
-			async.forEach(['name', 'link'], checkInputIsHere, done);
+		it('And I click on the button for create a project', function(done) {
+			driver.findElement(By.css('button')).click().then(
+				done,
+				(err) => done(err)
+			);
+		});
+
+		it('It must see a form with an input for each data', function(done) {
+			async.forEach(Object.keys(project), checkInputIsHere, done);
 		});
 
 		it('Then when I fill form inputs', function(done) {
 			async.parallel([
-				(stepDone) => fillTextInput('name', project.name, stepDone),
-				(stepDone) => fillTextInput('link', project.link, stepDone),
+				(stepDone) => fillTextInput('projectName', project.projectName, stepDone),
+				(stepDone) => fillTextInput('repositoryLink', project.repositoryLink, stepDone),
 			], done);
 		});
 
 		it('And I submit form', function(done) {
-			driver.findElement(By.id('submit')).submit().then(
+			driver.findElement(By.css('#newProjectDialog > form')).submit().then(
 				done,
 				(err) => done(err)
 			);
@@ -78,7 +85,7 @@ module.exports = function(providedDriver, i) {
 			setTimeout(() => {
 				driver.findElement(By.id('message')).getText().then(
 					(text) => {
-						expect(text).to.be.eql('The project "' + project.name + '" has been created successfully.');
+						expect(text).to.be.eql('The project "' + project.projectName + '" has been created successfully.');
 						done();
 					},
 					(err) => done(err)

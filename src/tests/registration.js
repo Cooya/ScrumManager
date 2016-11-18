@@ -67,11 +67,11 @@ module.exports = function(providedDriver) {
 			);
 		});
 
-		it('I must be redirected on the project creation page', function(done) {
+		it('I must be redirected on the projects list page', function(done) {
 			setTimeout(() => {
 				driver.getCurrentUrl().then(
 					(text) => {
-						expect(text).to.be.eql("http://localhost/newProject.php");
+						expect(text).to.be.eql("http://localhost/projectList.php");
 						done();
 					},
 					(err) => done(err)

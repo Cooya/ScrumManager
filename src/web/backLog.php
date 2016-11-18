@@ -6,46 +6,44 @@
 	include 'databaseConnection.php';
 	$message = "";
 
-	if(empty($_GET['projectId']))
+	$projectId = $_GET['projectId'];
+	if(empty($projectId))
 		$message = '<p style="color:red">Missing GET parameter.</p>';
-	else {
-		$projectId = $_GET['projectId'];
-		if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
-			if($_POST['action'] == 'delete') {
-				$projectId = $_POST['projectId'];
-				$sprint = $_POST['sprint'];
-				$specificId = $_POST['specificId'];
-				$result = $db->query("DELETE FROM us WHERE projectId = '$projectId' AND sprint = '$sprint' AND specificId = '$specificId'");
-				if($result)
-					$message = '<p style="color:green">The user story has been deleted successfully.</p>';
-				else
-					$message = '<p style="color:red">An error has occured when trying to delete this user story.</p>';
-			}
-			else if(empty($_POST['specificId']) || empty($_POST['description']) || empty($_POST['sprint']))
-				$message = '<p style="color:red">"Id", "Description" & "Sprint" fields are required.</p>';
-			else {
-				$specificId = $_POST['specificId'];
-				$description = $_POST['description'];
-				$sprint = $_POST['sprint'];
-				$cost = !empty($_POST['cost']) ? $_POST['cost'] : 0;
-				$priority = !empty($_POST['priority']) ? $_POST['priority'] : 0;
-				$result = $db->query("SELECT specificId FROM us WHERE projectId = '$projectId' AND specificId = '$specificId'"); 
-				$data = $result->fetch();
-				
-				if(($_POST['action'] == 'create' && $specificId != $data['specificId'])) {
-					$sql = "INSERT INTO us VALUES(NULL, '$specificId', '$projectId', '$description', '$priority', '$cost', '$sprint')";
-					if(!$db->query($sql))
-						$message = '<p style="color:red">This US id has already been taken by another US.</p>';
-				}
-				else if($_POST['action'] == 'modify') {
-					$sql = "UPDATE us SET specificId = '$specificId', description = '$description', sprint = '$sprint', cost = '$cost', 
-						priority = '$priority' WHERE specificId = '$specificId' AND projectId = '$projectId'";
-					if(!$db->query($sql))
-						$message = '<p style="color:red">This US id has already been taken by another US.</p>';
-				}
-				else
+	else if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
+		if($_POST['action'] == 'delete') {
+			$projectId = $_POST['projectId'];
+			$sprint = $_POST['sprint'];
+			$specificId = $_POST['specificId'];
+			$result = $db->query("DELETE FROM us WHERE projectId = '$projectId' AND sprint = '$sprint' AND specificId = '$specificId'");
+			if($result)
+				$message = '<p style="color:green">The user story has been deleted successfully.</p>';
+			else
+				$message = '<p style="color:red">An error has occured when trying to delete this user story.</p>';
+		}
+		else if(empty($_POST['specificId']) || empty($_POST['description']) || empty($_POST['sprint']))
+			$message = '<p style="color:red">"Id", "Description" & "Sprint" fields are required.</p>';
+		else {
+			$specificId = $_POST['specificId'];
+			$description = $_POST['description'];
+			$sprint = $_POST['sprint'];
+			$cost = !empty($_POST['cost']) ? $_POST['cost'] : 0;
+			$priority = !empty($_POST['priority']) ? $_POST['priority'] : 0;
+			$result = $db->query("SELECT specificId FROM us WHERE projectId = '$projectId' AND specificId = '$specificId'"); 
+			$data = $result->fetch();
+			
+			if(($_POST['action'] == 'create' && $specificId != $data['specificId'])) {
+				$sql = "INSERT INTO us VALUES(NULL, '$specificId', '$projectId', '$description', '$priority', '$cost', '$sprint')";
+				if(!$db->query($sql))
 					$message = '<p style="color:red">This US id has already been taken by another US.</p>';
 			}
+			else if($_POST['action'] == 'modify') {
+				$sql = "UPDATE us SET specificId = '$specificId', description = '$description', sprint = '$sprint', cost = '$cost', 
+					priority = '$priority' WHERE specificId = '$specificId' AND projectId = '$projectId'";
+				if(!$db->query($sql))
+					$message = '<p style="color:red">This US id has already been taken by another US.</p>';
+			}
+			else
+				$message = '<p style="color:red">Invalid action.</p>';
 		}
 	}
 ?>
@@ -64,9 +62,9 @@
 	<body>
 		<?php 
 			include 'navBar.php';
-			if(isset($projectId)) {
-				$result = $db->query("SELECT * FROM us WHERE projectId = '$projectId' ORDER BY specificId");
-				$result2 = $db->query("SELECT * FROM project WHERE id = '$projectId'");
+			if(!empty($projectId)) {
+				$result = $db->query("SELECT * FROM us WHERE projectId = $projectId ORDER BY specificId");
+				$result2 = $db->query("SELECT * FROM project WHERE id = $projectId");
 				$data = $result2->fetch();
 				echo '<h2>Backlog du projet : ' . $data['name'] . '</h2>';
 				echo '
@@ -115,7 +113,7 @@
 							createDialog.dialog("close");
 						},
 						Cancel: function() {
-				  			createDialog.dialog("close");
+							createDialog.dialog("close");
 						}
 					},
 					close: function() {
@@ -134,7 +132,7 @@
 							modifyDialog.dialog("close");
 						},
 						Cancel: function() {
-				  			modifyDialog.dialog("close");
+							modifyDialog.dialog("close");
 						}
 					},
 					close: function() {
@@ -153,7 +151,7 @@
 							deleteDialog.dialog("close");
 						},
 						Cancel: function() {
-				  			deleteDialog.dialog("close");
+							deleteDialog.dialog("close");
 						}
 					},
 					close: function() {

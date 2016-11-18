@@ -21,14 +21,14 @@
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		if(isset($_POST['projectName'])) {
 			if(!$master = checkUsername($db, $_SESSION['login']))
-				$message = '<p style="color: red">Unknown user for master.</p>';
+				$message = '<p style="color: red">Unknown master username.</p>';
 			else if(!empty($_POST['ownerUsername']) && !$owner = checkUsername($db, $_POST['ownerUsername']))
-				$message = '<p style="color: red">Unknown user for owner.</p>';
+				$message = '<p style="color: red">Unknown owner username.</p>';
 			else {
 				$projectName = $_POST['projectName'];
 				$repositoryLink = !empty($_POST['repositoryLink']) ? $_POST['repositoryLink'] : '';
 				$creationDate = date("Y-m-d H:i:s");
-				$ownerId = isset($owner['id']) ? $owner['id'] : 'NULL';
+				$ownerId = isset($owner) ? $owner['id'] : 'NULL';
 				$sql = "INSERT INTO project (name, master, creation_date, repository_link, owner) VALUES 
 				('$projectName', " . $master['id'] . ", '$creationDate', '$repositoryLink', $ownerId)";
 				if($db->query($sql)) 

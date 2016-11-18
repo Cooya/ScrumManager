@@ -26,7 +26,7 @@
 			else {
 				$_SESSION['accountId'] = $db->lastInsertId();
 				$_SESSION['login'] = $login;
-				header('Location: newProject.php');
+				header('Location: projectList.php');
 			}
 		}
 	}

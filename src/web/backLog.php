@@ -161,7 +161,7 @@
 				});
 
 				openModifyDialog = function(usObj) {
-					$("#modifyDialog > form > fieldset > input, textarea").each(function(index, elt) {
+					$("#modifyDialog > form > fieldset > input").each(function(index, elt) {
 						if(elt.name != 'action')
 							elt.value = usObj[elt.name];
 					});
@@ -188,7 +188,7 @@
 				<input type="number" name="specificId" id="specificId" class="text ui-widget-content ui-corner-all" required>
 
 				<label for="description">Description</label>
-				<textarea name="description" id="description" cols="51" rows="3" required></textarea>
+				<input type="text" name="description" id="description" class="text ui-widget-content ui-corner-all" required>
 
 				<label for="sprint">Sprint</label>
 				<input type="number" name="sprint" id="sprint" class="text ui-widget-content ui-corner-all" required>				
@@ -214,7 +214,7 @@
 				<input type="number" name="specificId" id="specificId" class="text ui-widget-content ui-corner-all" required>
 
 				<label for="description">Description</label>
-				<textarea name="description" id="description" cols="51" rows="3" required></textarea>
+				<input type="text" name="description" id="description" class="text ui-widget-content ui-corner-all" required>
 
 				<label for="Sprint">Sprint</label>
 				<input type="number" name="sprint" id="sprint" class="text ui-widget-content ui-corner-all" required>				

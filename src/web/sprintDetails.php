@@ -90,8 +90,16 @@
 			}
 		}
 		else if($_POST['action'] == "delete") {
-			if(empty($_POST['id']) || empty($_POST['description']))
-				$message = '<p style="color: red">"Id" & "Description" fields are required.</p>';
+			if(empty($_POST['id']))
+				$message = '<p style="color: red">Missing id for deletion.</p>';
+			else {
+				$id = $_POST['id'];
+				$sql = "DELETE FROM task WHERE id = $id AND sprint = $sprint AND projectId = $projectId";
+ 				if($db->query($sql))
+ 					$message = '<p style="color:red">An error has occurred when deleting the task.</p>';
+ 				else
+ 					$message = '<p style="color:green">The task has been deleted successfully.</p>';
+			}
 		}
 		else
 			$message = '<p style="color: red">Invalid action.</p>';
@@ -145,7 +153,7 @@
 								<td class="cell">' . ($data['status'] == 3 ? 'X' : '') . '</td>
 								<td><img onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')" style="cursor:pointer"
 									src="assets/images/update.png" alt="update"/></td>
-								<td><img onclick="deleteDialog.dialog(\'open\')" style="cursor:pointer"
+								<td><img onclick="openDeleteDialog(' . $data['id'] . ')" style="cursor:pointer"
 									src="assets/images/delete.png" alt="delete"/></td>
 							</tr>
 						';
@@ -230,6 +238,11 @@
 					});
 					modifyDialog.dialog('open');
 				};
+
+				openDeleteDialog = function(taskId) {
+					$('#deleteDialog > form > fieldset > input[name="id"]').val(taskId);
+					deleteDialog.dialog('open');
+				}
 			});
 		</script>
 	</body>
@@ -291,7 +304,8 @@
   		<p class="validateTips">Delete this task ?</p>
 		<form method="POST">
 			<fieldset>
-				<input type="hidden" type="action" name="delete">
+				<input type="hidden" name="action" value="delete">
+				<input type="hidden" name="id">
 				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 			</fieldset>
 		</form>

@@ -19,8 +19,8 @@ function fillTextInput(inputName, text, callback) {
 	);
 }
 
-function getUSRowIndexIntoTable(id, done, next) {
-	driver.findElements(By.css('table > tbody > tr > td:nth-child(1)')).then(
+function getRowIndexIntoTable(selector, id, done, next) {
+	driver.findElements(By.css(selector)).then(
 		(array) => {
 			array.forEach(function(elt, index) {
 				elt.getText().then(
@@ -28,7 +28,7 @@ function getUSRowIndexIntoTable(id, done, next) {
 						if(text == id)
 							next(index);
 						else if(index + 1 == array.length)
-							done(new Error('User story with id = ' + id + ' not found into the table.'));
+							done(new Error('Row with id = ' + id + ' not found into the table.'));
 					},
 					(err) => done(err)
 				);
@@ -38,17 +38,17 @@ function getUSRowIndexIntoTable(id, done, next) {
 	);
 }
 
-function checkUSRow(US, index, done) {
-	driver.findElements(By.css('table > tbody > tr:nth-child(' + (index + 1) + ') > td')).then(
+function checkRow(selector, row, done) {
+	driver.findElements(By.css(selector)).then(
 		(array) => {
 			array.forEach(function(elt, index) {
 				elt.getText().then(
 					(text) => {
-						expect(text).to.be.eql(US[index]);
+						expect(text).to.be.eql(row[index]);
 						if(index + 1 == array.length) done();
-					}
-				),
-				(err) => done(err);
+					},
+					(err) => done(err)
+				);
 			});
 		},
 		(err) => done(err)
@@ -144,8 +144,8 @@ module.exports = function(providedDriver, i) {
 		});
 
 		it('And I must see my new US into the table', function(done) {
-			getUSRowIndexIntoTable(US[0], done, function(index) {
-				checkUSRow(US, index, done);
+			getRowIndexIntoTable('table > tbody > tr > td:nth-child(1)', US[0], done, function(index) {
+				checkRow('table > tbody > tr:nth-child(' + (index + 1) + ') > td', US, done);
 			});
 		});
 	});

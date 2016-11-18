@@ -10,9 +10,17 @@
 		$message = '<p style="color:red">Missing GET parameter.</p>';
 	else {
 		$projectId = $_GET['projectId'];
-		if($_SERVER["REQUEST_METHOD"] == "POST") {
-			if(empty($_POST['action']))
-				$message = '<p style="color:red">Missing POST parameter.</p>';
+		if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
+			if($_POST['action'] == 'delete') {
+				$projectId = $_POST['projectId'];
+				$sprint = $_POST['sprint'];
+				$specificId = $_POST['specificId'];
+				$result = $db->query("DELETE FROM us WHERE projectId = '$projectId' AND sprint = '$sprint' AND specificId = '$specificId'");
+				if($result)
+					$message = '<p style="color:green">The user story has been deleted successfully.</p>';
+				else
+					$message = '<p style="color:red">An error has occured when trying to delete this user story.</p>';
+			}
 			else if(empty($_POST['specificId']) || empty($_POST['description']) || empty($_POST['sprint']))
 				$message = '<p style="color:red">"Id", "Description" & "Sprint" fields are required.</p>';
 			else {
@@ -76,16 +84,16 @@
 							<td>' . ($data['cost'] != 0 ? $data['cost'] : "") . '</td>
 							<td>' . ($data['priority'] != 0 ? $data['priority'] : "") . '</td>
 							<td>
-							<a onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')">
-								<img src="assets/images/update.png" alt="update"/>
-							</a>
-							<a href="deleteUs.php?specificId=' . $data['specificId'] . '&projectId=' . $projectId . '&sprint=' . $data['sprint'] . 							         '"><img src="assets/images/delete.png" alt="delete"/></a>
+								<a onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')" style="cursor:pointer">
+									<img src="assets/images/update.png" alt="update"/>
+								</a>
+								<a onclick="openDeleteDialog(' . str_replace("\"", "'", json_encode($data)) . ')" style="cursor:pointer">
+									<img src="assets/images/delete.png" alt="delete"/>
+								</a>
 							</td>
 						</tr>
 					';
 				}
-
-				$result->closeCursor();
 				echo '</table>';
 			}
 		?>
@@ -134,12 +142,39 @@
 					}
 				});
 
+				deleteDialog = $("#deleteDialog").dialog({
+					autoOpen: false,
+					height: 300,
+					width: 300,
+					modal: true,
+					buttons: {
+						"Confirm": function() {
+							deleteDialog.find("form").submit();
+							deleteDialog.dialog("close");
+						},
+						Cancel: function() {
+				  			deleteDialog.dialog("close");
+						}
+					},
+					close: function() {
+
+					}
+				});
+
 				openModifyDialog = function(usObj) {
 					$("#modifyDialog > form > fieldset > input, textarea").each(function(index, elt) {
 						if(elt.name != 'action')
 							elt.value = usObj[elt.name];
 					});
 					modifyDialog.dialog('open');
+				};
+
+				openDeleteDialog = function(params) {
+					$("#deleteDialog > form > fieldset > input").each(function(index, elt) {
+						if(elt.name != 'action')
+							elt.value = params[elt.name];
+					});
+					deleteDialog.dialog('open');
 				};
 			});
 		</script>
@@ -190,6 +225,20 @@
 				
 				<label for="Priority">Priority</label>
 				<input type="number" name="priority" id="priority" class="text ui-widget-content ui-corner-all">
+
+				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="deleteDialog" title="User story deletion">
+  		<p class="validateTips">Delete this user story ?</p>
+		<form method="POST">
+			<fieldset>
+				<input type="hidden" type="text" name="action" value="delete">
+				<input type="hidden" type="text" name="projectId">
+				<input type="hidden" type="text" name="specificId">
+				<input type="hidden" type="text" name="sprint">
 
 				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 			</fieldset>

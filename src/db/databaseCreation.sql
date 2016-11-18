@@ -46,7 +46,7 @@ CREATE TABLE `task` (
 	`sprint` int(80) unsigned NOT NULL,
 	`status` int(80) unsigned DEFAULT NULL,
 	`duration` int(80) unsigned DEFAULT NULL,
-	PRIMARY KEY (`id`, `projectId`),
+	PRIMARY KEY (`id`, `sprint`),
 	KEY `projectId` (`projectId`),
 	KEY `developerId` (`developerId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;

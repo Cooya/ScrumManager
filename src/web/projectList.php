@@ -6,7 +6,7 @@
 	include 'databaseConnection.php';
 	$message = "";
 
-	function checkUsername($db, $user) {
+	function getIdByUsername($db, $user) {
 		$sql = "SELECT id FROM user WHERE login = '$user'";
 		try {
 			$result = $db->query($sql);
@@ -15,22 +15,22 @@
 			echo $sql . "<br>" . $e->getMessage();
 			return false;	
 		}
-		return $result->fetch();
+		return $result->fetch()['id'];
 	}
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		if(isset($_POST['projectName'])) {
-			if(!$master = checkUsername($db, $_SESSION['login']))
+			if(!$masterId = getIdByUsername($db, $_SESSION['login']))
 				$message = '<p style="color: red">Unknown master username.</p>';
-			else if(!empty($_POST['ownerUsername']) && !$owner = checkUsername($db, $_POST['ownerUsername']))
+			else if(!empty($_POST['ownerUsername']) && !$ownerId = getIdByUsername($db, $_POST['ownerUsername']))
 				$message = '<p style="color: red">Unknown owner username.</p>';
 			else {
 				$projectName = $_POST['projectName'];
 				$repositoryLink = !empty($_POST['repositoryLink']) ? $_POST['repositoryLink'] : '';
 				$creationDate = date("Y-m-d H:i:s");
-				$ownerId = isset($owner) ? $owner['id'] : 'NULL';
+				$ownerId = isset($ownerId) ? $ownerId : 'NULL';
 				$sql = "INSERT INTO project (name, master, creation_date, repository_link, owner) VALUES 
-				('$projectName', " . $master['id'] . ", '$creationDate', '$repositoryLink', $ownerId)";
+				('$projectName', " . $masterId . ", '$creationDate', '$repositoryLink', $ownerId)";
 				if($db->query($sql)) 
 					$message = '<p style="color:green">The project "' . $_POST['projectName'] . '" has been created successfully.</p>';
 				else
@@ -38,10 +38,10 @@
 			}
 		}
 		else if(isset($_POST['projectId']) && isset($_POST['owner'])) {
-			if(!$data = checkUsername($db, $_POST['owner']))
+			if(!$ownerId = getIdByUsername($db, $_POST['owner']))
 				$message .= '<p style="color: red">Unknown user.</p>';
 			else {
-				$sql = "UPDATE project SET owner = " . $data['id'] . " WHERE id = " . $_POST['projectId'];
+				$sql = "UPDATE project SET owner = $ownerId WHERE id = " . $_POST['projectId'];
 				if(!$db->query($sql))
 					$message .= '<p style="color: red">Setting client of the project has failed.</p>';
 				else
@@ -49,10 +49,10 @@
 			}
 		}
 		else if(isset($_POST['projectId']) && isset($_POST['contributor'])) {
-			if(!$data = checkUsername($db, $_POST['contributor']))
+			if(!$contributorId = getIdByUsername($db, $_POST['contributor']))
 				$message = '<p style="color: red">Unknown user.</p>';
 			else {
-				$sql = "INSERT INTO contributor (projectId, userId) VALUES (" . $_POST['projectId'] . ", " . $data['id'] . ")";
+				$sql = "INSERT INTO contributor (projectId, userId) VALUES (" . $_POST['projectId'] . ", $contributorId)";
 				if(!$db->query($sql))
 					$message = '<p style="color: red">Adding contributor has failed. Maybe it is already a contributor of this project.</p>';
 				else

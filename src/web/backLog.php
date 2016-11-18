@@ -30,17 +30,21 @@
 			$priority = !empty($_POST['priority']) ? $_POST['priority'] : 0;
 			$result = $db->query("SELECT specificId FROM us WHERE projectId = '$projectId' AND specificId = '$specificId'"); 
 			$data = $result->fetch();
-			
+
 			if(($_POST['action'] == 'create' && $specificId != $data['specificId'])) {
 				$sql = "INSERT INTO us VALUES(NULL, '$specificId', '$projectId', '$description', '$priority', '$cost', '$sprint')";
 				if(!$db->query($sql))
-					$message = '<p style="color:red">This US id has already been taken by another US.</p>';
+					$message = '<p style="color:red">This user story id has already been taken by another US.</p>';
+				else
+					$message = '<p style="color:green">The user story has been created successfully.</p>';
 			}
 			else if($_POST['action'] == 'modify') {
 				$sql = "UPDATE us SET specificId = '$specificId', description = '$description', sprint = '$sprint', cost = '$cost', 
 					priority = '$priority' WHERE specificId = '$specificId' AND projectId = '$projectId'";
 				if(!$db->query($sql))
-					$message = '<p style="color:red">This US id has already been taken by another US.</p>';
+					$message = '<p style="color:red">This user story id has already been taken by another US.</p>';
+				else
+					$message = '<p style="color:green">The user story has been updated successfully.</p>';
 			}
 			else
 				$message = '<p style="color:red">Invalid action.</p>';
@@ -70,7 +74,8 @@
 				echo '
 					<table border=1>
 					<tr>
-						<td><b>Id</b></td><td><b>US</b></td><td><b>Sprint</b></td><td><b>Cost</b></td><td><b>Priority</b></td><td><b>Actions</b></td>
+						<td><b>Id</b></td><td><b>US</b></td><td><b>Sprint</b></td><td><b>Cost</b></td><td><b>Priority</b></td>
+						<td><b>Modify</b></td><td><b>Delete</b></td>
 					</tr>
 				';
 				while($data = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -81,14 +86,10 @@
 							<td><a href="sprintDetails.php?projectId=' . $projectId . '&sprint=' . $data['sprint'] . '">' . $data['sprint'] . '</td>
 							<td>' . ($data['cost'] != 0 ? $data['cost'] : "") . '</td>
 							<td>' . ($data['priority'] != 0 ? $data['priority'] : "") . '</td>
-							<td>
-								<a onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')" style="cursor:pointer">
-									<img src="assets/images/update.png" alt="update"/>
-								</a>
-								<a onclick="openDeleteDialog(' . str_replace("\"", "'", json_encode($data)) . ')" style="cursor:pointer">
-									<img src="assets/images/delete.png" alt="delete"/>
-								</a>
-							</td>
+							<td><img onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')" style="cursor:pointer"
+								src="assets/images/update.png" alt="update"/></td>
+							<td><img onclick="openDeleteDialog(' . str_replace("\"", "'", json_encode($data)) . ')" style="cursor:pointer"
+								src="assets/images/delete.png" alt="delete"/></td>
 						</tr>
 					';
 				}
@@ -230,7 +231,7 @@
 	</div>
 
 	<div id="deleteDialog" title="User story deletion">
-  		<p class="validateTips">Delete this user story ?</p>
+		<p class="validateTips">Delete this user story ?</p>
 		<form method="POST">
 			<fieldset>
 				<input type="hidden" type="text" name="action" value="delete">

@@ -95,7 +95,7 @@
 			else {
 				$id = $_POST['id'];
 				$sql = "DELETE FROM task WHERE id = $id AND sprint = $sprint AND projectId = $projectId";
- 				if($db->query($sql))
+ 				if(!$db->query($sql))
  					$message = '<p style="color:red">An error has occurred when deleting the task.</p>';
  				else
  					$message = '<p style="color:green">The task has been deleted successfully.</p>';

@@ -11,3 +11,6 @@ INSERT INTO `task` (`id`, `projectId`, `description`, `developerId`, `sprint`, `
 
 /* insertion d'une US */
 INSERT INTO `us` (`id`, `projectId`, `description`, `priority`, `cost`, `sprint`) VALUES ('1', '3', 'US 1 : En tant que Test ...', '1', '2', '1');
+
+/* insertion d'une documentation */
+INSERT INTO `documentation` (`id`, `projectId`, `description`) VALUES ('1', '1', 'ceci est un projet qui de test, il a pour but .....');

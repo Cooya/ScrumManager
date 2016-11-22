@@ -66,6 +66,15 @@ CREATE TABLE `us` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
+/* ajout de la table "documentation" */
+CREATE TABLE `documentation` (
+	`id` int(80) unsigned NOT NULL AUTO_INCREMENT,
+	`projectId` int(80) unsigned NOT NULL,
+	`description` varchar(80) NOT NULL,
+	PRIMARY KEY (`id`),
+   	KEY `projectId` (`projectId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
 
 /* contraintes pour la table "project" */
 ALTER TABLE `project`
@@ -85,3 +94,9 @@ ALTER TABLE `task`
 /* contraintes pour la table "us" */
 ALTER TABLE `us`
 	ADD CONSTRAINT `us_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);
+
+/* contraintes pour la table "documentation" */
+ALTER TABLE `documentation`
+	ADD CONSTRAINT `documentation_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);
+
+

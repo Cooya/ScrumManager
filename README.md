@@ -26,7 +26,7 @@
 ## Tâches
 ### Tâche 1 (base de données mySQL) :
 * Création d'une table Documentation(id, project_Id, description). 
-* Ajouter une documentation d'un projet en requêtes SQL pour vérifier que la table est bien présente. 
+* Ajouter une documentation pour un projet en requêtes SQL pour vérifier que la table est bien présente. 
 
 *Durée estimée : 0.5 Jh*
 

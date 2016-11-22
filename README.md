@@ -1,92 +1,97 @@
-# Second Sprint (07/11 - 18/11)
+# Third Sprint (21/11 - 02/12)
 
 ## Kanban
 |Task id | Developper | To do | On going | On testing | Done |
 | ---------- | ---------- | :-----: | :--------: | :----------: | :----: |
 | 1 | Ismail | | | | X |
-| 2 | Ismail | | | | X |
-| 3 | Ismail | | | | X |
-| 4 | Ismail | | | | X |
-| 5 | Ismail | | | | X |
-| 6 | Nicolas | | | | X |
-| 7 | Nicolas | | | | X |
-| 8 | Mohamed | | | | X |
-| 9 | Mohamed | | | | X |
-| 10 | Mohamed | | | | X |
-| 11 | Mohamed | | | | X |
-| 12 | Nicolas | | | | X |
-
+| 2 | Ismail | X | | | |
+| 3 |  | | | | |
+| 4 |  | | | | |
+| 5 |  | | | | |
+| 6 |  | | | | |
+| 7 |  | | | | |
+| 8 |  | | | | |
+| 9 |  | | | | |
+| 10 |  | | | | |
+| 11 |  | | | | |
+| 12 |  | | | | |
+| 13 |  | | | | |
 
 ## User stories
-* US#7 : En tant que participant à un projet, je dois pouvoir consulter et modifier le backlog (ajout, modification et suppression des sprints). 
-* US#8 : En tant que participant à un projet, je dois pouvoir ajouter, modifier et supprimer des US du backlog.	
-* US#9 : En tant que participant à un projet, je dois pouvoir modifier et consulter les détails de chaque sprint (kanban et description des tâches).
+* US#6  : En tant que chef de projet, je dois pouvoir modifier les informations à propos d'un projet ou supprimer ce projet.
+* US#10 : En tant que participant à un projet, je dois pouvoir modifier et consulter la documentation du projet.
+* US#11 : En tant que participant à un projet, je dois pouvoir consulter le burn down chart du projet.
+* US#12 : En tant que participant à un projet, je dois pouvoir accéder à une liste des modifications apportées au projet.
 
 ## Tâches
 ### Tâche 1 (base de données mySQL) :
-* Création d'une table Task(id, description, developper, sprint, duration). 
-* Création d'une table US(id, description, priority, cost, sprint). 
-* Ajouter une tâche et une US en requêtes SQL pour vérifier que toutes les tables sont bien présentes. 
+* Création d'une table Documentation(id, project_Id, description). 
+* Ajouter une documentation d'un projet en requêtes SQL pour vérifier que la table est bien présente. 
 
 *Durée estimée : 0.5 Jh*
 
 ### Tâche 2 :
-* Création de la page HTML du backlog (tableau des US avec description/priorité/coût/sprint).
-* Création d'une boîte de dialogue permettant l'ajout, la modification et la suppression d'US.
+* Création de la page HTML pour la modification des informations d'un projet.
 
-*Durée estimée : 2 Jh*
+*Durée estimée : 0,5 Jh*
 
 ### Tâche 3 :
-* Création du contrôleur d'ajout des US.
+* Création du contrôleur pour la modification des informations d'un projet.
 
-*Durée estimée : 0.5 Jh*
+*Durée estimée : 1 Jh*
 
 ### Tâche 4 :
-* Création du contrôleur de modification des US.
+* Création du contrôleur pour la suppression d'un projet.
 
 *Durée estimée : 0.5 Jh*
 
 ### Tâche 5 :
-* Création du contrôleur de suppression des US (et supression du sprint si aucune US associée au sprint restante).
+* Création de la page HTML pour l'ajout d'une documentation d'un projet.
 
 *Durée estimée : 1 Jh*
 
 ### Tâche 6 :
-* Création du contrôleur d'ajout des priorités, des coûts et des sprints pour chaque US.
+* Création de la page HTML pour la modification et la consultation de la documentation d'un projet.
 
-*Durée estimée : 1.5 Jh*
+*Durée estimée : 1 Jh*
 
 ### Tâche 7 :
-* Création du contrôleur de modification des priorités, des coûts et des sprints pour chaque US.
+* Création du contrôleur pour l'ajout d'une documentation d'un projet.
 
 *Durée estimée : 1 Jh*
 
 ### Tâche 8 :
-* Création de la page HTML pour la consultation du détail de chaque sprint (kanban + US + description de chaque taĉhe).
-* Création d'une boîte de dialogue permettant l'ajout, la modification et la suppression de tâches.
+* Création du contrôleur pour la modification et la consultation de la documentation d'un projet.
 
-*Durée estimée : 2 Jh*
+*Durée estimée : 1,5 Jh*
 
 ### Tâche 9 :
-* Création du contrôleur d'ajout d'une tâche.
+* Création de la page HTML pour la consultation du burn down chart d'un projet.
 
 *Durée estimée : 1 Jh*
 
 ### Tâche 10 :
-* Création d'un contrôleur de modification d'une taĉhe.
-
-*Durée estimée : 1 Jh*
-
-### Tâche 11 :
-* Création d'un contrôleur de suppression d'une tâche.
-
-*Durée estimée : 0,5 Jh*
-
-### Tâche 12 :
-* Test de validation qui crée plusieurs US.
-* Test de validation qui ajoute des tâches dans un sprint.
+* Création du contrôleur qui affiche le burn down chart d'un projet.
 
 *Durée estimée : 2 Jh*
 
+### Tâche 11 :
+* Création de la page HTML pour afficher une liste des modifications apportées à un projet.
 
-**Durée totale estimée : 13,5 Jh**
+*Durée estimée : 0,5 Jh*
+
+
+### Tâche 12 :
+* Création du contrôleur qui affiche les modifications apportées à un projet.
+
+*Durée estimée : 1 Jh*
+
+### Tâche 13 :
+* Test de validation qui supprime un projet.
+* Test de validation qui ajoute une documentation à un projet.
+
+
+*Durée estimée : 1 Jh*
+
+
+**Durée totale estimée : 12,5 Jh**

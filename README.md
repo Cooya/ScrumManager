@@ -4,7 +4,7 @@
 |Task id | Developper | To do | On going | On testing | Done |
 | ---------- | ---------- | :-----: | :--------: | :----------: | :----: |
 | 1 | Ismail | | | | X |
-| 2 | Ismail | X | | | |
+| 2 | Ismail | | X | | |
 | 3 | Ismail | X | | | |
 | 4 | Ismail | X | | | |
 | 5 |  | | | | |

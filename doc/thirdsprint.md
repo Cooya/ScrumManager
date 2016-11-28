@@ -4,18 +4,18 @@
 |Task id | Developper | To do | On going | On testing | Done |
 | ---------- | ---------- | :-----: | :--------: | :----------: | :----: |
 | 1 | Ismail | | | | X |
-| 2 | Ismail | | X | | |
-| 3 | Ismail | X | | | |
-| 4 | Ismail | X | | | |
-| 5 |  | | | | |
-| 6 |  | | | | |
-| 7 |  | | | | |
-| 8 |  | | | | |
-| 9 |  | | | | |
-| 10 |  | | | | |
-| 11 |  | | | | |
-| 12 |  | | | | |
-| 13 |  | | | | |
+| 2 | Ismail | | | | X |
+| 3 | Nicolas| X| | | |
+| 4 | Ismail | | | | X|
+| 5 | Ismail |X| | | |
+| 6 | Ismail |X| | | |
+| 7 | Ismail |X| | | |
+| 8 | Ismail |X| | | |
+| 9 | Nicolas | X| | | |
+| 10 | Nicolas  | X | | | |
+| 11 | Mohamed |  X | | | |
+| 12 | Mohamed | X | | | |
+| 13 | Nicolas | X | | | |
 
 ## User stories
 * US#6  : En tant que chef de projet, je dois pouvoir modifier les informations à propos d'un projet ou supprimer ce projet.

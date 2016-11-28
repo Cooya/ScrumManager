@@ -4,13 +4,13 @@
 |Task id | Developper | To do | On going | On testing | Done |
 | ---------- | ---------- | :-----: | :--------: | :----------: | :----: |
 | 1 | Ismail | | | | X |
-| 2 | Ismail | | X | | |
-| 3 | Ismail | X | | | |
-| 4 | Ismail | X | | | |
-| 5 |  | | | | |
-| 6 |  | | | | |
-| 7 |  | | | | |
-| 8 |  | | | | |
+| 2 | Ismail | | | | X |
+| 3 | Nicolas| | | | |
+| 4 | Ismail | | | | X|
+| 5 | Ismail |X| | | |
+| 6 | Ismail |X| | | |
+| 7 | Ismail |X| | | |
+| 8 | Ismail |X| | | |
 | 9 |  | | | | |
 | 10 |  | | | | |
 | 11 |  | | | | |

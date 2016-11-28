@@ -19,7 +19,7 @@
 	}
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
-		if(isset($_POST['projectName'])) {
+		if(isset($_POST['projectName']) && !isset($_POST['action']) ) {
 			if(!$masterId = getIdByUsername($db, $_SESSION['login']))
 				$message = '<p style="color: red">Unknown master username.</p>';
 			else if(!empty($_POST['ownerUsername']) && !$ownerId = getIdByUsername($db, $_POST['ownerUsername']))
@@ -61,6 +61,15 @@
 		}
 		else
 			$message = '<p style="color: red">Missing POST parameter(s).</p>';
+
+		if(isset($_POST['projectId']) && $_POST['action'] == 'delete') {
+			$sql ="DELETE FROM project WHERE id =" .$_POST['projectId'];
+			if(!$db->query($sql)){
+				$message = '<p style="color:red">An error has occured when trying to delete this project.</p>';}
+			else{
+				$message = '<p style="color:green">The project has been deleted successfully.</p>';}
+		}
+
 	}
 ?>
 
@@ -83,7 +92,7 @@
 			echo '
 				<table border="1">
 					<tr>
-						<td><b>Name</b></td><td><b>Owner</b></td><td><b>Master</b></td><td><b>Last update</b></td><td><b>Creation date</b></td><td><b>Repository Link</b></td><td><b>Add contributor</b></td><td><b>Set owner</b></td>
+						<td><b>Name</b></td><td><b>Owner</b></td><td><b>Master</b></td><td><b>Last update</b></td><td><b>Creation date</b></td><td><b>Repository Link</b></td><td><b>Add contributor</b></td><td><b>Set owner</b></td><td><b>Modify</b></td><td><b>Delete</b></td>
 					</tr>
 			';
 
@@ -123,6 +132,7 @@
 					}
 				}
 
+
 			    echo '
 			    	<tr>
 			    		<td><a href="backLog.php?projectId=' . $data[$i]['projectId'] . '"><b>' . $data[$i]['projectName'] . '</b></a></td>
@@ -135,6 +145,10 @@
 							style="cursor:pointer" alt="update"/></td>
 						<td><img onclick="openOwnerDialog({projectId:' . $data[$i]['projectId'] . ',ownerName:\'' . $ownerName . '\'})" 
 							src="assets/images/update.png" style="cursor:pointer" alt="update"/></td>
+						<td><img onclick="openModifyProjectDialog({projectId:' . $data[$i]['projectId'] . '})" 
+							src="assets/images/update.png" style="cursor:pointer" alt="update"/></td>
+						<td><img onclick="openDeleteProjectDialog({projectId:' . $data[$i]['projectId'] . '})" 
+							src="assets/images/delete.png" style="cursor:pointer" alt="update"/></td>
 			    	</tr>
 			    ';
 
@@ -187,6 +201,45 @@
 					}
 				});
 
+
+				deleteProjectDialog = $("#deleteProjectDialog").dialog({
+					autoOpen: false,
+					height: 300,
+					width: 300,
+					modal: true,
+					buttons: {
+						"Confirm": function() {
+							deleteProjectDialog.find("form").submit();
+							deleteProjectDialog.dialog("close");
+						},
+						Cancel: function() {
+							deleteProjectDialog.dialog("close");
+						}
+					},
+					close: function() {
+
+					}
+				});
+
+				modifyProjectDialog = $("#modifyProjectDialog").dialog({
+					autoOpen: false,
+					height: 400,
+					width: 400,
+					modal: true,
+					buttons: {
+						"Confirm": function() {
+							modifyProjectDialog.find("form").submit();
+							modifyProjectDialog.dialog("close");
+						},
+						Cancel: function() {
+							modifyProjectDialog.dialog("close");
+						}
+					},
+					close: function() {
+
+					}
+				});
+
 				newProjectDialog = $("#newProjectDialog").dialog({
 					autoOpen: false,
 					height: 500,
@@ -209,13 +262,29 @@
 				openContributorDialog = function(projectId) {
 					$("#contributorDialog > form > fieldset > input[type='hidden']").val(projectId);
 					contributorDialog.dialog('open');
-				}
+				};
 
 				openOwnerDialog = function(params) {
 					$("#ownerDialog > form > fieldset > input[type='hidden']").val(params.projectId);
 					if(params.ownerName != '')
 						$("#ownerDialog > form > fieldset > input[type='text']").val(params.ownerName);
 					ownerDialog.dialog('open');
+				};
+
+				openDeleteProjectDialog = function(params) {
+					$("#deleteProjectDialog > form > fieldset > input").each(function(index, elt) {
+						if(elt.name != 'action')
+							elt.value = params[elt.name];
+					});
+					deleteProjectDialog.dialog('open');
+				};
+
+				openModifyProjectDialog = function(params) {
+					$("#modifyProjectDialog > form > fieldset > input").each(function(index, elt) {
+						if(elt.name != 'action')
+							elt.value = params[elt.name];
+					});
+					modifyProjectDialog.dialog('open');
 				};
 			});
 		</script>
@@ -260,6 +329,37 @@
 				<label for="ownerUsername">Owner username</label>
 				<input type="text" name="ownerUsername" id="ownerUsername" class="text ui-widget-content ui-corner-all">
 
+				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+			</fieldset>
+		</form>
+	</div>
+
+
+
+	<div id="modifyProjectDialog" title="Modify project">
+		<p class="validateTips">Field "Project name" is required.</p>
+		<form method="POST">
+			<fieldset>
+				<label for="projectName">Project name</label>
+				<input type="text" name="projectName" id="projectName" class="text ui-widget-content ui-corner-all" required>
+
+				<label for="repositoryLink">Repository link</label>
+				<input type="link" name="repositoryLink" id="repositoryLink" class="text ui-widget-content ui-corner-all">
+
+				<input type="hidden" name="projectId">
+				<input type="hidden" name="projectName">
+				<input type="hidden" name="repository_link">
+				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+			</fieldset>
+		</form>
+	</div>
+
+	<div id="deleteProjectDialog" title="Project deletion">
+		<p class="validateTips">Delete this project ?</p>
+		<form method="POST">
+			<fieldset>
+				<input type="hidden" type="text" name="action" value="delete">
+				<input type="hidden" name="projectId">
 				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 			</fieldset>
 		</form>

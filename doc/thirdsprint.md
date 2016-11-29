@@ -13,7 +13,7 @@
 | 8 | Ismail |X| | | |
 | 9 | Nicolas | X| | | |
 | 10 | Nicolas  | X | | | |
-| 11 | Mohamed |  X | | | |
+| 11 | Mohamed |  | X | | |
 | 12 | Mohamed | X | | | |
 | 13 | Nicolas | X | | | |
 

@@ -80,7 +80,7 @@ CREATE TABLE `updates` (
 	`id` int(80) unsigned NOT NULL AUTO_INCREMENT,
 	`projectId` int(80) unsigned NOT NULL,
 	`date_update` datetime,
-	`description` varchar(80),
+	`developerId` int(80) unsigned DEFAULT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
@@ -110,6 +110,7 @@ ALTER TABLE `documentation`
 	
 	/* contraintes pour la table "updates" */
 ALTER TABLE `updates`
+	ADD CONSTRAINT `updates_ibfk_2` FOREIGN KEY (`developerId`) REFERENCES `user` (`id`),
 	ADD CONSTRAINT `updates_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);
 
 

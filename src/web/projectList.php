@@ -3,19 +3,8 @@
 	if(!isset($_SESSION['login']))
 		header('Location: login.php');
 	include 'databaseConnection.php';
+	include 'utilities.php';
 	$message = "";
-
-	function getIdByUsername($db, $user) {
-		$sql = "SELECT id FROM user WHERE login = '$user'";
-		try {
-			$result = $db->query($sql);
-		}
-		catch(PDOException $e) {
-			echo $sql . "<br>" . $e->getMessage();
-			return false;	
-		}
-		return $result->fetch()['id'];
-	}
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		if(isset($_POST['projectName']) && $_POST['action'] == 'create') { // création d'un projet
@@ -42,7 +31,9 @@
 		}
 		else if(isset($_POST['projectId'])) { // mise à jour d'un projet existant
 			$projectId = $_POST['projectId'];
-			if(isset($_POST['owner'])) { // modification du propriétaire d'un projet
+			if(!isProjectMaster($db, $_SESSION['login'], $projectId)) // nécessite d'être le master du projet pour effectuer une modification
+				$message = '<p style="color: red">You are not the master of this project.</p>';
+			else if(isset($_POST['owner'])) { // modification du propriétaire d'un projet
 				if(!$ownerId = getIdByUsername($db, $_POST['owner']))
 					$message .= '<p style="color: red">Unknown user.</p>';
 				else {
@@ -149,7 +140,6 @@
 						$ownerName = NULL;
 					}
 				}
-
 			    echo '
 			    	<tr>
 			    		<td><a href="backLog.php?projectId=' . $data[$i]['projectId'] . '"><b>' . $data[$i]['projectName'] . '</b></a></td>
@@ -158,6 +148,8 @@
 			    		<td><b>' . $data[$i]['last_update'] . '</b></td>
 			    		<td><b>' . $data[$i]['creation_date'] . '</b></td>
 			    		<td><b><a href="http://' . $data[$i]['repository_link'] . '">' . $data[$i]['repository_link'] . '</a></b></td>	
+			    ';
+			    if(isProjectMaster($db, $_SESSION['login'], $data[$i]['projectId'])) echo '
 						<td><img onclick="openContributorDialog(' . $data[$i]['projectId'] . ')" src="assets/images/add.png" 
 							style="cursor:pointer" alt="update"/></td>
 						<td><img onclick="openOwnerDialog({projectId:' . $data[$i]['projectId'] . ', ownerName:\'' . $ownerName . '\'})" 

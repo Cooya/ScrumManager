@@ -1,14 +1,16 @@
 <?php
 	session_start();
-	if(!isset($_SESSION['login'])) {
+	if(!isset($_SESSION['login']))
 		header('Location: login.php');
-	}
 	include 'databaseConnection.php';
+	include 'utilities.php';
 	$message = "";
 
 	$projectId = $_GET['projectId'];
 	if(empty($projectId))
 		$message = '<p style="color:red">Missing GET parameter.</p>';
+	else if(!belongsToProject($db, $_SESSION['login'], $projectId)) // petite sécurité d'accès
+		die('You are not allowed to access to this backlog project.');
 	else if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
 		if($_POST['action'] == 'delete') {
 			$projectId = $_POST['projectId'];

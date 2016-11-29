@@ -1,39 +1,17 @@
 <?php 
 	session_start();
-	if(!isset($_SESSION['login'])) {
+	if(!isset($_SESSION['login']))
 		header('Location: login.php');
-	}
 	include 'databaseConnection.php';
+	include 'utilities.php';
 	$message = "";
-
-	function getIdByUsername($db, $user) {
-		$sql = "SELECT id FROM user WHERE login = '$user'";
-		try {
-			$result = $db->query($sql);
-		}
-		catch(PDOException $e) {
-			echo $sql . "<br>" . $e->getMessage();
-			return false;	
-		}
-		return $result->fetch()['id'];
-	}
-
-	function getUsernameById($db, $id) {
-		$sql = "SELECT login FROM user WHERE id = $id";
-		try {
-			$result = $db->query($sql);
-		}
-		catch(PDOException $e) {
-			echo $sql . "<br>" . $e->getMessage();
-			return false;	
-		}
-		return $result->fetch()['login'];
-	}
 
 	$projectId = $_GET['projectId'];
 	$sprint = $_GET['sprint'];
 	if(empty($_GET['projectId'] || empty($_GET['sprint'])))
 		$message = '<p style="color:red">Missing GET parameter(s).</p>';
+	else if(!belongsToProject($db, $_SESSION['login'], $projectId)) // petite sécurité d'accès
+		die('You are not allowed to access to this backlog project.');
 	else if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
 		if($_POST['action'] == "create") {
 			if(empty($_POST['id']) || empty($_POST['description']))

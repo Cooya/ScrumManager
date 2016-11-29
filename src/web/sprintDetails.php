@@ -10,7 +10,7 @@
 	$sprint = $_GET['sprint'];
 	if(empty($_GET['projectId'] || empty($_GET['sprint'])))
 		$message = '<p style="color:red">Missing GET parameter(s).</p>';
-	else if(!belongsToProject($db, $_SESSION['login'], $projectId)) // petite sécurité d'accès
+	else if(!belongsToProject($db, $_SESSION['accountId'], $projectId)) // petite sécurité d'accès
 		die('You are not allowed to access to this backlog project.');
 	else if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
 		if($_POST['action'] == "create") {
@@ -28,10 +28,8 @@
 
 					$sql = "INSERT INTO task (id, projectId, description, developerId, sprint, status, duration) 
 					VALUES ($id, $projectId, '$description', $developerId, $sprint, $status, $duration)";
-					if(!$db->query($sql)) {
-						//print_r($db->errorInfo());
+					if(!$db->query($sql))
 						$message = '<p style="color:red">Task id already used.</p>';
-					}
 					else
 						$message = '<p style="color:green">The task has been created successfully.</p>';
 				}
@@ -58,10 +56,8 @@
 					else
 						$sql = "UPDATE task SET description = '$description', developerId = $developerId, duration = $duration, status = $status
 							WHERE id = $id AND sprint = $sprint AND projectId = $projectId";
-					if(!$db->query($sql)) {
-						//print_r($db->errorInfo());
+					if(!$db->query($sql))
 						$message = '<p style="color:red">Task id already used.</p>';
-					}
 					else
 						$message = '<p style="color:green">The task has been updated successfully.</p>';
 				}
@@ -142,10 +138,10 @@
 		<h2>User stories</h2>
 		<ul>
 			<?php
-				$sql = "SELECT id, description FROM us WHERE sprint = $sprint AND projectId = $projectId"; 
+				$sql = "SELECT specificId, description FROM us WHERE sprint = $sprint AND projectId = $projectId"; 
 				$result = $db->query($sql);
 				while($data = $result->fetch())
-					echo '<li><b>US#' . $data['id'] . '</b> : '. $data['description'] .' </li>';
+					echo '<li><b>US#' . $data['specificId'] . '</b> : '. $data['description'] .' </li>';
 			?>
 		</ul>
 		<button onclick="createDialog.dialog('open')">Create new task</button>

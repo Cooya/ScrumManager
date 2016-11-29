@@ -9,7 +9,7 @@
 	$projectId = $_GET['projectId'];
 	if(empty($projectId))
 		$message = '<p style="color:red">Missing GET parameter.</p>';
-	else if(!belongsToProject($db, $_SESSION['login'], $projectId)) // petite sécurité d'accès
+	else if(!belongsToProject($db, $_SESSION['accountId'], $projectId)) // petite sécurité d'accès
 		die('You are not allowed to access to this backlog project.');
 	else if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
 		if($_POST['action'] == 'delete') {
@@ -69,10 +69,8 @@
 		<?php 
 			include 'navBar.php';
 			if(!empty($projectId)) {
-				$result = $db->query("SELECT * FROM us WHERE projectId = $projectId ORDER BY specificId");
-				$result2 = $db->query("SELECT * FROM project WHERE id = $projectId");
-				$data = $result2->fetch();
-				echo '<h2>Backlog du projet : ' . $data['name'] . '</h2>';
+				$result = $db->query("SELECT name FROM project WHERE id = $projectId");
+				echo '<h2>Backlog du projet : ' . $result->fetch()['name'] . '</h2>';
 				echo '
 					<table border=1>
 					<tr>
@@ -80,6 +78,7 @@
 						<td><b>Modify</b></td><td><b>Delete</b></td>
 					</tr>
 				';
+				$result = $db->query("SELECT * FROM us WHERE projectId = $projectId ORDER BY specificId");
 				while($data = $result->fetch(PDO::FETCH_ASSOC)) {
 					echo'
 						<tr>

@@ -23,8 +23,7 @@
 		return $result->fetch()['login'];
 	}
 
-	function belongsToProject($db, $login, $projectId) {
-		$userId = getIdByUsername($db, $login); 
+	function belongsToProject($db, $userId, $projectId) {
 		$sql = "SELECT owner, master FROM project WHERE id = $projectId UNION SELECT userId, projectId FROM contributor WHERE projectId = $projectId";
 		$data = $db->query($sql)->fetch();
 		return
@@ -33,8 +32,7 @@
 			($data['userId'] ? $data['userId'] == $userId : false);
 	}
 
-	function isProjectMaster($db, $login, $projectId) {
-		$userId = getIdByUsername($db, $login); 
+	function isProjectMaster($db, $userId, $projectId) { 
 		$sql = "SELECT master FROM project WHERE id = $projectId";
 		$data = $db->query($sql)->fetch();
 		return $data['master'] == $userId;

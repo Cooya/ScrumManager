@@ -1,8 +1,7 @@
 <?php
 	session_start();
-	if(!isset($_SESSION['login'])) {
+	if(!isset($_SESSION['login']))
 		header('Location: login.php');
-	}
 	include 'databaseConnection.php';
 	$message = "";
 
@@ -19,57 +18,76 @@
 	}
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
-		if(isset($_POST['projectName']) && !isset($_POST['action']) ) {
+		if(isset($_POST['projectName']) && $_POST['action'] == 'create') { // création d'un projet
 			if(!$masterId = getIdByUsername($db, $_SESSION['login']))
 				$message = '<p style="color: red">Unknown master username.</p>';
 			else if(!empty($_POST['ownerUsername']) && !$ownerId = getIdByUsername($db, $_POST['ownerUsername']))
 				$message = '<p style="color: red">Unknown owner username.</p>';
 			else {
-				$projectName = $_POST['projectName'];
-				$repositoryLink = !empty($_POST['repositoryLink']) ? $_POST['repositoryLink'] : '';
-				$creationDate = date("Y-m-d H:i:s");
-				$ownerId = isset($ownerId) ? $ownerId : 'NULL';
-				$sql = "INSERT INTO project (name, master, creation_date, repository_link, owner) VALUES 
-				('$projectName', " . $masterId . ", '$creationDate', '$repositoryLink', $ownerId)";
-				if($db->query($sql)) 
-					$message = '<p style="color:green">The project "' . $_POST['projectName'] . '" has been created successfully.</p>';
+				if(!empty($_POST['projectName'])) {
+					$projectName = $_POST['projectName'];
+					$repositoryLink = !empty($_POST['repositoryLink']) ? $_POST['repositoryLink'] : '';
+					$creationDate = date("Y-m-d H:i:s");
+					$ownerId = isset($ownerId) ? $ownerId : 'NULL';
+					$sql = "INSERT INTO project (name, master, creation_date, repository_link, owner) VALUES 
+					('$projectName', " . $masterId . ", '$creationDate', '$repositoryLink', $ownerId)";
+					if($db->query($sql)) 
+						$message = '<p style="color:green">The project "' . $_POST['projectName'] . '" has been created successfully.</p>';
+					else
+						$message = '<p style="color:red">An error has occurred, please try again.</p>';
+				}
 				else
-					$message = '<p style="color:red">An error has occurred, please try again.</p>';
+					$message = '<p style="color: red">The project name cannot be empty.</p>';
 			}
 		}
-		else if(isset($_POST['projectId']) && isset($_POST['owner'])) {
-			if(!$ownerId = getIdByUsername($db, $_POST['owner']))
-				$message .= '<p style="color: red">Unknown user.</p>';
-			else {
-				$sql = "UPDATE project SET owner = $ownerId WHERE id = " . $_POST['projectId'];
-				if(!$db->query($sql))
-					$message .= '<p style="color: red">Setting client of the project has failed.</p>';
-				else
-					$message .= '<p style="color: green">The client has been set successfully.</p>';
+		else if(isset($_POST['projectId'])) { // mise à jour d'un projet existant
+			$projectId = $_POST['projectId'];
+			if(isset($_POST['owner'])) { // modification du propriétaire d'un projet
+				if(!$ownerId = getIdByUsername($db, $_POST['owner']))
+					$message .= '<p style="color: red">Unknown user.</p>';
+				else {
+					$sql = "UPDATE project SET owner = $ownerId WHERE id = $projectId";
+					if(!$db->query($sql))
+						$message = '<p style="color: red">Setting client of the project has failed.</p>';
+					else
+						$message = '<p style="color: green">The client has been set successfully.</p>';
+				}
 			}
-		}
-		else if(isset($_POST['projectId']) && isset($_POST['contributor'])) {
-			if(!$contributorId = getIdByUsername($db, $_POST['contributor']))
-				$message = '<p style="color: red">Unknown user.</p>';
-			else {
-				$sql = "INSERT INTO contributor (projectId, userId) VALUES (" . $_POST['projectId'] . ", $contributorId)";
-				if(!$db->query($sql))
-					$message = '<p style="color: red">Adding contributor has failed. Maybe it is already a contributor of this project.</p>';
-				else
-					$message = '<p style="color: green">The contributor has been added successfully.</p>';
+			else if(isset($_POST['contributor'])) { // ajout d'un contributeur à un projet
+				if(!$contributorId = getIdByUsername($db, $_POST['contributor']))
+					$message = '<p style="color: red">Unknown user.</p>';
+				else {
+					$sql = "INSERT INTO contributor (projectId, userId) VALUES ($projectId, $contributorId)";
+					if(!$db->query($sql))
+						$message = '<p style="color: red">Adding contributor has failed. Maybe it is already a contributor of this project.</p>';
+					else
+						$message = '<p style="color: green">The contributor has been added successfully.</p>';
+				}
 			}
+			// modification du nom ou du dépôt d'un projet
+			else if($_POST['action'] == 'modify' && isset($_POST['projectName']) && isset($_POST['repositoryLink'])) {
+				if(!empty($_POST['projectName'])) {
+					$sql = "UPDATE project SET name = \"" . $_POST['projectName'] . "\", repository_link = \"" . $_POST['repositoryLink'] . "\" WHERE id = $projectId";
+					if(!$db->query($sql))
+						$message = '<p style="color: red">Updating project has failed, please try again.</p>';
+					else
+						$message = '<p style="color: green">The project has been updated successfully.</p>';
+				}
+				else
+					$message = '<p style="color: red">The project name cannot be empty.</p>';
+			}
+			else if($_POST['action'] == 'delete') { // suppression d'un projet
+				$sql = "DELETE FROM project WHERE id = $projectId";
+				if(!$db->query($sql))
+					$message = '<p style="color:red">An error has occured when trying to delete this project.</p>';
+				else
+					$message = '<p style="color:green">The project has been deleted successfully.</p>';
+			}
+			else
+				$message = '<p style="color: red">Missing POST parameter(s).</p>';
 		}
 		else
 			$message = '<p style="color: red">Missing POST parameter(s).</p>';
-
-		if(isset($_POST['projectId']) && $_POST['action'] == 'delete') {
-			$sql ="DELETE FROM project WHERE id =" .$_POST['projectId'];
-			if(!$db->query($sql)){
-				$message = '<p style="color:red">An error has occured when trying to delete this project.</p>';}
-			else{
-				$message = '<p style="color:green">The project has been deleted successfully.</p>';}
-		}
-
 	}
 ?>
 
@@ -132,7 +150,6 @@
 					}
 				}
 
-
 			    echo '
 			    	<tr>
 			    		<td><a href="backLog.php?projectId=' . $data[$i]['projectId'] . '"><b>' . $data[$i]['projectName'] . '</b></a></td>
@@ -143,10 +160,14 @@
 			    		<td><b><a href="http://' . $data[$i]['repository_link'] . '">' . $data[$i]['repository_link'] . '</a></b></td>	
 						<td><img onclick="openContributorDialog(' . $data[$i]['projectId'] . ')" src="assets/images/add.png" 
 							style="cursor:pointer" alt="update"/></td>
-						<td><img onclick="openOwnerDialog({projectId:' . $data[$i]['projectId'] . ',ownerName:\'' . $ownerName . '\'})" 
+						<td><img onclick="openOwnerDialog({projectId:' . $data[$i]['projectId'] . ', ownerName:\'' . $ownerName . '\'})" 
 							src="assets/images/update.png" style="cursor:pointer" alt="update"/></td>
-						<td><img onclick="openModifyProjectDialog({projectId:' . $data[$i]['projectId'] . '})" 
-							src="assets/images/update.png" style="cursor:pointer" alt="update"/></td>
+						<td><img onclick="openModifyProjectDialog({
+							projectId:' . $data[$i]['projectId'] . ', 
+							projectName: \'' . $data[$i]['projectName'] . '\', 
+							repositoryLink: \'' . $data[$i]['repository_link'] . '\'})"
+							src="assets/images/update.png" style="cursor:pointer" alt="update"/>
+						</td>
 						<td><img onclick="openDeleteProjectDialog({projectId:' . $data[$i]['projectId'] . '})" 
 							src="assets/images/delete.png" style="cursor:pointer" alt="update"/></td>
 			    	</tr>
@@ -163,6 +184,25 @@
 		?>
 		<script>
 			$(function() {
+				newProjectDialog = $("#newProjectDialog").dialog({
+					autoOpen: false,
+					height: 500,
+					width: 400,
+					modal: true,
+					buttons: {
+						"Create": function() {
+							newProjectDialog.find("form").submit();
+							newProjectDialog.dialog("close");
+						},
+						Cancel: function() {
+				  			newProjectDialog.dialog("close");
+						}
+					},
+					close: function() {
+
+					}
+				});
+
 				contributorDialog = $("#contributorDialog").dialog({
 					autoOpen: false,
 					height: 400,
@@ -201,6 +241,24 @@
 					}
 				});
 
+				modifyProjectDialog = $("#modifyProjectDialog").dialog({
+					autoOpen: false,
+					height: 400,
+					width: 400,
+					modal: true,
+					buttons: {
+						"Confirm": function() {
+							modifyProjectDialog.find("form").submit();
+							modifyProjectDialog.dialog("close");
+						},
+						Cancel: function() {
+							modifyProjectDialog.dialog("close");
+						}
+					},
+					close: function() {
+
+					}
+				});
 
 				deleteProjectDialog = $("#deleteProjectDialog").dialog({
 					autoOpen: false,
@@ -221,44 +279,6 @@
 					}
 				});
 
-				modifyProjectDialog = $("#modifyProjectDialog").dialog({
-					autoOpen: false,
-					height: 400,
-					width: 400,
-					modal: true,
-					buttons: {
-						"Confirm": function() {
-							modifyProjectDialog.find("form").submit();
-							modifyProjectDialog.dialog("close");
-						},
-						Cancel: function() {
-							modifyProjectDialog.dialog("close");
-						}
-					},
-					close: function() {
-
-					}
-				});
-
-				newProjectDialog = $("#newProjectDialog").dialog({
-					autoOpen: false,
-					height: 500,
-					width: 400,
-					modal: true,
-					buttons: {
-						"Create": function() {
-							newProjectDialog.find("form").submit();
-							newProjectDialog.dialog("close");
-						},
-						Cancel: function() {
-				  			newProjectDialog.dialog("close");
-						}
-					},
-					close: function() {
-
-					}
-				});
-
 				openContributorDialog = function(projectId) {
 					$("#contributorDialog > form > fieldset > input[type='hidden']").val(projectId);
 					contributorDialog.dialog('open');
@@ -271,20 +291,20 @@
 					ownerDialog.dialog('open');
 				};
 
-				openDeleteProjectDialog = function(params) {
-					$("#deleteProjectDialog > form > fieldset > input").each(function(index, elt) {
-						if(elt.name != 'action')
-							elt.value = params[elt.name];
-					});
-					deleteProjectDialog.dialog('open');
-				};
-
 				openModifyProjectDialog = function(params) {
 					$("#modifyProjectDialog > form > fieldset > input").each(function(index, elt) {
 						if(elt.name != 'action')
 							elt.value = params[elt.name];
 					});
 					modifyProjectDialog.dialog('open');
+				};
+
+				openDeleteProjectDialog = function(params) {
+					$("#deleteProjectDialog > form > fieldset > input").each(function(index, elt) {
+						if(elt.name != 'action')
+							elt.value = params[elt.name];
+					});
+					deleteProjectDialog.dialog('open');
 				};
 			});
 		</script>
@@ -329,12 +349,11 @@
 				<label for="ownerUsername">Owner username</label>
 				<input type="text" name="ownerUsername" id="ownerUsername" class="text ui-widget-content ui-corner-all">
 
+				<input type="hidden" type="text" name="action" value="create">
 				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 			</fieldset>
 		</form>
 	</div>
-
-
 
 	<div id="modifyProjectDialog" title="Modify project">
 		<p class="validateTips">Field "Project name" is required.</p>
@@ -346,15 +365,14 @@
 				<label for="repositoryLink">Repository link</label>
 				<input type="link" name="repositoryLink" id="repositoryLink" class="text ui-widget-content ui-corner-all">
 
+				<input type="hidden" type="text" name="action" value="modify">
 				<input type="hidden" name="projectId">
-				<input type="hidden" name="projectName">
-				<input type="hidden" name="repository_link">
 				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 			</fieldset>
 		</form>
 	</div>
 
-	<div id="deleteProjectDialog" title="Project deletion">
+	<div id="deleteProjectDialog" title="Delete project">
 		<p class="validateTips">Delete this project ?</p>
 		<form method="POST">
 			<fieldset>

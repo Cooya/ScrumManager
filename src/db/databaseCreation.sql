@@ -52,7 +52,6 @@ CREATE TABLE `task` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 /* ajout de la table "us" */
-
 CREATE TABLE `us` (
 	`id` int(80) NOT NULL AUTO_INCREMENT,
 	`specificId` int(10) UNSIGNED NOT NULL,
@@ -112,5 +111,3 @@ ALTER TABLE `documentation`
 ALTER TABLE `updates`
 	ADD CONSTRAINT `updates_ibfk_2` FOREIGN KEY (`developerId`) REFERENCES `user` (`id`),
 	ADD CONSTRAINT `updates_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);
-
-

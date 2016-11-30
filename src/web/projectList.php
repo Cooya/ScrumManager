@@ -87,12 +87,12 @@
 	<head>
 		<title>ScrumManager</title>
 		<meta charset="utf-8">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
-  		<link rel="stylesheet" href="assets/css/style.css">
-  		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="assets/css/style.css">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  	</head>
+	</head>
 	<body>
 		<?php include 'navBar.php'; ?>
 		<h1>Projects List</h1>
@@ -106,71 +106,60 @@
 			';
 
 			$id = $_SESSION['accountId'];
-			$sql = "SELECT project.id AS projectId, project.name AS projectName, project.owner, project.master, user.id AS userId, user.surname, 
-			user.name AS userName, project.last_update, project.creation_date, project.repository_link FROM project INNER JOIN user ON 
-			(master = $id OR owner = $id) AND (project.master = user.id OR project.owner = user.id)";
-			$data = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-			$dataSize = count($data);
-			$pass = false;
-			for($i = 0; $i < $dataSize; $i++) {
-				if($i + 1 < $dataSize && $data[$i]['projectName'] == $data[$i + 1]['projectName']) {
-					if($data[$i]['userId'] == $data[$i]['master']) {
-						$masterSurname = $data[$i]['surname'];
-						$masterName = $data[$i]['userName'];
-						$ownerSurname = $data[$i + 1]['surname'];
-						$ownerName = $data[$i + 1]['userName'];
-					}
-					else {
-						$masterSurname = $data[$i + 1]['surname'];
-						$masterName = $data[$i + 1]['userName'];
-						$ownerSurname = $data[$i]['surname'];
-						$ownerName = $data[$i]['userName'];
-					}
-					$pass = true;
-				}
-				else {
-					$masterSurname = $data[$i]['surname'];
-					$masterName = $data[$i]['userName'];
-					if($data[$i]['userId'] == $data[$i]['master']) {
-						$ownerSurname = $masterSurname;
-						$ownerName = $masterName;
-					}
-					else {
-						$ownerSurname = NULL;
-						$ownerName = NULL;
-					}
-				}
 
-			    echo '
-			    	<tr>
-			    		<td><a href="backLog.php?projectId=' . $data[$i]['projectId'] . '"><b>' . $data[$i]['projectName'] . '</b></a></td>
-			    		<td><b>' . $ownerSurname . ' ' . $ownerName . '</b></td>
-			    		<td><b>' . $masterSurname . ' ' . $masterName . '</b></td>
-			    		<td><b>' . $data[$i]['last_update'] . '</b></td>
-			    		<td><b>' . $data[$i]['creation_date'] . '</b></td>
-			    		<td><b><a href="http://' . $data[$i]['repository_link'] . '">' . $data[$i]['repository_link'] . '</a></b></td>	
-			    ';
-			    if(isProjectMaster($db, $_SESSION['accountId'], $data[$i]['projectId'])) echo '
-						<td><img onclick="openContributorDialog(' . $data[$i]['projectId'] . ')" src="assets/images/add.png" 
+			// récupération des projets où l'utilisateur actuel est soit master, soit propriétaire soit contributeur
+			$sql = "SELECT * FROM project WHERE master = $id OR owner = $id UNION 
+				SELECT id, name, owner, master, last_update, creation_date, repository_link FROM project 
+				INNER JOIN contributor ON project.id = contributor.projectId AND contributor.userId = $id";
+			$data = $db->query($sql)->fetchAll();
+
+			// récupération des identifiants des utilisateurs apparaissant dans la requête
+			foreach($data as $entry) {
+				if(!empty($entry['master']))
+					$users[$entry['master']] = true;
+				if(!empty($entry['owner']))
+					$users[$entry['owner']] = true;
+			}
+
+			// récupération de leur nom d'utilisateur
+			$sql = "SELECT id, login FROM user WHERE id IN (" . implode(',', array_keys($users)) . ")";
+			foreach($db->query($sql)->fetchAll() as $entry)
+				$logins[$entry['id']] = $entry['login'];
+
+			// remplacement de leur identifiant par leur nom d'utilisateur
+			for($i = 0; $i < count($data); ++$i) {
+				if(!empty($data[$i]['master']))
+					$data[$i]['master'] = $logins[$data[$i]['master']];
+				if(!empty($data[$i]['owner']))
+					$data[$i]['owner'] = $logins[$data[$i]['owner']];
+			}
+
+			foreach($data as $entry) {
+				echo '
+					<tr>
+						<td><a href="backLog.php?projectId=' . $entry['id'] . '"><b>' . $entry['name'] . '</b></a></td>
+						<td><b>' . $entry['owner'] . '</b></td>
+						<td><b>' . $entry['master'] . '</b></td>
+						<td><b>' . $entry['last_update'] . '</b></td>
+						<td><b>' . $entry['creation_date'] . '</b></td>
+						<td><b><a href="http://' . $entry['repository_link'] . '">' . $entry['repository_link'] . '</a></b></td>	
+				';
+				if(isProjectMaster($db, $_SESSION['accountId'], $entry['id'])) echo '
+						<td><img onclick="openContributorDialog(' . $entry['id'] . ')" src="assets/images/add.png" 
 							style="cursor:pointer" alt="update"/></td>
-						<td><img onclick="openOwnerDialog({projectId:' . $data[$i]['projectId'] . ', ownerName:\'' . $ownerName . '\'})" 
+						<td><img onclick="openOwnerDialog({projectId:' . $entry['id'] . ', ownerName:\'' . $entry['owner'] . '\'})" 
 							src="assets/images/update.png" style="cursor:pointer" alt="update"/></td>
 						<td><img onclick="openModifyProjectDialog({
-							projectId:' . $data[$i]['projectId'] . ', 
-							projectName: \'' . $data[$i]['projectName'] . '\', 
-							repositoryLink: \'' . $data[$i]['repository_link'] . '\'})"
+							projectId:' . $entry['id'] . ', 
+							projectName: \'' . $entry['name'] . '\', 
+							repositoryLink: \'' . $entry['repository_link'] . '\'})"
 							src="assets/images/update.png" style="cursor:pointer" alt="update"/>
 						</td>
-						<td><img onclick="openDeleteProjectDialog({projectId:' . $data[$i]['projectId'] . '})" 
+						<td><img onclick="openDeleteProjectDialog({projectId:' . $entry['id'] . '})" 
 							src="assets/images/delete.png" style="cursor:pointer" alt="update"/></td>
-			    	</tr>
-			    ';
-
-			    if($pass) {
-			    	$i++;
-			    	$pass = false;
-			    }
-			} 
+					</tr>
+				';
+			}
 			echo '</table><br>';
 			echo '<button onclick="newProjectDialog.dialog(\'open\')">Create a new project</button>';
 			echo '<div id="message">' . $message . '</div>';
@@ -188,7 +177,7 @@
 							newProjectDialog.dialog("close");
 						},
 						Cancel: function() {
-				  			newProjectDialog.dialog("close");
+							newProjectDialog.dialog("close");
 						}
 					},
 					close: function() {
@@ -207,7 +196,7 @@
 							contributorDialog.dialog("close");
 						},
 						Cancel: function() {
-				  			contributorDialog.dialog("close");
+							contributorDialog.dialog("close");
 						}
 					},
 					close: function() {
@@ -226,7 +215,7 @@
 							ownerDialog.dialog("close");
 						},
 						Cancel: function() {
-				  			ownerDialog.dialog("close");
+							ownerDialog.dialog("close");
 						}
 					},
 					close: function() {

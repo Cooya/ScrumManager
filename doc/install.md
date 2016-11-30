@@ -16,6 +16,7 @@ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root');
 "ScrumManager/src/bd/databaseCreation.sql" ou en exécutant le script NodeJS "ScrumManager/src/tests/createDatabase.js"
 
 ## Tests (NodeJS/Mocha/Selenium-Webdriver) ##
+* Installer Google Chrome sur la machine.
 * Installer NodeJS sur la machine (https://nodejs.org/).
 * Installer Mocha sur la machine, lancer la commande  : "npm install -g mocha" (ne fonctionne pas au CREMI).
 * Lancer la commande "npm install" dans le répertoire "ScrumManager/src/tests/", cela va installer tous les modules nécessaires.

@@ -40,6 +40,7 @@
 			$sprint = $_POST['sprint'];
 			$cost = !empty($_POST['cost']) ? $_POST['cost'] : 0;
 			$priority = !empty($_POST['priority']) ? $_POST['priority'] : 0;
+			$done = (isset($_POST['done']) && $_POST['done'] == "done") ? 1 : 0;
 			$result = $db->query("SELECT specificId FROM us WHERE projectId = '$projectId' AND specificId = '$specificId'"); 
 			$data = $result->fetch();
 
@@ -55,7 +56,7 @@
 			}
 			else if($_POST['action'] == 'modify') {
 				$sql = "UPDATE us SET specificId = '$specificId', description = '$description', sprint = '$sprint', cost = '$cost', 
-					priority = '$priority' WHERE specificId = '$specificId' AND projectId = '$projectId'";
+					priority = '$priority', done = $done WHERE specificId = '$specificId' AND projectId = '$projectId'";
 				if(!$db->query($sql))
 					$message = '<p style="color:red">This user story id has already been taken by another US.</p>';
 				else{
@@ -93,7 +94,7 @@
 					<table border=1>
 					<tr>
 						<td><b>Id</b></td><td><b>US</b></td><td><b>Sprint</b></td><td><b>Cost</b></td><td><b>Priority</b></td>
-						<td><b>Modify</b></td><td><b>Delete</b></td>
+						<td><b>Done</b></td><td><b>Modify</b></td><td><b>Delete</b></td>
 					</tr>
 				';
 				$sql = "SELECT * FROM us WHERE projectId = $projectId ORDER BY specificId";
@@ -106,6 +107,7 @@
 							<td><a href="sprintDetails.php?projectId=' . $projectId . '&sprint=' . $entry['sprint'] . '">' . $entry['sprint'] . '</td>
 							<td>' . ($entry['cost'] != 0 ? $entry['cost'] : "") . '</td>
 							<td>' . ($entry['priority'] != 0 ? $entry['priority'] : "") . '</td>
+							<td>' . ($entry['done'] != 0 ? "Yes" : "No") . '</td>
 							<td><img onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($entry)) . ')" style="cursor:pointer"
 								src="assets/images/update.png" alt="update"/></td>
 							<td><img onclick="openDeleteDialog(' . str_replace("\"", "'", json_encode($entry)) . ')" style="cursor:pointer"
@@ -230,7 +232,9 @@
 
 				openModifyDialog = function(usObj) {
 					$("#modifyDialog > form > fieldset > input").each(function(index, elt) {
-						if(elt.name != 'action')
+						if(elt.name == 'done')
+							elt.checked = usObj['done'] == "1";
+						else if(elt.name != 'action')
 							elt.value = usObj[elt.name];
 					});
 					modifyDialog.dialog('open');
@@ -292,6 +296,9 @@
 				
 				<label for="Priority">Priority</label>
 				<input type="number" name="priority" id="priority" class="text ui-widget-content ui-corner-all">
+
+				<label for="done">Done ?</label><br>
+				<input type="checkbox" name="done" id="done" value="done">
 
 				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 			</fieldset>

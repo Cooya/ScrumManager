@@ -59,6 +59,7 @@ CREATE TABLE `us` (
 	`description` varchar(80) NOT NULL,
 	`priority` int(80) DEFAULT NULL,
 	`cost` int(80) DEFAULT NULL,
+	`done` tinyint(1) NOT NULL DEFAULT 0,
 	`sprint` int(80) NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `projectId` (`projectId`)

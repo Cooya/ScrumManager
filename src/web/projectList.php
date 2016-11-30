@@ -156,9 +156,11 @@
 			}
 
 			// récupération de leur nom d'utilisateur
-			$sql = "SELECT id, login FROM user WHERE id IN (" . implode(',', array_keys($users)) . ")";
-			foreach($db->query($sql)->fetchAll() as $entry)
-				$logins[$entry['id']] = $entry['login'];
+			if(isset($users)) {
+				$sql = "SELECT id, login FROM user WHERE id IN (" . implode(',', array_keys($users)) . ")";
+				foreach($db->query($sql)->fetchAll() as $entry)
+					$logins[$entry['id']] = $entry['login'];
+			}
 
 			// remplacement de leur identifiant par leur nom d'utilisateur
 			for($i = 0; $i < count($data); ++$i) {

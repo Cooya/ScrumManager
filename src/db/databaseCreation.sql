@@ -74,7 +74,7 @@ CREATE TABLE `documentation` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 /* ajout de la table "update" */
-CREATE TABLE `update` (
+CREATE TABLE `updates` (
 	`id` int(80) unsigned NOT NULL AUTO_INCREMENT,
 	`projectId` int(80) unsigned NOT NULL,
 	`description` text NOT NULL,
@@ -107,6 +107,6 @@ ALTER TABLE `documentation`
 	ADD CONSTRAINT `documentation_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);
 	
 	/* contraintes pour la table "updates" */
-ALTER TABLE `update`
+ALTER TABLE `updates`
 	ADD CONSTRAINT `updates_ibfk_2` FOREIGN KEY (`developerId`) REFERENCES `user` (`id`),
 	ADD CONSTRAINT `updates_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);

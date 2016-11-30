@@ -64,6 +64,7 @@
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 	</head>
 	<body>
 		<?php 
@@ -78,18 +79,19 @@
 						<td><b>Modify</b></td><td><b>Delete</b></td>
 					</tr>
 				';
-				$result = $db->query("SELECT * FROM us WHERE projectId = $projectId ORDER BY specificId");
-				while($data = $result->fetch(PDO::FETCH_ASSOC)) {
+				$sql = "SELECT * FROM us WHERE projectId = $projectId ORDER BY specificId";
+				$data = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+				foreach($data as $entry) {
 					echo'
 						<tr>
-							<td>' . $data['specificId'] . '</td>
-							<td>' . $data['description'] . '</td>
-							<td><a href="sprintDetails.php?projectId=' . $projectId . '&sprint=' . $data['sprint'] . '">' . $data['sprint'] . '</td>
-							<td>' . ($data['cost'] != 0 ? $data['cost'] : "") . '</td>
-							<td>' . ($data['priority'] != 0 ? $data['priority'] : "") . '</td>
-							<td><img onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($data)) . ')" style="cursor:pointer"
+							<td>' . $entry['specificId'] . '</td>
+							<td>' . $entry['description'] . '</td>
+							<td><a href="sprintDetails.php?projectId=' . $projectId . '&sprint=' . $entry['sprint'] . '">' . $entry['sprint'] . '</td>
+							<td>' . ($entry['cost'] != 0 ? $entry['cost'] : "") . '</td>
+							<td>' . ($entry['priority'] != 0 ? $entry['priority'] : "") . '</td>
+							<td><img onclick="openModifyDialog(' . str_replace("\"", "'", json_encode($entry)) . ')" style="cursor:pointer"
 								src="assets/images/update.png" alt="update"/></td>
-							<td><img onclick="openDeleteDialog(' . str_replace("\"", "'", json_encode($data)) . ')" style="cursor:pointer"
+							<td><img onclick="openDeleteDialog(' . str_replace("\"", "'", json_encode($entry)) . ')" style="cursor:pointer"
 								src="assets/images/delete.png" alt="delete"/></td>
 						</tr>
 					';
@@ -100,9 +102,57 @@
 		<br>
 		<button id="createUS" onclick="createDialog.dialog('open')">Add new US</button>
 		<br>
-
 		<div id="message"><?php echo $message ?></div>
+
+		<?php
+			// récupération de tous les US d'un projet
+			foreach($data as $us) {
+				if(!isset($sprints[$us['sprint']]))
+					$sprints[$us['sprint']] = [];
+				array_push($sprints[$us['sprint']], $us);
+			}
+
+			// récupération des coûts de chaque sprint et du coût total
+			$totalCost = 0;
+			foreach($sprints as $key => $sprint) {
+				$sprintCost = 0;
+				foreach($sprint as $us)
+					$sprintCost += $us['cost'];
+				$sprints[$key]['cost'] = $sprintCost;
+				$totalCost += $sprintCost;
+			}
+			$sprints['totalCost'] = $totalCost;
+
+			// récupération des tâches de chaque sprint
+			// TO DO ...
+		?>
+
+		<canvas id="chart" width="800" height="400"></canvas>
 		<script>
+			var chart = new Chart(document.getElementById("chart"), {
+				type: 'line',
+				data: {
+					labels: [0, 1, 2, 3, 4, 5, 6],
+					datasets: [
+						{
+							label: "reality",
+							fill: false,
+							borderColor: "green",
+							data: [50, 32, 26, 14, 11, 6]
+						},
+						{
+							label: "expected",
+							fill: false,
+							borderColor: "red",
+							data: [50, 30, 25, 10, 8, 5]
+						}
+					]
+				},
+				options: {
+			        responsive: false
+			    }
+			});
+
 			$(function() {
 				createDialog = $("#createDialog").dialog({
 					autoOpen: false,

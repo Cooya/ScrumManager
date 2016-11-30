@@ -64,7 +64,6 @@ CREATE TABLE `us` (
 	KEY `projectId` (`projectId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
-
 /* ajout de la table "documentation" */
 CREATE TABLE `documentation` (
 	`id` int(80) unsigned NOT NULL AUTO_INCREMENT,
@@ -74,15 +73,15 @@ CREATE TABLE `documentation` (
    	KEY `projectId` (`projectId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
-/* ajout de la table "updates" */
-CREATE TABLE `updates` (
+/* ajout de la table "update" */
+CREATE TABLE `update` (
 	`id` int(80) unsigned NOT NULL AUTO_INCREMENT,
 	`projectId` int(80) unsigned NOT NULL,
-	`date_update` datetime,
+	`description` text NOT NULL,
 	`developerId` int(80) unsigned DEFAULT NULL,
+	`date_update` datetime,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-
 
 /* contraintes pour la table "project" */
 ALTER TABLE `project`

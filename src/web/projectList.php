@@ -5,6 +5,12 @@
 	include 'databaseConnection.php';
 	include 'utilities.php';
 	$message = "";
+	//pour les mises à jours
+	$loginUp=$_SESSION['login'];
+	$resultUp = $db->query("SELECT id FROM user WHERE login = '$loginUp' "); 
+	$dataUp = $resultUp->fetch();
+	$idUp=$dataUp['id'];
+	$prname='';
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		if(isset($_POST['projectName']) && $_POST['action'] == 'create') { // création d'un projet
@@ -15,13 +21,19 @@
 			else {
 				if(!empty($_POST['projectName'])) {
 					$projectName = $_POST['projectName'];
+					$prname = $_POST['projectName'];
 					$repositoryLink = !empty($_POST['repositoryLink']) ? $_POST['repositoryLink'] : '';
 					$creationDate = date("Y-m-d H:i:s");
 					$ownerId = isset($ownerId) ? $ownerId : 'NULL';
 					$sql = "INSERT INTO project (name, master, creation_date, repository_link, owner) VALUES 
 					('$projectName', " . $masterId . ", '$creationDate', '$repositoryLink', $ownerId)";
-					if($db->query($sql)) 
+					if($db->query($sql)) {
+						$lastId = $db->lastInsertId();
+						$projectName=$_POST['projectName'];
+						$description="the user  $loginUp created the project $projectName  in projectList.php " ;
+						$result = $db->query("INSERT INTO updates VALUES(NULL,'$lastId' ,'$description' ,'$idUp', NOW() )");
 						$message = '<p style="color:green">The project "' . $_POST['projectName'] . '" has been created successfully.</p>';
+						}
 					else
 						$message = '<p style="color:red">An error has occurred, please try again.</p>';
 				}
@@ -40,8 +52,13 @@
 					$sql = "UPDATE project SET owner = $ownerId WHERE id = $projectId";
 					if(!$db->query($sql))
 						$message = '<p style="color: red">Setting client of the project has failed.</p>';
-					else
+					else{
+						$owner= $_POST['owner'];
+						$description="the user  $loginUp set $owner as owner of the project $prname  in projectList.php " ;
+						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
+
 						$message = '<p style="color: green">The client has been set successfully.</p>';
+					}
 				}
 			}
 			else if(isset($_POST['contributor'])) { // ajout d'un contributeur à un projet
@@ -51,8 +68,14 @@
 					$sql = "INSERT INTO contributor (projectId, userId) VALUES ($projectId, $contributorId)";
 					if(!$db->query($sql))
 						$message = '<p style="color: red">Adding contributor has failed. Maybe it is already a contributor of this project.</p>';
-					else
+					else{
+						$lastId = $db->lastInsertId();
+						$contributor= $_POST['contributor'];
+						$description="the user  $loginUp added $contributor as contributor of the project $prname  in projectList.php " ;
+						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
+
 						$message = '<p style="color: green">The contributor has been added successfully.</p>';
+					}
 				}
 			}
 			// modification du nom ou du dépôt d'un projet
@@ -61,8 +84,13 @@
 					$sql = "UPDATE project SET name = \"" . $_POST['projectName'] . "\", repository_link = \"" . $_POST['repositoryLink'] . "\" WHERE id = $projectId";
 					if(!$db->query($sql))
 						$message = '<p style="color: red">Updating project has failed, please try again.</p>';
-					else
+					else{
+						$lastId = $db->lastInsertId();
+						$description="the user  $loginUp modified the project  $prname in projectList.php " ;
+						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
+
 						$message = '<p style="color: green">The project has been updated successfully.</p>';
+					}
 				}
 				else
 					$message = '<p style="color: red">The project name cannot be empty.</p>';
@@ -73,8 +101,12 @@
 				$sql2 = "DELETE FROM project WHERE id = $projectId";
 				if(!$db->query($sql) || !$db->query($sql2))
 					$message = '<p style="color:red">An error has occured when trying to delete this project.</p>';
-				else
+				else{
 					$message = '<p style="color:green">The project has been deleted successfully.</p>';
+					//$lastId = $db->lastInsertId();
+					//$description="the user  $loginUp deleted  the project $prname in projectList.php " ;
+					//$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
+			}
 			}
 			else
 				$message = '<p style="color: red">Missing POST parameter(s).</p>';
@@ -103,7 +135,7 @@
 			echo '
 				<table border="1">
 					<tr>
-						<td><b>Name</b></td><td><b>Owner</b></td><td><b>Master</b></td><td><b>Last update</b></td><td><b>Creation date</b></td><td><b>Repository Link</b></td><td><b>Add contributor</b></td><td><b>Set owner</b></td><td><b>Modify</b></td><td><b>Delete</b></td>
+						<td><b>Name</b></td><td><b>Owner</b></td><td><b>Master</b></td><td><b>Last update</b></td><td><b>Creation date</b></td><td><b>Repository Link</b></td><td><b>Add contributor</b></td><td><b>Set owner</b></td><td><b>Modify</b></td><td><b>Delete</b></td><td><b>Updates</b></td>
 					</tr>
 			';
 
@@ -159,6 +191,8 @@
 						</td>
 						<td><img onclick="openDeleteProjectDialog({projectId:' . $entry['id'] . '})" 
 							src="assets/images/delete.png" style="cursor:pointer" alt="update"/></td>
+						<td><a href="updates.php?projectId=' . $entry['id'] . '">more</a></td>
+	
 					</tr>
 				';
 			}

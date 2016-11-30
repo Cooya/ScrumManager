@@ -107,6 +107,6 @@ ALTER TABLE `documentation`
 	ADD CONSTRAINT `documentation_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);
 	
 	/* contraintes pour la table "updates" */
-ALTER TABLE `updates`
+ALTER TABLE `update`
 	ADD CONSTRAINT `updates_ibfk_2` FOREIGN KEY (`developerId`) REFERENCES `user` (`id`),
 	ADD CONSTRAINT `updates_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);

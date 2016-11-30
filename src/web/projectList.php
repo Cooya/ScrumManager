@@ -68,8 +68,10 @@
 					$message = '<p style="color: red">The project name cannot be empty.</p>';
 			}
 			else if($_POST['action'] == 'delete') { // suppression d'un projet
-				$sql = "DELETE FROM project WHERE id = $projectId";
-				if(!$db->query($sql))
+				// suppression des contributeurs du projet (nécessaire du fait de la contrainte de clé étrangère)
+				$sql = "DELETE FROM contributor WHERE projectId = $projectId";
+				$sql2 = "DELETE FROM project WHERE id = $projectId";
+				if(!$db->query($sql) || !$db->query($sql2))
 					$message = '<p style="color:red">An error has occured when trying to delete this project.</p>';
 				else
 					$message = '<p style="color:green">The project has been deleted successfully.</p>';

@@ -173,7 +173,7 @@
 			foreach($data as $entry) {
 				echo '
 					<tr>
-						<td><a href="backLog.php?projectId=' . $entry['id'] . '"><b>' . $entry['name'] . '</b></a></td>
+						<td><a href="backlog.php?projectId=' . $entry['id'] . '"><b>' . $entry['name'] . '</b></a></td>
 						<td><b>' . $entry['owner'] . '</b></td>
 						<td><b>' . $entry['master'] . '</b></td>
 						<td><b>' . $entry['last_update'] . '</b></td>

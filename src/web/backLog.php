@@ -124,26 +124,28 @@
 		<div id="message"><?php echo $message ?></div>
 
 		<?php
-			// récupération de tous les US d'un projet
-			foreach($data as $us) {
-				if(!isset($sprints[$us['sprint']]))
-					$sprints[$us['sprint']] = [];
-				array_push($sprints[$us['sprint']], $us);
-			}
+			if(count($data) != 0) {
+				// récupération de tous les US d'un projet
+				foreach($data as $us) {
+					if(!isset($sprints[$us['sprint']]))
+						$sprints[$us['sprint']] = [];
+					array_push($sprints[$us['sprint']], $us);
+				}
 
-			// récupération des coûts de chaque sprint et du coût total
-			$totalCost = 0;
-			foreach($sprints as $key => $sprint) {
-				$sprintCost = 0;
-				foreach($sprint as $us)
-					$sprintCost += $us['cost'];
-				$sprints[$key]['cost'] = $sprintCost;
-				$totalCost += $sprintCost;
-			}
-			$sprints['totalCost'] = $totalCost;
+				// récupération des coûts de chaque sprint et du coût total
+				$totalCost = 0;
+				foreach($sprints as $key => $sprint) {
+					$sprintCost = 0;
+					foreach($sprint as $us)
+						$sprintCost += $us['cost'];
+					$sprints[$key]['cost'] = $sprintCost;
+					$totalCost += $sprintCost;
+				}
+				$sprints['totalCost'] = $totalCost;
 
-			// récupération des tâches de chaque sprint
-			// TO DO ...
+				// récupération des tâches de chaque sprint
+				// TO DO ...
+			}
 		?>
 
 		<canvas id="chart" width="800" height="400"></canvas>

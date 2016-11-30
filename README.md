@@ -5,15 +5,15 @@
 | ---------- | ---------- | :-----: | :--------: | :----------: | :----: |
 | 1 | Ismail | | | | X |
 | 2 | Ismail | | | | X |
-| 3 | Nicolas| X| | | |
-| 4 | Ismail | | | | X|
-| 5 | Ismail | | X| | |
-| 6 | Ismail |X| | | |
-| 7 | Ismail |X| | | |
-| 8 | Ismail |X| | | |
-| 9 | Nicolas | X| | | |
-| 10 | Nicolas  | X | | | |
-| 11 | Mohamed |  X | | | |
+| 3 | Nicolas| | | | X |
+| 4 | Ismail | | | | X |
+| 5 | Ismail | | X | | |
+| 6 | Ismail | X | | | |
+| 7 | Ismail | X | | | |
+| 8 | Ismail | X | | | |
+| 9 | Nicolas | | X | | |
+| 10 | Nicolas | | X | | |
+| 11 | Mohamed | X | | | |
 | 12 | Mohamed | X | | | |
 | 13 | Nicolas | X | | | |
 
@@ -78,13 +78,13 @@
 ### Tâche 11 :
 * Création de la page HTML pour afficher une liste des modifications apportées à un projet.
 
-*Durée estimée : 0,5 Jh*
+*Durée estimée : 1 Jh*
 
 
 ### Tâche 12 :
 * Création du contrôleur qui affiche les modifications apportées à un projet.
 
-*Durée estimée : 1 Jh*
+*Durée estimée : 2 Jh*
 
 ### Tâche 13 :
 * Test de validation qui supprime un projet.
@@ -94,4 +94,4 @@
 *Durée estimée : 1 Jh*
 
 
-**Durée totale estimée : 12,5 Jh**
+**Durée totale estimée : 14 Jh**

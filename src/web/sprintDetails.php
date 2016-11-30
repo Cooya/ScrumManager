@@ -5,9 +5,14 @@
 	include 'databaseConnection.php';
 	include 'utilities.php';
 	$message = "";
-
-	$projectId = $_GET['projectId'];
+		$projectId = $_GET['projectId'];
 	$sprint = $_GET['sprint'];
+	//pour les mises à jours
+	$loginUp=$_SESSION['login'];
+	$resultUp = $db->query("SELECT id FROM user WHERE login = '$loginUp' "); 
+	$dataUp = $resultUp->fetch();
+	$idUp=$dataUp['id'];
+
 	if(empty($_GET['projectId'] || empty($_GET['sprint'])))
 		$message = '<p style="color:red">Missing GET parameter(s).</p>';
 	else if(!belongsToProject($db, $_SESSION['accountId'], $projectId)) // petite sécurité d'accès
@@ -30,8 +35,12 @@
 					VALUES ($id, $projectId, '$description', $developerId, $sprint, $status, $duration)";
 					if(!$db->query($sql))
 						$message = '<p style="color:red">Task id already used.</p>';
-					else
+					else{
+
+						$description="the user  $loginUp added the task $id of the sprint $sprint in the sprintDetails.php" ;
+						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
 						$message = '<p style="color:green">The task has been created successfully.</p>';
+					}
 				}
 			}
 		}
@@ -58,8 +67,11 @@
 							WHERE id = $id AND sprint = $sprint AND projectId = $projectId";
 					if(!$db->query($sql))
 						$message = '<p style="color:red">Task id already used.</p>';
-					else
+					else{
+						$description="the user  $loginUp modified the task $id of the sprint $sprint in the sprintDetails.php" ;
+						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
 						$message = '<p style="color:green">The task has been updated successfully.</p>';
+					}
 				}
 			}
 		}
@@ -71,8 +83,11 @@
 				$sql = "DELETE FROM task WHERE id = $id AND sprint = $sprint AND projectId = $projectId";
  				if(!$db->query($sql))
  					$message = '<p style="color:red">An error has occurred when deleting the task.</p>';
- 				else
+ 				else{
+ 						$description="the user  $loginUp deleted the task $id of the sprint $sprint in the sprintDetails.php" ;
+						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
  					$message = '<p style="color:green">The task has been deleted successfully.</p>';
+ 				}
 			}
 		}
 		else

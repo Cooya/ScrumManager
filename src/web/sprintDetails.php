@@ -4,16 +4,13 @@
 		header('Location: login.php');
 	include 'databaseConnection.php';
 	include 'utilities.php';
-	$message = "";
-		$projectId = $_GET['projectId'];
+	$login = $_SESSION['login'];
+	$accountId = $_SESSION['accountId'];
+	$projectId = $_GET['projectId'];
 	$sprint = $_GET['sprint'];
-	//pour les mises à jours
-	$loginUp=$_SESSION['login'];
-	$resultUp = $db->query("SELECT id FROM user WHERE login = '$loginUp' "); 
-	$dataUp = $resultUp->fetch();
-	$idUp=$dataUp['id'];
+	$message = "";
 
-	if(empty($_GET['projectId'] || empty($_GET['sprint'])))
+	if(empty($projectId) || empty($sprint))
 		$message = '<p style="color:red">Missing GET parameter(s).</p>';
 	else if(!belongsToProject($db, $_SESSION['accountId'], $projectId)) // petite sécurité d'accès
 		die('You are not allowed to access to this backlog project.');
@@ -35,10 +32,9 @@
 					VALUES ($id, $projectId, '$description', $developerId, $sprint, $status, $duration)";
 					if(!$db->query($sql))
 						$message = '<p style="color:red">Task id already used.</p>';
-					else{
-
-						$description="the user  $loginUp added the task $id of the sprint $sprint in the sprintDetails.php" ;
-						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
+					else {
+						$description="the user $login added the task $id of the sprint $sprint in the sprintDetails.php" ;
+						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
 						$message = '<p style="color:green">The task has been created successfully.</p>';
 					}
 				}
@@ -68,8 +64,8 @@
 					if(!$db->query($sql))
 						$message = '<p style="color:red">Task id already used.</p>';
 					else{
-						$description="the user  $loginUp modified the task $id of the sprint $sprint in the sprintDetails.php" ;
-						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
+						$description="the user $login modified the task $id of the sprint $sprint in the sprintDetails.php" ;
+						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
 						$message = '<p style="color:green">The task has been updated successfully.</p>';
 					}
 				}
@@ -84,8 +80,8 @@
  				if(!$db->query($sql))
  					$message = '<p style="color:red">An error has occurred when deleting the task.</p>';
  				else{
- 						$description="the user  $loginUp deleted the task $id of the sprint $sprint in the sprintDetails.php" ;
-						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
+ 					$description="the user  $login deleted the task $id of the sprint $sprint in the sprintDetails.php" ;
+					$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
  					$message = '<p style="color:green">The task has been deleted successfully.</p>';
  				}
 			}
@@ -108,7 +104,7 @@
 	</head>
 	<body>
 		<?php include 'navBar.php'; ?>
-		<h1>Sprint <?php echo $_GET['sprint'] ?> </h1>
+		<h1>Sprint <?php echo $sprint; ?> </h1>
 		<h2>Kanban</h2>
 		<table class="tableau">
 			<thead class="header">

@@ -4,19 +4,14 @@
 		header('Location: login.php');
 	include 'databaseConnection.php';
 	include 'utilities.php';
-	$message = "";
-
+	$login = $_SESSION['login'];
+	$accountId = $_SESSION['accountId'];
 	$projectId = $_GET['projectId'];
-
-	//pour les mises à jours
-	$loginUp=$_SESSION['login'];
-	$resultUp = $db->query("SELECT id FROM user WHERE login = '$loginUp' "); 
-	$dataUp = $resultUp->fetch();
-	$idUp=$dataUp['id'];
+	$message = "";
 
 	if(empty($projectId))
 		$message = '<p style="color:red">Missing GET parameter.</p>';
-	else if(!belongsToProject($db, $_SESSION['accountId'], $projectId)) // petite sécurité d'accès
+	else if(!belongsToProject($db, $accountId, $projectId)) // petite sécurité d'accès
 		die('You are not allowed to access to this backlog project.');
 	else if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
 		if($_POST['action'] == 'delete') {
@@ -25,8 +20,8 @@
 			$specificId = $_POST['specificId'];
 			$result = $db->query("DELETE FROM us WHERE projectId = '$projectId' AND sprint = '$sprint' AND specificId = '$specificId'");
 			if($result){
-				$description="the user  $loginUp deleted the user story $specificId of the sprint $sprint in backlog.php " ;
-				$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
+				$description="the user  $login deleted the user story $specificId of the sprint $sprint in backlog.php " ;
+				$result = $db->query("INSERT INTO updates VALUES (NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
 				$message = '<p style="color:green">The user story has been deleted successfully.</p>';
 			}
 			else
@@ -41,17 +36,19 @@
 			$cost = !empty($_POST['cost']) ? $_POST['cost'] : 0;
 			$priority = !empty($_POST['priority']) ? $_POST['priority'] : 0;
 			$done = (isset($_POST['done']) && $_POST['done'] == "done") ? 1 : 0;
-			$result = $db->query("SELECT specificId FROM us WHERE projectId = '$projectId' AND specificId = '$specificId'"); 
-			$data = $result->fetch();
 
-			if(($_POST['action'] == 'create' && $specificId != $data['specificId'])) {
-				$sql = "INSERT INTO us VALUES(NULL, '$specificId', '$projectId', '$description', '$priority', '$cost', '$sprint')";
-				if(!$db->query($sql))
-					$message = '<p style="color:red">This user story id has already been taken by another US.</p>';
-				else{
-					$description="the user  $loginUp added the user story $specificId of the sprint $sprint in  backlog.php " ;
-					$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
-					$message = '<p style="color:green">The user story has been created successfully.</p>';
+			if($_POST['action'] == 'create') {
+				if($result = $db->query("SELECT specificId FROM us WHERE projectId = '$projectId' AND specificId = '$specificId'")->fetch())
+					$message = '<p style="color:red">This US id already exists.</p>';
+				else {
+					$sql = "INSERT INTO us VALUES (NULL, $specificId, $projectId, '$description', $priority, $cost, $sprint, 0)";
+					if(!$db->query($sql))
+						$message = '<p style="color:red">This user story id has already been taken by another US.</p>';
+					else {
+						$description="the user  $login added the user story $specificId of the sprint $sprint in  backlog.php " ;
+						$result = $db->query("INSERT INTO updates VALUES (NULL, $projectId, '$description', $accountId, now())");
+						$message = '<p style="color:green">The user story has been created successfully.</p>';
+					}
 				}
 			}
 			else if($_POST['action'] == 'modify') {
@@ -60,14 +57,14 @@
 				if(!$db->query($sql))
 					$message = '<p style="color:red">This user story id has already been taken by another US.</p>';
 				else{
-					$description="the user  $loginUp modified the user story $specificId of the sprint $sprint in backlog.php " ;
-					$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
+					$description="the user  $login modified the user story $specificId of the sprint $sprint in backlog.php " ;
+					$result = $db->query("INSERT INTO updates VALUES (NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
 
 					$message = '<p style="color:green">The user story has been updated successfully.</p>';
 				}
 			}
 			else
-				$message = '<p style="color:red">Invalid action.</p>';
+				$message = '<p style="color:red">Invalid action into the POST parameter.</p>';
 		}
 	}
 ?>

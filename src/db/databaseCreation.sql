@@ -70,7 +70,7 @@ CREATE TABLE `documentation` (
 	`id` int(80) unsigned NOT NULL AUTO_INCREMENT,
 	`projectId` int(80) unsigned NOT NULL,
 	`description` varchar(80) NOT NULL,
-	PRIMARY KEY (`id`),
+	PRIMARY KEY (`id`, `projectId`),
    	KEY `projectId` (`projectId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
@@ -106,6 +106,7 @@ ALTER TABLE `us`
 /* contraintes pour la table "documentation" */
 ALTER TABLE `documentation`
 	ADD CONSTRAINT `documentation_ibfk_1` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`);
+ 	ADD UNIQUE(`projectId`); 
 	
 	/* contraintes pour la table "updates" */
 ALTER TABLE `updates`

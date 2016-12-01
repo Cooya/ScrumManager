@@ -106,7 +106,7 @@
 					//$lastId = $db->lastInsertId();
 					//$description="the user  $loginUp deleted  the project $prname in projectList.php " ;
 					//$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
-			}
+				}
 			}
 			else
 				$message = '<p style="color: red">Missing POST parameter(s).</p>';

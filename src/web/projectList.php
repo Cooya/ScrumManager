@@ -98,15 +98,18 @@
 			else if($_POST['action'] == 'delete') { // suppression d'un projet
 				// suppression des contributeurs du projet (nécessaire du fait de la contrainte de clé étrangère)
 				$sql = "DELETE FROM contributor WHERE projectId = $projectId";
-				$sql2 = "DELETE FROM project WHERE id = $projectId";
-				if(!$db->query($sql) || !$db->query($sql2))
+				$sql2 = "DELETE FROM updates WHERE projectId = $projectId";
+				$sql3 = "DELETE FROM project WHERE id = $projectId";
+				if(!$db->query($sql) || !$db->query($sql2) || !$db->query($sql3)) {
+					var_dump($db->errorInfo());
 					$message = '<p style="color:red">An error has occured when trying to delete this project.</p>';
+				}
 				else{
 					$message = '<p style="color:green">The project has been deleted successfully.</p>';
 					$lastId = $db->lastInsertId();
 					$description="the user  $loginUp deleted  the project $prname in projectList.php " ;
 					$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
-			}
+				}
 			}
 			else
 				$message = '<p style="color: red">Missing POST parameter(s).</p>';

@@ -4,6 +4,10 @@
 * Installer Apache et PHP sur la machine.
 * Configurer Apache pour que le répertoire d'accueil pointe vers le dossier "ScrumManager/src/web/" (du dépôt). Soit en modifiant 
 le "DocumentRoot" dans le fichier "httpd.conf" soit en créant un virtual host dans le fichier "httpd-vhosts.conf".
+* Au CREMI, il suffit de lancer la commande suivante pour lancer le serveur Apache :
+```
+php -S localhost:8080 -t src/web/
+```
 
 ## Base de données (MySQL) ##
 * Installer MySQL sur la machine.

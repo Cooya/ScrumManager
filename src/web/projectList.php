@@ -103,9 +103,9 @@
 					$message = '<p style="color:red">An error has occured when trying to delete this project.</p>';
 				else{
 					$message = '<p style="color:green">The project has been deleted successfully.</p>';
-					//$lastId = $db->lastInsertId();
-					//$description="the user  $loginUp deleted  the project $prname in projectList.php " ;
-					//$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
+					$lastId = $db->lastInsertId();
+					$description="the user  $loginUp deleted  the project $prname in projectList.php " ;
+					$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$idUp', NOW() )");
 			}
 			}
 			else

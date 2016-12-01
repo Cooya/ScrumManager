@@ -18,9 +18,8 @@
 			$email = $_POST['email'];
 
 			$sql = "INSERT INTO user (login, password, name, surname, mail) VALUES ('$login', '$password', '$name', '$surname', '$email')";
-			if(!$db->query($sql)) {
+			if(!$db->query($sql))
 				$message = '<p style="color: red">This login has already been taken.</p>';
-			}
 			else {
 				$_SESSION['accountId'] = $db->lastInsertId();
 				$_SESSION['login'] = $login;

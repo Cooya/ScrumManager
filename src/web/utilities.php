@@ -37,4 +37,10 @@
 		$data = $db->query($sql)->fetch();
 		return $data['master'] == $userId;
 	}
+
+	function newUpdate($db, $projectId, $accountId, $login, $description) {
+		$description = "<b>$login</b> " . $description;
+		$db->query("INSERT INTO updates VALUES (NULL, $projectId, '$description', $accountId, now())");
+		$db->query("UPDATE project SET last_update = now() WHERE id = $projectId");
+	}
 ?>

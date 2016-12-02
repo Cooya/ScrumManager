@@ -23,10 +23,7 @@
 					$sql = "INSERT INTO project (name, master, creation_date, repository_link, owner) VALUES 
 					('$projectName', $masterId, '$creationDate', '$repositoryLink', $ownerId)";
 					if($db->query($sql)) {
-						$lastId = $db->lastInsertId();
-						$projectName=$_POST['projectName'];
-						$description="the user  $login created the project $projectName  in projectList.php " ;
-						$result = $db->query("INSERT INTO updates VALUES (NULL,'$lastId' ,'$description' ,'$accountId', NOW() )");
+						newUpdate($db, $db->lastInsertId(), $accountId, $login, "has created the project $projectName.");
 						$message = '<p style="color:green">The project "' . $_POST['projectName'] . '" has been created successfully.</p>';
 					}
 					else
@@ -41,18 +38,16 @@
 			if(!isProjectMaster($db, $_SESSION['accountId'], $projectId)) // nécessite d'être le master du projet pour effectuer une modification
 				$message = '<p style="color: red">You are not the master of this project.</p>';
 			else if(isset($_POST['owner'])) { // modification du propriétaire d'un projet
-				if(!$ownerId = getIdByUsername($db, $_POST['owner']))
+				$owner = $_POST['owner'];
+				if(!$ownerId = getIdByUsername($db, $owner))
 					$message .= '<p style="color: red">Unknown user.</p>';
 				else {
 					$sql = "UPDATE project SET owner = $ownerId WHERE id = $projectId";
 					if(!$db->query($sql))
-						$message = '<p style="color: red">Setting client of the project has failed.</p>';
-					else{
-						$owner= $_POST['owner'];
-						$description="the user  $login set $owner as owner of the project in projectList.php " ;
-						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
-
-						$message = '<p style="color: green">The client has been set successfully.</p>';
+						$message = '<p style="color: red">Setting owner of the project has failed.</p>';
+					else {
+						newUpdate($db, $projectId, $accountId, $login, "has set $owner as owner of the project.");
+						$message = '<p style="color: green">The owner has been set successfully.</p>';
 					}
 				}
 			}
@@ -63,12 +58,9 @@
 					$sql = "INSERT INTO contributor (projectId, userId) VALUES ($projectId, $contributorId)";
 					if(!$db->query($sql))
 						$message = '<p style="color: red">Adding contributor has failed. Maybe it is already a contributor of this project.</p>';
-					else{
-						$lastId = $db->lastInsertId();
-						$contributor= $_POST['contributor'];
-						$description="the user  $login added $contributor as contributor of the project in projectList.php " ;
-						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
-
+					else {
+						$contributor = $_POST['contributor'];
+						newUpdate($db, $projectId, $accountId, $login, "has added $contributor as contributor of the project.");
 						$message = '<p style="color: green">The contributor has been added successfully.</p>';
 					}
 				}
@@ -80,10 +72,7 @@
 					if(!$db->query($sql))
 						$message = '<p style="color: red">Updating project has failed, please try again.</p>';
 					else {
-						$lastId = $db->lastInsertId();
-						$description="the user  $login modified the project  in projectList.php " ;
-						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
-
+						newUpdate($db, $projectId, $accountId, $login, "has modified the project.");
 						$message = '<p style="color: green">The project has been updated successfully.</p>';
 					}
 				}

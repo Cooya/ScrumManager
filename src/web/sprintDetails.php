@@ -33,8 +33,7 @@
 					if(!$db->query($sql))
 						$message = '<p style="color:red">Task id already used.</p>';
 					else {
-						$description="the user $login added the task $id of the sprint $sprint in the sprintDetails.php" ;
-						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
+						newUpdate($db, $projectId, $accountId, $login, "has created the task $id of the sprint $sprint.");
 						$message = '<p style="color:green">The task has been created successfully.</p>';
 					}
 				}
@@ -63,9 +62,8 @@
 							WHERE id = $id AND sprint = $sprint AND projectId = $projectId";
 					if(!$db->query($sql))
 						$message = '<p style="color:red">Task id already used.</p>';
-					else{
-						$description="the user $login modified the task $id of the sprint $sprint in the sprintDetails.php" ;
-						$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
+					else {
+						newUpdate($db, $projectId, $accountId, $login, "has modified the task $id of the sprint $sprint.");
 						$message = '<p style="color:green">The task has been updated successfully.</p>';
 					}
 				}
@@ -79,9 +77,8 @@
 				$sql = "DELETE FROM task WHERE id = $id AND sprint = $sprint AND projectId = $projectId";
  				if(!$db->query($sql))
  					$message = '<p style="color:red">An error has occurred when deleting the task.</p>';
- 				else{
- 					$description="the user  $login deleted the task $id of the sprint $sprint in the sprintDetails.php" ;
-					$result = $db->query("INSERT INTO updates VALUES(NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
+ 				else {
+ 					newUpdate($db, $projectId, $accountId, $login, "has deleted the task $id of the sprint $sprint.");
  					$message = '<p style="color:green">The task has been deleted successfully.</p>';
  				}
 			}

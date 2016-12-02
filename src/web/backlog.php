@@ -19,9 +19,8 @@
 			$sprint = $_POST['sprint'];
 			$specificId = $_POST['specificId'];
 			$result = $db->query("DELETE FROM us WHERE projectId = '$projectId' AND sprint = '$sprint' AND specificId = '$specificId'");
-			if($result){
-				$description="the user  $login deleted the user story $specificId of the sprint $sprint in backlog.php " ;
-				$result = $db->query("INSERT INTO updates VALUES (NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
+			if($result) {
+				newUpdate($db, $projectId, $accountId, $login, "has deleted the user story $specificId of the sprint $sprint.");
 				$message = '<p style="color:green">The user story has been deleted successfully.</p>';
 			}
 			else
@@ -45,8 +44,7 @@
 					if(!$db->query($sql))
 						$message = '<p style="color:red">This user story id has already been taken by another US.</p>';
 					else {
-						$description="the user $login added the user story $specificId of the sprint $sprint in backlog.php " ;
-						$result = $db->query("INSERT INTO updates VALUES (NULL, $projectId, '$description', $accountId, now())");
+						newUpdate($db, $projectId, $accountId, $login, "has created the user story $specificId of the sprint $sprint.");
 						$message = '<p style="color:green">The user story has been created successfully.</p>';
 					}
 				}
@@ -67,8 +65,7 @@
 				else if(!$db->query($sql))
 					$message = '<p style="color:red">This user story id has already been taken by another US.</p>';
 				else {
-					$description="the user $login modified the user story $specificId of the sprint $sprint in backlog.php " ;
-					$result = $db->query("INSERT INTO updates VALUES (NULL, $projectId, $description, $accountId, now())");
+					newUpdate($db, $projectId, $accountId, $login, "has modified the user story $specificId of the sprint $sprint.");
 					$message = '<p style="color:green">The user story has been updated successfully.</p>';
 				}
 			}

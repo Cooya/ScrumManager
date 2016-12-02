@@ -124,11 +124,12 @@
 		?>
 		<br>
 		<button id="createUS" onclick="createDialog.dialog('open')">Add new US</button>
-		<input type="button" value="Add new documentation" onclick="javascript:location.href='addDoc.php?projectId=<?php echo $projectId; ?>'">
-		<input type="button" value="Consult & Modify documentation" onclick="javascript:location.href='consult&modifDoc.php?projectId=<?php echo $projectId; ?>'">
+		<button type="button" onclick="location.href='addDoc.php?projectId=<?php echo $projectId; ?>'">Add new documentation</button>
+		<button type="button" onclick="location.href='consult&modifDoc.php?projectId=<?php echo $projectId; ?>'">Consult & Modify documentation</button>
 
 		<br>
 		<div id="message"><?php echo $message ?></div>
+		<h2>Burn down chart</h2>
 
 		<?php
 			if(count($data) != 0) {

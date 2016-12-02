@@ -22,4 +22,5 @@ describe('ScrumManager E2E tests', function() {
 	require('./createTask.js')(driver, 1);
 	require('./createTask.js')(driver, 2);
 	require('./createTask.js')(driver, 3);
+	require('./deleteProject.js')(driver);
 });

@@ -28,7 +28,7 @@ module.exports = function(providedDriver, i) {
 	}
 
 	describe('Create a project', function() {
-		this.timeout(4000);
+		this.timeout(5000);
 
 		if(!providedDriver) {
 			before(function() {

@@ -83,9 +83,14 @@
 				// suppression des contributeurs du projet (nécessaire du fait de la contrainte de clé étrangère)
 				$sql = "DELETE FROM contributor WHERE projectId = $projectId";
 				$sql2 = "DELETE FROM updates WHERE projectId = $projectId";
-				$sql3 = "DELETE FROM project WHERE id = $projectId";
-				if(!$db->query($sql) || !$db->query($sql2) || !$db->query($sql3))
+				$sql3 = "DELETE FROM documentation WHERE projectId = $projectId";
+				$sql4 = "DELETE FROM task WHERE projectId = $projectId";
+				$sql5 = "DELETE FROM us WHERE projectId = $projectId";
+				$sql6 = "DELETE FROM project WHERE id = $projectId";
+				if(!$db->query($sql) || !$db->query($sql2) || !$db->query($sql3) || !$db->query($sql4) || !$db->query($sql5) || !$db->query($sql6)) {
+					var_dump($db->errorInfo());
 					$message = '<p style="color:red">An error has occured when trying to delete this project.</p>';
+				}
 				else
 					$message = '<p style="color:green">The project has been deleted successfully.</p>';
 			}
@@ -116,7 +121,9 @@
 			echo '
 				<table border="1">
 					<tr>
-						<td><b>Name</b></td><td><b>Owner</b></td><td><b>Master</b></td><td><b>Last update</b></td><td><b>Creation date</b></td><td><b>Repository Link</b></td><td><b>Add contributor</b></td><td><b>Set owner</b></td><td><b>Modify</b></td><td><b>Delete</b></td><td><b>Updates</b></td>
+						<td><b>Name</b></td><td><b>Owner</b></td><td><b>Master</b></td><td><b>Last update</b></td><td><b>Creation date</b></td>
+							<td><b>Repository link</b></td><td><b>Add contributor</b></td><td><b>Set owner</b></td><td><b>Modify</b></td>
+							<td><b>Delete</b></td><td><b>Logs</b></td>
 					</tr>
 			';
 
@@ -174,7 +181,7 @@
 						</td>
 						<td><img onclick="openDeleteProjectDialog({projectId:' . $entry['id'] . '})" 
 							src="assets/images/delete.png" style="cursor:pointer" alt="update"/></td>
-						<td><a href="updates.php?projectId=' . $entry['id'] . '">more</a></td>
+						<td><a href="updates.php?projectId=' . $entry['id'] . '">consult</a></td>
 	
 					</tr>
 				';

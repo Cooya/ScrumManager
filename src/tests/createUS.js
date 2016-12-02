@@ -57,7 +57,7 @@ function checkRow(selector, row, done) {
 
 module.exports = function(providedDriver, i) {
 	i = i ? i : 1;
-	var US = ['100' + i, 'user story description', '' + i, '10', '5', '', ''];
+	var US = ['100' + i, 'user story description', '' + i, '10', '5', 'No', '', ''];
 	var projectName;
 
 	describe('Create a user story', function() {

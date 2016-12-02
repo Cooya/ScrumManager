@@ -15,7 +15,7 @@
 | 10 | Nicolas | | | | X |
 | 11 | Mohamed | | | | X |
 | 12 | Mohamed | | | | X |
-| 13 | Nicolas | | X | | |
+| 13 | Nicolas | | | | X |
 
 ## User stories
 * US#6  : En tant que chef de projet, je dois pouvoir modifier les informations à propos d'un projet ou supprimer ce projet.

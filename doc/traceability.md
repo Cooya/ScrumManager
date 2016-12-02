@@ -7,14 +7,14 @@
 | US#3 | 43b16deeec2e66c3728b6640c9938002d3dcf668 |
 | US#4 | 43b16deeec2e66c3728b6640c9938002d3dcf668 |
 | US#5 | 685d600033d5f2096897f8aecafcd16649fb1165 |
-| US#5 | |
-| US#6 | |
+| US#5 | f944f55c2bcbf999ce5841d3ede75f02f2c86826 |
+| US#6 | a8463190ec2c188bbe85a05081fd7c37000b3b61 |
 | US#7 | 0174fdc3038cc83d20c64227d0b643e0e28457e6 |
 | US#8 | 0174fdc3038cc83d20c64227d0b643e0e28457e6 |
 | US#9 | 7e0256adb34d33bba68b89732f9ddaf827905815 |
-| US#10 | |
-| US#11 | |
-| US#12 | |
+| US#10 | 224508aa11543cca472e111e5d9eb23760e23222 |
+| US#11 | a6c42d49a64992c2a62e10286d75478405e50a6a |
+| US#12 | 3640aebda201820012ad572c2cc39b2e534a5006 |
 
 ## User stories
 * 1 : En tant qu’utilisateur quelconque, je dois pouvoir m’inscrire, me connecter et me déconnecter de l’application.

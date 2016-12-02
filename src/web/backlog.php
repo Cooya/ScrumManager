@@ -124,8 +124,7 @@
 		?>
 		<br>
 		<button id="createUS" onclick="createDialog.dialog('open')">Add new US</button>
-		<button type="button" onclick="location.href='addDoc.php?projectId=<?php echo $projectId; ?>'">Add new documentation</button>
-		<button type="button" onclick="location.href='consult&modifDoc.php?projectId=<?php echo $projectId; ?>'">Consult & Modify documentation</button>
+		<button type="button" onclick="location.href='consult&modifDoc.php?projectId=<?php echo $projectId; ?>'">Consult documentation</button>
 
 		<br>
 		<div id="message"><?php echo $message ?></div>

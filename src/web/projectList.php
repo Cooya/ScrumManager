@@ -22,12 +22,17 @@
 					$ownerId = isset($ownerId) ? $ownerId : 'NULL';
 					$sql = "INSERT INTO project (name, master, creation_date, repository_link, owner) VALUES 
 					('$projectName', $masterId, '$creationDate', '$repositoryLink', $ownerId)";
-					if($db->query($sql)) {
-						newUpdate($db, $db->lastInsertId(), $accountId, $login, "has created the project $projectName.");
-						$message = '<p style="color:green">The project "' . $_POST['projectName'] . '" has been created successfully.</p>';
-					}
-					else
+					if(!$db->query($sql))
 						$message = '<p style="color:red">An error has occurred, please try again.</p>';
+					else {
+						$projectId = $db->lastInsertId();
+						if(!$db->query("INSERT INTO documentation VALUES (NULL, $projectId, '')"))
+							$message = '<p style="color:red">An error has occurred, please try again.</p>';
+						else {
+							newUpdate($db, $projectId, $accountId, $login, "has created the project $projectName.");
+							$message = '<p style="color:green">The project "' . $_POST['projectName'] . '" has been created successfully.</p>';
+						}
+					}
 				}
 				else
 					$message = '<p style="color: red">The project name cannot be empty.</p>';

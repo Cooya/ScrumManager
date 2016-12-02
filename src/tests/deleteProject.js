@@ -8,7 +8,7 @@ var driver;
 module.exports = function(providedDriver) {
 	describe('Delete one project', function() {
 		this.timeout(4000);
-		var projectName
+		var projectName;
 
 		before(function() {
 			if(!providedDriver) {

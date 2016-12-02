@@ -38,28 +38,37 @@
 			$done = (isset($_POST['done']) && $_POST['done'] == "done") ? 1 : 0;
 
 			if($_POST['action'] == 'create') {
-				if($result = $db->query("SELECT specificId FROM us WHERE projectId = '$projectId' AND specificId = '$specificId'")->fetch())
+				if($result = $db->query("SELECT specificId FROM us WHERE projectId = $projectId AND specificId = $specificId")->fetch())
 					$message = '<p style="color:red">This US id already exists.</p>';
 				else {
 					$sql = "INSERT INTO us VALUES (NULL, $specificId, $projectId, '$description', $priority, $cost, $sprint, 0)";
 					if(!$db->query($sql))
 						$message = '<p style="color:red">This user story id has already been taken by another US.</p>';
 					else {
-						$description="the user  $login added the user story $specificId of the sprint $sprint in  backlog.php " ;
+						$description="the user $login added the user story $specificId of the sprint $sprint in backlog.php " ;
 						$result = $db->query("INSERT INTO updates VALUES (NULL, $projectId, '$description', $accountId, now())");
 						$message = '<p style="color:green">The user story has been created successfully.</p>';
 					}
 				}
 			}
 			else if($_POST['action'] == 'modify') {
-				$sql = "UPDATE us SET specificId = '$specificId', description = '$description', sprint = '$sprint', cost = '$cost', 
-					priority = '$priority', done = $done WHERE specificId = '$specificId' AND projectId = '$projectId'";
-				if(!$db->query($sql))
+				$oldId = $_POST['oldId'];
+				$idAlreadyExists = false;
+				if($specificId != $oldId) {
+					$idAlreadyExists = $db->query("SELECT specificId FROM us WHERE projectId = $projectId AND specificId = $specificId")->fetch();
+					$sql = "UPDATE us SET specificId = $specificId, description = '$description', sprint = $sprint, cost = $cost, 
+						priority = $priority, done = $done WHERE specificId = $oldId AND projectId = $projectId";
+				}
+				else
+					$sql = "UPDATE us SET description = '$description', sprint = $sprint, cost = $cost, 
+						priority = $priority, done = $done WHERE specificId = $specificId AND projectId = $projectId";
+				if($idAlreadyExists)
+					$message = '<p style="color:red">This US id already exists.</p>';
+				else if(!$db->query($sql))
 					$message = '<p style="color:red">This user story id has already been taken by another US.</p>';
-				else{
-					$description="the user  $login modified the user story $specificId of the sprint $sprint in backlog.php " ;
-					$result = $db->query("INSERT INTO updates VALUES (NULL,'$projectId' ,'$description' ,'$accountId', NOW() )");
-
+				else {
+					$description="the user $login modified the user story $specificId of the sprint $sprint in backlog.php " ;
+					$result = $db->query("INSERT INTO updates VALUES (NULL, $projectId, $description, $accountId, now())");
 					$message = '<p style="color:green">The user story has been updated successfully.</p>';
 				}
 			}
@@ -97,6 +106,7 @@
 				$sql = "SELECT * FROM us WHERE projectId = $projectId ORDER BY specificId";
 				$data = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 				foreach($data as $entry) {
+					$entry['oldId'] = $entry['specificId'];
 					echo'
 						<tr>
 							<td>' . $entry['specificId'] . '</td>
@@ -129,47 +139,76 @@
 					array_push($sprints[$us['sprint']], $us);
 				}
 
-				// récupération des coûts de chaque sprint et du coût total
+				// récupération des coûts (effectif et attendu) de chaque sprint et calcul du coût total
 				$totalCost = 0;
+				$sprintCostsArray = [];
+				$sprintDoneCostsArray = [];
+				$sprintIds = [0];
 				foreach($sprints as $key => $sprint) {
 					$sprintCost = 0;
-					foreach($sprint as $us)
+					$sprintDoneCost = 0;
+					foreach($sprint as $us) {
 						$sprintCost += $us['cost'];
-					$sprints[$key]['cost'] = $sprintCost;
+						if($us['done'])
+							$sprintDoneCost += $us['cost'];
+					}
+					array_push($sprintIds, $key);
+					array_push($sprintCostsArray, $sprintCost);
+					array_push($sprintDoneCostsArray, $sprintDoneCost);
 					$totalCost += $sprintCost;
 				}
-				$sprints['totalCost'] = $totalCost;
 
-				// récupération des tâches de chaque sprint
-				// TO DO ...
+				// calcul des valeurs du graphe à partir des coûts de chaque sprint et du coût total
+				$progressiveCost = 0;
+				$progressiveDoneCost = 0;
+				$nbSprints = count($sprintCostsArray);
+				for($i = 0; $i < $nbSprints; ++$i) {
+					$progressiveCost += $sprintCostsArray[$i];
+					$progressiveDoneCost += $sprintDoneCostsArray[$i];
+					$sprintCostsArray[$i] = $totalCost - $progressiveCost;
+					$sprintDoneCostsArray[$i] = $totalCost - $progressiveDoneCost;
+					
+				}
+
+				sort($sprintIds);
+				array_unshift($sprintCostsArray, $totalCost);
+				array_unshift($sprintDoneCostsArray, $totalCost);
+				$chartData['sprintLabels'] = $sprintIds;
+				$chartData['expected'] = $sprintCostsArray;
+				$chartData['done'] = $sprintDoneCostsArray;
 			}
 		?>
 
 		<canvas id="chart" width="800" height="400"></canvas>
 		<script>
-			var chart = new Chart(document.getElementById("chart"), {
-				type: 'line',
-				data: {
-					labels: [0, 1, 2, 3, 4, 5, 6],
-					datasets: [
-						{
-							label: "reality",
-							fill: false,
-							borderColor: "green",
-							data: [50, 32, 26, 14, 11, 6]
-						},
-						{
-							label: "expected",
-							fill: false,
-							borderColor: "red",
-							data: [50, 30, 25, 10, 8, 5]
-						}
-					]
-				},
-				options: {
-			        responsive: false
-			    }
-			});
+			<?php echo "var chartData = " . (isset($chartData) ? json_encode($chartData) : "null") . ";" ?>
+			if(chartData) {
+				var chart = new Chart(document.getElementById("chart"), {
+					type: 'line',
+					data: {
+						labels: chartData.sprintLabels,
+						datasets: [
+							{
+								label: "done",
+								tension: 0,
+								fill: false,
+								borderColor: "green",
+								data: chartData.done
+							},
+							{
+								label: "expected",
+								tension: 0,
+								fill: false,
+								borderColor: "red",
+								data: chartData.expected
+							}
+						]
+					},
+					options: {
+						responsive: false
+					}
+				});
+			}
 
 			$(function() {
 				createDialog = $("#createDialog").dialog({
@@ -279,6 +318,7 @@
 		<p class="validateTips">"Id", "Description" & "Sprint" fields are required.</p>
 		<form method="POST">
 			<fieldset>
+				<input type="hidden" name="oldId">
 				<input type="hidden" type="text" name="action" value="modify">
 
 				<label for="specificId">Id</label>

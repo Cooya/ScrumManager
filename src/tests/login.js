@@ -21,7 +21,7 @@ function fillTextInput(inputName, text, callback) {
 
 module.exports = function(providedDriver) {
 	describe('Log in', function() {
-		this.timeout(8000);
+		this.timeout(10000);
 
 		if(!providedDriver) {
 			before(function() {
@@ -32,9 +32,10 @@ module.exports = function(providedDriver) {
 				driver.quit();
 			});
 		}
-		else {
-			driver = providedDriver;
-		}
+		else
+			before(function() {
+				driver = providedDriver;
+			});
 
 		it('When I go to the login page', function(done) {
 			driver.get('http://localhost/login.php').then(
@@ -55,6 +56,7 @@ module.exports = function(providedDriver) {
 		});
 
 		it('And I submit form', function(done) {
+			driver.sleep(1000);
 			driver.findElement(By.id('submit')).submit().then(
 				done,
 				(err) => done(err)
@@ -62,15 +64,14 @@ module.exports = function(providedDriver) {
 		});
 
 		it('I must be redirected on the project list page', function(done) {
-			setTimeout(() => {
-				driver.getCurrentUrl().then(
-					(text) => {
-						expect(text).to.be.eql("http://localhost/projectList.php");
-						done();
-					},
-					(err) => done(err)
-				);
-			}, 500);
+			driver.sleep(1000);
+			driver.getCurrentUrl().then(
+				(text) => {
+					expect(text).to.be.eql("http://localhost/projectList.php");
+					done();
+				},
+				(err) => done(err)
+			);
 		});
 	});
 };

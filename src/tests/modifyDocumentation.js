@@ -7,17 +7,22 @@ var driver;
 
 module.exports = function(providedDriver) {
 	describe('Modify project documentation', function() {
-		this.timeout(4000);
+		this.timeout(10000);
 		var projectName;
 
-		before(function() {
-			if(!providedDriver) {
-				console.err("Projects must be created before modifying their documentation.");
-				return;
-			}
-			else
+		if(!providedDriver) {
+			before(function() {
+				driver = new webdriver.Builder().forBrowser('chrome').build();
+			});
+
+			after(function() {
+				driver.quit();
+			});
+		}
+		else
+			before(function() {
 				driver = providedDriver;
-		});
+			});
 
 		it('When I go to the projects list page', function(done) {
 			driver.get('http://localhost/projectList.php');
@@ -76,6 +81,7 @@ module.exports = function(providedDriver) {
 		});
 
 		it('I must see a success message', function(done) {
+			driver.sleep(1000);
 			driver.findElement(By.id('message')).getText().then(
 				(text) => {
 					expect(text).to.be.eql("The documentation has been modified successfully.");
@@ -86,6 +92,7 @@ module.exports = function(providedDriver) {
 		});
 
 		it('And see my documentation text into the textarea', function(done) {
+			driver.sleep(1000);
 			driver.findElement(By.css('textarea')).getText().then(
 				(text) => {
 					expect(text).to.be.eql("documentation mocha test");

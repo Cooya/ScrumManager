@@ -33,7 +33,7 @@ function checkProjectLink(project, next) {
 
 module.exports = function(providedDriver) {
 	describe('List projects', function() {
-		this.timeout(4000);
+		this.timeout(10000);
 
 		before(function() {
 			if(!providedDriver || ! providedDriver.projects) {

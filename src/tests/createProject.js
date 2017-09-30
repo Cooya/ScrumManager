@@ -28,7 +28,7 @@ module.exports = function(providedDriver, i) {
 	}
 
 	describe('Create a project', function() {
-		this.timeout(5000);
+		this.timeout(10000);
 
 		if(!providedDriver) {
 			before(function() {
@@ -75,6 +75,7 @@ module.exports = function(providedDriver, i) {
 		});
 
 		it('And I submit form', function(done) {
+			driver.sleep(1000);
 			driver.findElement(By.css('#newProjectDialog > form')).submit().then(
 				done,
 				(err) => done(err)
@@ -82,15 +83,14 @@ module.exports = function(providedDriver, i) {
 		});
 
 		it('I must see a success message', function(done) {
-			setTimeout(() => {
-				driver.findElement(By.id('message')).getText().then(
-					(text) => {
-						expect(text).to.be.eql('The project "' + project.projectName + '" has been created successfully.');
-						done();
-					},
-					(err) => done(err)
-				);
-			}, 500);
+			driver.sleep(1000);
+			driver.findElement(By.id('message')).getText().then(
+				(text) => {
+					expect(text).to.be.eql('The project "' + project.projectName + '" has been created successfully.');
+					done();
+				},
+				(err) => done(err)
+			);
 		});
 	});
 };

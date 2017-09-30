@@ -63,7 +63,7 @@ module.exports = function(providedDriver, i) {
 	var sprintId;
 
 	describe('Create a task', function() {
-		this.timeout(4000);
+		this.timeout(10000);
 
 		if(!providedDriver) {
 			before(function() {
@@ -74,11 +74,10 @@ module.exports = function(providedDriver, i) {
 				driver.quit();
 			});
 		}
-		else {
+		else
 			before(function() {
 				driver = providedDriver;
 			});
-		}
 
 		it('When I go to the projects list and I click on the first project', function(done) {
 			var css = 'table > tbody > tr:nth-child(2) > td:nth-child(1) > a';
@@ -151,6 +150,7 @@ module.exports = function(providedDriver, i) {
 		});
 
 		it('And I submit form', function(done) {
+			driver.sleep(1000);
 			driver.findElement(By.css('#createDialog > form')).submit().then(
 				done,
 				(err) => done(err)
@@ -158,6 +158,7 @@ module.exports = function(providedDriver, i) {
 		});
 
 		it('I must see a success message', function(done) {
+			driver.sleep(1000);
 			driver.findElement(By.id('message')).getText().then(
 				(text) => {
 					expect(text).to.be.eql('The task has been created successfully.');

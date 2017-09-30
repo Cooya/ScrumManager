@@ -7,17 +7,22 @@ var driver;
 
 module.exports = function(providedDriver) {
 	describe('Delete one project', function() {
-		this.timeout(4000);
+		this.timeout(10000);
 		var projectName;
 
-		before(function() {
-			if(!providedDriver) {
-				console.err("Projects must be created before being deleted.");
-				return;
-			}
-			else
+		if(!providedDriver) {
+			before(function() {
+				driver = new webdriver.Builder().forBrowser('chrome').build();
+			});
+
+			after(function() {
+				driver.quit();
+			});
+		}
+		else
+			before(function() {
 				driver = providedDriver;
-		});
+			});
 
 		it('When I go to the projects list page', function(done) {
 			driver.get('http://localhost/projectList.php');
@@ -45,6 +50,7 @@ module.exports = function(providedDriver) {
 				null,
 				(err) => done(err)
 			);
+			driver.sleep(1000);
 			driver.findElement(By.css('div.ui-dialog:nth-child(12) > div:nth-child(3) > div:nth-child(1) > button:nth-child(1)')).click().then(
 				done,
 				(err) => done(err)
@@ -52,15 +58,14 @@ module.exports = function(providedDriver) {
 		});
 
 		it('I must see a success message', function(done) {
-			setTimeout(() => {
-				driver.findElement(By.id('message')).getText().then(
-					(text) => {
-						expect(text).to.be.eql('The project has been deleted successfully.');
-						done();
-					},
-					(err) => done(err)
-				);
-			}, 500);
+			driver.sleep(1000);
+			driver.findElement(By.id('message')).getText().then(
+				(text) => {
+					expect(text).to.be.eql('The project has been deleted successfully.');
+					done();
+				},
+				(err) => done(err)
+			);
 		});
 
 		it('And the project removed from the array', function(done) {
